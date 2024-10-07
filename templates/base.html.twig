@@ -1,17 +1,111 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr" data-fr-scheme="light">
     <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="format-detection" content="telephone=no,date=no,address=no,email=no,url=no">
+        <title>{% block title %}Base{% endblock %}</title>
+        <meta name="theme-color" content="#000091"><!-- Défini la couleur de thème du navigateur (Safari/Android) -->
+        <link rel="apple-touch-icon" href="{{asset('/dist/favicon/apple-touch-icon.png')}}"><!-- 180×180 -->
+        <link rel="icon" href="{{asset('/dist/favicon/favicon.svg')}}" type="image/svg+xml">
+        <!-- si favicon.ico peut etre placé à la racine du serveur, retirer la ligne ci-dessous -->
+        <link rel="shortcut icon" href="{{asset('/dist/favicon/favicon.ico')}}" type="image/x-icon"><!-- 32×32 -->
+        <link rel="manifest" href="{{asset('/dist/favicon/manifest.webmanifest')}}" crossorigin="use-credentials">
+        <!-- Modifier les chemins relatifs des favicons en fonction de la structure du projet -->
+        <!-- Dans le fichier manifest.webmanifest aussi, modifier les chemins vers les images -->
+        <link href="{{asset('/dist/utility/utility.main.css')}}" rel="stylesheet">
+        <link href="{{asset('/dist/dsfr.main.css')}}" rel="stylesheet">
+        <link href="{{asset('/dist/utility/utility.legacy.css')}}" rel="stylesheet">
+        <link href="{{asset('/dist/dsfr.legacy.css')}}" rel="stylesheet">
+        <link href="{{asset('/dist/utility/utility.print.css')}}" rel="stylesheet">
+        <link href="{{asset('/dist/dsfr.print.css')}}" rel="stylesheet">
+        <style>
+            code[class*="language-"],
+            pre[class*="language-"] {
+                white-space: pre-wrap;
+            }
+
+            .example-controls {
+                z-index: 100000;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1), 0 8px 16px -16px rgba(0, 0, 0, 0.32);
+            }
+
+            .example-controls>button {
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
+
+            .example-controls__content {
+                padding: 16px;
+                background-color: var(--background-elevated-white);
+            }
+
+            .example-controls .fr-collapse--expanded~[aria-expanded] {
+                display: none;
+            }
+
+            .example-controls .fr-collapse:not(.fr-collapse--expanded)~button:not([aria-expanded]) {
+                display: none;
+            }
+
+            .example-controls [class*="-form-group"] {
+                margin-bottom: 0;
+            }
+
+            .fr-display-button {
+                position: fixed;
+                bottom: 3.5rem;
+                right: 2rem;
+            }
+
+            @media screen and (-ms-high-contrast: active),
+            (-ms-high-contrast: none) {
+
+                /* IE10+ specific styles go here */
+                .example-controls {
+                    display: none;
+                }
+            }
+
+        </style>
+        <script>
+        window['dsfr'] = {
+        // verbose: true,
+        // production: true,
+        // mode: 'manual',
+        };
+        
+    </script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/themes/prism.min.css" rel="stylesheet" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet" />
         {% block stylesheets %}
         {% endblock %}
 
         {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
+            
         {% endblock %}
     </head>
+    
     <body>
-        {% block body %}{% endblock %}
+        {{ include('index/header.html.twig') }}
+        {{ include('index/theme.html.twig') }}
+        {{ include('index/fil.html.twig')}}
+        {% block body %}
+        {% endblock %}
+        {{ include('index/footer.html.twig') }}
+
+        <!-- Script en version es6 module et nomodule pour les navigateurs le ne supportant pas -->
+        <script type="module" src="{{asset('/dist/dsfr.module.js')}}"></script>
+        <script type="text/javascript" nomodule src="{{asset('/dist/dsfr.nomodule.js')}}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/components/prism-core.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/plugins/autoloader/prism-autoloader.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/plugins/toolbar/prism-toolbar.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
     </body>
 </html>
