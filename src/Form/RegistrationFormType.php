@@ -44,11 +44,6 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('typeUser ', EntityType::class, [ // Supprimez l'espace ici
-                'class' => TypeUser ::class,
-                'choice_label' => 'name', // Assurez-vous que 'name' est une propriété de TypeUser 
-                'placeholder' => 'Choisissez un type d\'utilisateur',
-            ]);
         ;
     }
 
