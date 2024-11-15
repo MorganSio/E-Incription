@@ -79,10 +79,10 @@ class InfoEleve
     private ?CentreSecuriteSociale $secu_sociale = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?scolariteAnterieur $anne_scolaire_un = null;
+    private ?ScolariteAnterieur $anne_scolaire_un = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?scolariteAnterieur $anne_scolaire_deux = null;
+    private ?ScolariteAnterieur $anne_scolaire_deux = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
@@ -108,7 +108,7 @@ class InfoEleve
     private ?RepresentantLegal $responsable_deux = null;
 
     #[ORM\ManyToOne]
-    private ?assuranceScolaire $assureur = null;
+    private ?AssuranceScolaire $assureur = null;
 
     #[ORM\ManyToOne(inversedBy: 'eleve')]
     #[ORM\JoinColumn(nullable: false)]
@@ -378,24 +378,24 @@ class InfoEleve
         return $this;
     }
 
-    public function getAnneScolaireUn(): ?scolariteAnterieur
+    public function getAnneScolaireUn(): ?ScolariteAnterieur
     {
         return $this->anne_scolaire_un;
     }
 
-    public function setAnneScolaireUn(?scolariteAnterieur $anne_scolaire_un): static
+    public function setAnneScolaireUn(?ScolariteAnterieur $anne_scolaire_un): static
     {
         $this->anne_scolaire_un = $anne_scolaire_un;
 
         return $this;
     }
 
-    public function getAnneScolaireDeux(): ?scolariteAnterieur
+    public function getAnneScolaireDeux(): ?ScolariteAnterieur
     {
         return $this->anne_scolaire_deux;
     }
 
-    public function setAnneScolaireDeux(?scolariteAnterieur $anne_scolaire_deux): static
+    public function setAnneScolaireDeux(?ScolariteAnterieur $anne_scolaire_deux): static
     {
         $this->anne_scolaire_deux = $anne_scolaire_deux;
 
@@ -486,12 +486,12 @@ class InfoEleve
         return $this;
     }
 
-    public function getAssureur(): ?assuranceScolaire
+    public function getAssureur(): ?AssuranceScolaire
     {
         return $this->assureur;
     }
 
-    public function setAssureur(?assuranceScolaire $assureur): static
+    public function setAssureur(?AssuranceScolaire $assureur): static
     {
         $this->assureur = $assureur;
 
