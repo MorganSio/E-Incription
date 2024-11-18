@@ -42,11 +42,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?TypeUser $role = null;
 
     #[ORM\ManyToOne(inversedBy: 'utilisateur')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?AccedeEleve $accedeEleve = null;
 
     #[ORM\ManyToOne(inversedBy: 'utilisateur')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?AccedeRepresentant $accedeRepresentant = null;
 
     #[ORM\Column]
