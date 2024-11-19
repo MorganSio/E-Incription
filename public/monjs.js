@@ -1,5 +1,10 @@
 function suivant(nb)
 {
+    if (nb == 1)
+        {
+            document.getElementById('RegistrationFirst').style.display = 'block';
+            document.getElementById('RegistrationFourth').style.display = 'none';
+        }
     if (nb == 2)
     {
         document.getElementById('RegistrationFirst').style.display = 'none';
@@ -16,4 +21,13 @@ function suivant(nb)
         document.getElementById('RegistrationFourth').style.display = 'block';
     }
 
+}
+
+function registerUser()
+{
+    var mail
+    var password
+    var role = document.getElementsByName('role').value
+    var nom
+    var prenom
 }
