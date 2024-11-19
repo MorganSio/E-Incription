@@ -19,7 +19,8 @@
         <link href="{{asset('/dist/dsfr.legacy.css')}}" rel="stylesheet">
         <link href="{{asset('/dist/utility/utility.print.css')}}" rel="stylesheet">
         <link href="{{asset('/dist/dsfr.print.css')}}" rel="stylesheet">
-        <link href="{{asset('/public/style.css')}}" rel="stylesheet">
+        {# <link href="{{asset('/public/style.css')}}" rel="stylesheet"> #}
+        <link href="{{asset('/moncss.css')}}" rel="stylesheet">
         <style>
             .dropdown {
                 position: relative;
@@ -147,5 +148,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/plugins/toolbar/prism-toolbar.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+        <script src="{{asset('/monjs.js')}}"></script>
     </body>
 </html>
