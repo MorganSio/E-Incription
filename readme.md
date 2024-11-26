@@ -1,4 +1,4 @@
-# Mon Projet Symfony
+# E-Inscription
 
 Bienvenue dans mon projet Symfony! Ce projet est construit avec le framework Symfony et utilise Doctrine ORM pour la gestion des bases de données.
 
@@ -28,8 +28,8 @@ Modifiez le fichier .env pour y ajouter vos informations de connexion à la base
 
 exemple :  DATABASE_URL="postgresql://user:mdp@1.2.3.4:5432/E-Inscription?serverVersion=15.8&charset=utf8"
 
-4. Vérifiez la connection a la base de donnée 
+### 4. Vérifiez la connection a la base de donnée 
 php bin/console app:check-database-connection
 
-5. Démarrer le Serveur de Développement
+### 5. Démarrer le Serveur de Développement
 symfony server:start
