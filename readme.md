@@ -17,7 +17,7 @@ Avant de commencer, assurez-vous d'avoir installé les éléments suivants sur v
 
 Clonez le dépôt GitHub sur votre machine locale :
 
-git clone [https://github.com/your-username/your-repository.git](https://github.com/MorganSio/E-Incription.git)
+git clone [https://github.com/MorganSio/E-Incription.git](https://github.com/MorganSio/E-Incription.git)
 cd your-repository
 
 ### 2. Installer les Dépendances
