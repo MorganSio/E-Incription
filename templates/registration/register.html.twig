@@ -54,15 +54,13 @@
                                         </div>
                                         <div class="fr-fieldset__element">
                                             <div class="fr-input-group" id="input-group-9360">
-                                                {# <label class="fr-label" for="username-9351">
-                                                    Identifiant
-                                                    <span class="fr-hint-text">Format attendu : nom@domaine.fr</span>
-                                                </label> #}
-                                                {{ form_row(registrationForm.email, {
+                                                {# Input mail #}
+                                                <input type="email" name="register" id="mail" placeholder="Adresse e-mail">
+                                                {# {{ form_row(registrationForm.email, {
                                                     id: 'username-9351',
                                                     label_attr: {'class': 'fr-label'},
                                                     attr: {'class': 'fr-input', 'autocapitalize': 'off', 'autocorrect': 'off'}
-                                                }) }}
+                                                }) }} #}
                                                 <span class="fr-hint-text">Format attendu : nom@domaine.fr</span>
                                                 <div class="fr-messages-group" id="username-9351-messages" aria-live="polite">
                                                 </div>
@@ -70,15 +68,14 @@
                                         </div>
                                         <div class="fr-fieldset__element">
                                             <div class="fr-password" id="password-9352">
-                                                {# <label class="fr-label" for="password-9352-input">
-                                                    Mot de passe
-                                                </label> #}
                                                 <div class="fr-input-wrap">
-                                                    {{ form_row(registrationForm.plainPassword, {
+                                                    {# input password #}
+                                                    <input type="password" name="register" id="password" placeholder="Mot de passe">
+                                                    {# {{ form_row(registrationForm.plainPassword, {
                                                         id: 'password-9352-input',
                                                         label_attr: {'class': 'fr-label'},
                                                         attr: {'class': 'fr-password__input fr-input', 'autocomplete': 'new-password'}
-                                                    }) }}
+                                                    }) }} #}
                                                 </div>
                                                 <div class="fr-messages-group" id="password-9352-input-messages" aria-live="polite">
                                                     <p class="fr-message" id="password-9352-input-message">Votre mot de passe doit contenir :</p>
@@ -145,14 +142,6 @@
 
                                         </fieldset>
                                         <div class="fr-fieldset__element">
-                                            {# <div class="fr-checkbox-group fr-checkbox-group--sm">
-                                                <input name="checkbox-cnil" id="checkbox-cnil-9353" type="checkbox" aria-describedby="checkbox-cnil-9353-messages">
-                                                <label class="fr-label" for="checkbox-cnil-9353">
-                                                    Mention CNIL — Lorem ipsum dolor sit amet, consectetur adipiscing est
-                                                </label>
-                                                <div class="fr-messages-group" id="checkbox-cnil-9353-messages" aria-live="polite">
-                                                </div>
-                                            </div> #}
                                         </div>
                                         {{ form_end(registrationForm) }}
                                         <div class="fr-fieldset__element">
@@ -179,14 +168,6 @@
 
     <article id="RegistrationSecond">
     <main role="main" id="content">
-        {# <div class="fr-container fr-mt-8v fr-mt-md-14v fr-mb-2v fr-mb-md-8v">
-            <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--center">
-                <div class="fr-col-12 fr-col-md-10 fr-col-lg-8">
-                    <h1 class="fr-h2">Création de compte sur [Nom de service-site]</h1>
-                    <p class="fr-text--lead">Chapô — Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh, sit amet tempor nibh finibus et.</p>
-                </div>
-            </div>
-        </div> #}
         <div class="fr-container fr-container--fluid fr-mb-md-14v">
             <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--center">
                 <div class="fr-col-12 fr-col-md-10 fr-col-lg-8">
@@ -316,14 +297,6 @@
 
     <article id="RegistrationThird">
     <main role="main" id="content">
-        {# <div class="fr-container fr-mt-8v fr-mt-md-14v fr-mb-2v fr-mb-md-8v">
-            <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--center">
-                <div class="fr-col-12 fr-col-md-10 fr-col-lg-8">
-                    <h1 class="fr-h2">Création de compte sur [Nom de service-site]</h1>
-                    <p class="fr-text--lead">Chapô — Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh, sit amet tempor nibh finibus et.</p>
-                </div>
-            </div>
-        </div> #}
         <div class="fr-container fr-container--fluid fr-mb-md-14v">
             <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--center">
                 <div class="fr-col-12 fr-col-md-10 fr-col-lg-8">
@@ -430,14 +403,6 @@
 
     <article id="RegistrationFourth">
     <main role="main" id="content">
-        {# <div class="fr-container fr-mt-8v fr-mt-md-14v fr-mb-2v fr-mb-md-8v">
-            <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--center">
-                <div class="fr-col-12 fr-col-md-10 fr-col-lg-8">
-                    <h1>Création de compte sur [Nom de service-site]</h1>
-                    <p class="fr-text--lead">Chapô — Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh, sit amet tempor nibh finibus et.</p>
-                </div>
-            </div>
-        </div> #}
         <div class="fr-container fr-container--fluid fr-mb-md-14v">
             <div class="fr-grid-row fr-grid-row-gutters fr-grid-row--center">
                 <div class="fr-col-12 fr-col-md-10 fr-col-lg-8">
