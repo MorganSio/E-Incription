@@ -91,6 +91,27 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <fieldset class="fr-fieldset" id="name-9545" aria-labelledby="name-9545-legend name-9545-messages">
+                                            <legend class="fr-fieldset__legend" id="name-9545-legend">
+                                                {# <h3 class="fr-h5">Nom</h3> #}
+                                            </legend>
+                                            <div class="fr-fieldset__element">
+                                                <div class="fr-input-group" id="input-group-9550">
+                                                    {# <label class="fr-label" for="family-name-9537">
+                                                        Nom
+                                                    </label> #}
+                                                    {{ form_row(registrationForm.nom, {
+                                                        id: 'family-name-9537',
+                                                        label_attr: {'class': 'fr-label'},
+                                                        attr: {'class': 'fr-input', 'autocapitalize': 'off', 'autocorrect': 'off'}
+                                                    }) }}
+                                                    <div class="fr-messages-group" id="family-name-9537-messages" aria-live="polite">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>  
+
                                         <fieldset class="fr-fieldset" id="radio-rich-hint-inline" aria-labelledby="radio-rich-hint-inline-legend radio-rich-hint-inline-messages">
                                             <legend class="fr-fieldset__legend--regular fr-fieldset__legend" id="radio-rich-hint-inline-legend">
                                                 Légende pour l’ensemble des éléments
