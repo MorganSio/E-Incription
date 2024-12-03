@@ -9,7 +9,7 @@ Avant de commencer, assurez-vous d'avoir installé les éléments suivants sur v
 - PHP >= 7.4
 - Composer
 - Un serveur Web (Apache, Nginx, etc.)
-- Une base de données (MySQL, PostgreSQL, SQLite, etc.)
+- Une base de données PostgreSQL version 15.8
 
 ## Installation
 
