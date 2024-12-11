@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -50,7 +51,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?AccedeRepresentant $accedeRepresentant = null;
 
     #[ORM\Column]
-    private bool $isVerified = false;
+    public bool $isVerified = false;
 
     public function getId(): ?int
     {
@@ -88,7 +89,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles[] = 'ROLE_ELEVE';
 
         return array_unique($roles);
     }

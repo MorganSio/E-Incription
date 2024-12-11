@@ -55,12 +55,12 @@
                                         <div class="fr-fieldset__element">
                                             <div class="fr-input-group" id="input-group-9360">
                                                 {# Input mail #}
-                                                <input type="email" name="register" id="mail" placeholder="Adresse e-mail">
-                                                {# {{ form_row(registrationForm.email, {
+                                                {# <input type="email" name="register" id="mail" placeholder="Adresse e-mail"> #}
+                                                {{ form_row(registrationForm.email, {
                                                     id: 'username-9351',
                                                     label_attr: {'class': 'fr-label'},
                                                     attr: {'class': 'fr-input', 'autocapitalize': 'off', 'autocorrect': 'off'}
-                                                }) }} #}
+                                                }) }}
                                                 <span class="fr-hint-text">Format attendu : nom@domaine.fr</span>
                                                 <div class="fr-messages-group" id="username-9351-messages" aria-live="polite">
                                                 </div>
@@ -71,11 +71,11 @@
                                                 <div class="fr-input-wrap">
                                                     {# input password #}
                                                     <input type="password" name="register" id="password" placeholder="Mot de passe">
-                                                    {# {{ form_row(registrationForm.plainPassword, {
+                                                    {{ form_row(registrationForm.plainPassword, {
                                                         id: 'password-9352-input',
                                                         label_attr: {'class': 'fr-label'},
                                                         attr: {'class': 'fr-password__input fr-input', 'autocomplete': 'new-password'}
-                                                    }) }} #}
+                                                    }) }}
                                                 </div>
                                                 <div class="fr-messages-group" id="password-9352-input-messages" aria-live="polite">
                                                     <p class="fr-message" id="password-9352-input-message">Votre mot de passe doit contenir :</p>
@@ -91,25 +91,46 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <fieldset class="fr-fieldset" id="radio-rich-hint-inline" aria-labelledby="radio-rich-hint-inline-legend radio-rich-hint-inline-messages">
+
+                                        <fieldset class="fr-fieldset" id="name-9545" aria-labelledby="name-9545-legend name-9545-messages">
+                                            <legend class="fr-fieldset__legend" id="name-9545-legend">
+                                                {# <h3 class="fr-h5">Nom</h3> #}
+                                            </legend>
+                                            <div class="fr-fieldset__element">
+                                                <div class="fr-input-group" id="input-group-9550">
+                                                    {# <label class="fr-label" for="family-name-9537">
+                                                        Nom
+                                                    </label> #}
+                                                    {{ form_row(registrationForm.nom, {
+                                                        id: 'family-name-9537',
+                                                        label_attr: {'class': 'fr-label'},
+                                                        attr: {'class': 'fr-input', 'autocapitalize': 'off', 'autocorrect': 'off', 'required': 'required'}
+                                                    }) }}
+                                                    <div class="fr-messages-group" id="family-name-9537-messages" aria-live="polite">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>  
+
+                                        {# <fieldset class="fr-fieldset" id="radio-rich-hint-inline" aria-labelledby="radio-rich-hint-inline-legend radio-rich-hint-inline-messages">
                                             <legend class="fr-fieldset__legend--regular fr-fieldset__legend" id="radio-rich-hint-inline-legend">
                                                 Légende pour l’ensemble des éléments
                                                 <span class="fr-hint-text">Texte de description additionnel</span>
-                                            </legend>
+                                            </legend> #}
 
                                             {# Role représentant légal #}
-                                            <div class="fr-fieldset__element fr-fieldset__element--inline">
+                                            {# <div class="fr-fieldset__element fr-fieldset__element--inline">
                                                 <div class="fr-radio-group fr-radio-rich">
-                                                    <input value="1" type="radio" id="majeur" name="role">
+                                                    <input value="3" type="radio" id="majeur" name="role">
                                                     <label class="fr-label" for="radio-rich-hint-inline-1">
                                                          Représentant Légal
                                                         <span class="fr-hint-text">Pour les parents ou étudiants majeurs</span>
                                                     </label>
                                                 </div>
-                                            </div>
+                                            </div> #}
 
                                             {# Role étudiant #}
-                                            <div class="fr-fieldset__element fr-fieldset__element--inline">
+                                            {# <div class="fr-fieldset__element fr-fieldset__element--inline">
                                                 <div class="fr-radio-group fr-radio-rich">
                                                     <input value="2" type="radio" id="mineur" name="role">
                                                     <label class="fr-label" for="radio-rich-hint-inline-2">
@@ -117,9 +138,9 @@
                                                         <span class="fr-hint-text">Pour les étudiants mineurs</span>
                                                     </label>
                                                 </div>
-                                            </div>
+                                            </div> #}
 
-                                        </fieldset>
+                                        {# </fieldset> #}
                                         <div class="fr-fieldset__element">
                                         </div>
                                         {{ form_end(registrationForm) }}
