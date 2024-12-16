@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Form;
-use App\Entity\TypeUser ;
+
+use App\Entity\TypeUser;
 use App\Entity\User;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -20,17 +22,7 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('nom')
             ->add('email')
-            ->add('agreeTerms', CheckboxType::class, [
-                                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
-                    ]),
-                ],
-            ])
             ->add('plainPassword', PasswordType::class, [
-                                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
@@ -40,12 +32,44 @@ class RegistrationFormType extends AbstractType
                     new Length([
                         'min' => 6,
                         'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
                 ],
             ])
-            
+            ->add('role', EntityType::class, [
+                'class' => TypeUser::class,
+                'choice_label' => 'label',
+                'multiple' => false,
+                'expanded' => false,
+                'required' => true,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please select a role',
+                    ]),
+                ],
+                'attr' => [
+                    'class' => 'fr-input',
+                    'style' => 'width: 1000 px',
+                ],
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('tu')
+                        ->orderBy('tu.label', 'ASC');
+                },
+            ])
+                     
+            ->add('agreeTerms', CheckboxType::class, [
+                'mapped' => false,
+                'constraints' => [
+                    new IsTrue([
+                        'message' => 'You should agree to our terms.',
+                    ]),
+                ],
+                'attr' => [
+                    'class' => 'fr-input',
+                    'style' => 'width: 1000 px',
+                ],
+            ])
+
         ;
     }
 
