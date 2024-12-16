@@ -1,0 +1,14 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "192.168.56.12",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "E-Inscription",
+            "username": "application",
+            "password": "APPazerty432156789",
+            "database": "E-Inscription"
+        }
+    ]
+}
