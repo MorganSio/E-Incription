@@ -29,12 +29,25 @@
                     <div class="fr-header__tools-links">
                         <ul class="fr-btns-group">
                             <li>
-                                <a class="fr-btn fr-icon-lock-line" href="[url - à modifier]">
-                                    Se connecter
-                                </a>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <a class="fr-btn" href="/admin">
+                                        Administration
+                                    </a>
+                                {% endif %}
                             </li>
                             <li>
-                                <a class="fr-btn fr-icon-account-line" href="[url - à modifier]">
+                                {% if is_granted('IS_AUTHENTICATED') %}
+                                    <a class="fr-btn fr-icon-lock-line" href="{{ path('app_logout') }}">
+                                        Se déconnecter
+                                    </a>
+                                {% else %}
+                                    <a class="fr-btn fr-icon-lock-line" href="{{ path('app_login') }}">
+                                        Se connecter
+                                    </a>
+                                {% endif %}
+                            </li>
+                            <li>
+                                <a class="fr-btn fr-icon-account-line" href="/register">
                                     S’enregistrer
                                 </a>
                             </li>
