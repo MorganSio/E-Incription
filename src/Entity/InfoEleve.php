@@ -18,9 +18,6 @@ class InfoEleve
     private ?\DateTimeInterface $date_de_naissance = null;
 
     #[ORM\Column(length: 50, nullable: true)]
-    private ?string $classe = null;
-
-    #[ORM\Column(length: 50, nullable: true)]
     private ?string $nationalite = null;
 
     #[ORM\Column(length: 50, nullable: true)]
@@ -114,6 +111,10 @@ class InfoEleve
     #[ORM\JoinColumn(nullable: false)]
     private ?AccedeEleve $accedeEleve = null;
 
+    #[ORM\ManyToOne(inversedBy: 'infoEleves')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Classe $classe = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -127,18 +128,6 @@ class InfoEleve
     public function setDateDeNaissance(?\DateTimeInterface $date_de_naissance): static
     {
         $this->date_de_naissance = $date_de_naissance;
-
-        return $this;
-    }
-
-    public function getClasse(): ?string
-    {
-        return $this->classe;
-    }
-
-    public function setClasse(?string $classe): static
-    {
-        $this->classe = $classe;
 
         return $this;
     }
@@ -506,6 +495,18 @@ class InfoEleve
     public function setAccedeEleve(?AccedeEleve $accedeEleve): static
     {
         $this->accedeEleve = $accedeEleve;
+
+        return $this;
+    }
+
+    public function getClasse(): ?Classe
+    {
+        return $this->classe;
+    }
+
+    public function setClasse(?Classe $classe): static
+    {
+        $this->classe = $classe;
 
         return $this;
     }
