@@ -8,39 +8,119 @@
     {% endfor %}
 
     <main role="main" id="content">
-        <div class="fr-container fr-mt-8v fr-mt-md-14v fr-mb-2v fr-mb-md-8v">
-            <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--center">
-                <div class="fr-col-12 fr-col-md-10 fr-col-lg-8">
-                    <h1 class="fr-h2">Adhésion à la MDL</h1>
-
-                    {# Bouttons de test #}
-                    <button onclick="suivant(1)">Étape 1</button>
-                    <button onclick="suivant(2)">Étape 2</button>
-                    <button onclick="suivant(3)">Étape 3</button>
-                    <button onclick="suivant(4)">Étape 4</button>
-
+        <form method="post" action="{{ path('formulaire_mdl') }}">
+        <!-- Section 1 -->
+        <article id="mdlFirst">
+            <div class="fr-container fr-container--fluid fr-mb-md-14v">
+                <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--center">
+                    <div class="fr-col-12 fr-col-md-10 fr-col-lg-8">
+                        <div class="fr-container fr-background-alt--grey fr-px-md-0 fr-pt-10v fr-pt-md-14v fr-pb-6v fr-pb-md-10v">
+                            <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--center">
+                                <div class="fr-col-12 fr-col-md-10 fr-col-lg-9">
+                                    <h1 class="fr-h2">Adhésion à la MDL</h1>
+                                    <form id="mdlFirstForm">
+                                        <fieldset class="fr-fieldset" id="radio-rich" aria-labelledby="radio-rich-legend radio-rich-messages">
+                                            <legend class="fr-fieldset__legend fr-text--regular" id="radio-rich-legend">
+                                                Voulez-vous adhérer à la MDL ?
+                                            </legend>
+                                            <div class="fr-fieldset__element">
+                                                <div class="fr-radio-group fr-radio-rich">
+                                                    <input value="oui" type="radio" id="acceptYes" name="accepter" required>
+                                                    <label class="fr-label" for="acceptYes">
+                                                        Oui, j'accepte
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="fr-fieldset__element">
+                                                <div class="fr-radio-group fr-radio-rich">
+                                                    <input value="non" type="radio" id="acceptNo" name="accepter" required>
+                                                    <label class="fr-label" for="acceptNo">
+                                                        Non, je refuse
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="fr-form-group">
+                                                <button type="button" class="fr-btn" id="validateFirst">Valider</button>
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-<fieldset class="fr-fieldset" aria-label="Demande de nom et prénom" aria-describedby="name-1-fieldset-messages">
-    <legend class="fr-fieldset__legend fr-text--regular">Informations personnelles</legend>
-    <div class="fr-fieldset__element">
-        <div class="fr-input-group">
-            <label class="fr-label" for="input-family-name-1">
-                Nom
-            </label>
-            <input class="fr-input" spellcheck="false" autocomplete="family-name" name="family-name" id="input-family-name-1" type="text" required>
-        </div>
-    </div>
-    <div class="fr-fieldset__element">
-        <div class="fr-input-group">
-            <label class="fr-label" for="input-firstname-1">
-                Prénom
-            </label>
-            <input class="fr-input" spellcheck="false" autocomplete="given-name" name="given-name" id="input-firstname-1" type="text" required>
-        </div>
-    </div>
-    <div class="fr-messages-group" aria-live="assertive" id="name-1-fieldset-messages">
-    </div>
-</fieldset>        
-{{% endblock %}}
+        </article>
+
+        <!-- Section 2 -->
+        <article id="mdlSecond">
+            <div class="fr-container fr-container--fluid fr-mb-md-14v">
+                <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--center">
+                    <div class="fr-col-12 fr-col-md-10 fr-col-lg-8">
+                        <div class="fr-container fr-background-alt--grey fr-px-md-0 fr-pt-10v fr-pt-md-14v fr-pb-6v fr-pb-md-10v">
+                            <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--center">
+                                <div class="fr-col-12 fr-col-md-10 fr-col-lg-9">
+                                    <h1 class="fr-h2">Adhésion à la MDL</h1>
+                                    <form id="mdlSecondForm" method="post">
+                                        <!-- Paiement -->
+                                        <fieldset class="fr-fieldset" id="radio-rich-payment" aria-labelledby="radio-rich-payment-legend radio-rich-payment-messages">
+                                            <legend class="fr-fieldset__legend--regular fr-fieldset__legend" id="radio-rich-payment-legend">
+                                                Mode de paiement
+                                            </legend>
+                                            <p>10€ à l'ordre de la MDL, paiement de préférence par chèque.</p>
+                                            <div class="fr-fieldset__element">
+                                                <div class="fr-radio-group fr-radio-rich">
+                                                    <input value="cheque" type="radio" id="radio-rich-payment-1" name="payment_method" required>
+                                                    <label class="fr-label" for="radio-rich-payment-1">
+                                                        Chèque
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="fr-fieldset__element">
+                                                <div class="fr-radio-group fr-radio-rich">
+                                                    <input value="cash" type="radio" id="radio-rich-payment-2" name="payment_method" required>
+                                                    <label class="fr-label" for="radio-rich-payment-2">
+                                                        Espèces
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+
+                                        <!-- Droit à l'image -->
+                                        <fieldset class="fr-fieldset" id="radio-rich-image" aria-labelledby="radio-rich-image-legend radio-rich-image-messages">
+                                            <legend class="fr-fieldset__legend--regular fr-fieldset__legend" id="radio-rich-image-legend">
+                                                Autorisation droit à l'image
+                                            </legend>
+                                            <div class="fr-fieldset__element">
+                                                <div class="fr-radio-group fr-radio-rich">
+                                                    <input value="authorize" type="radio" id="radio-rich-image-1" name="image_rights" required>
+                                                    <label class="fr-label" for="radio-rich-image-1">
+                                                        Autorise
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="fr-fieldset__element">
+                                                <div class="fr-radio-group fr-radio-rich">
+                                                    <input value="do_not_authorize" type="radio" id="radio-rich-image-2" name="image_rights" required>
+                                                    <label class="fr-label" for="radio-rich-image-2">
+                                                        N'autorise pas
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+
+                                        <!-- Bouton Valider -->
+                                        <div class="fr-form-group">
+                                            <button type="button" class="fr-btn" id="validateSecond">Valider</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+        </form>
+    </main>
+{% endblock %}

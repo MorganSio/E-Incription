@@ -9,5 +9,19 @@
 }
 #RegistrationFourth {
     display: none; /* Masque le bloc par défaut */
-}   
+}
 
+#mdlFirst{
+    display: block;
+}
+#mdlSecond{
+    display: none;
+}
+
+#intFirst {
+    display: block;
+}
+
+#intSecond {
+    display: none;
+}

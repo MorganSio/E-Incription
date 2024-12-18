@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\TypeUser;
+
 use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
@@ -35,28 +35,7 @@ class RegistrationFormType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
-            ])
-            ->add('role', EntityType::class, [
-                'class' => TypeUser::class,
-                'choice_label' => 'label',
-                'multiple' => false,
-                'expanded' => false,
-                'required' => true,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please select a role',
-                    ]),
-                ],
-                'attr' => [
-                    'class' => 'fr-input',
-                    'style' => 'width: 1000 px',
-                ],
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('tu')
-                        ->orderBy('tu.label', 'ASC');
-                },
-            ])
-                     
+            ])                     
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
@@ -69,6 +48,8 @@ class RegistrationFormType extends AbstractType
                     'style' => 'width: 1000 px',
                 ],
             ])
+            
+
 
         ;
     }
