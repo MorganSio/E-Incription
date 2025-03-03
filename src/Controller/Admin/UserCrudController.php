@@ -25,7 +25,6 @@ class UserCrudController extends AbstractCrudController
             ArrayField::new('roles'),
             TextField::new('password')->onlyOnForms(), // Pour ne pas afficher le mot de passe en clair
             TextField::new('Nom'),
-            AssociationField::new('role'),
             AssociationField::new('accedeEleve'),
             AssociationField::new('accedeRepresentant'),
             BooleanField::new('isVerified'),
