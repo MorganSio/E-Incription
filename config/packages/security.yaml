@@ -23,7 +23,7 @@ security:
                 # target: app_any_route
 
     access_control:
-        - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/parent, roles: ROLE_PARENT }
         - { path: ^/eleve, roles: ROLE_ELEVE }
         # - { path: ^/profile, roles: ROLE_USER }
