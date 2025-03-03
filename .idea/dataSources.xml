@@ -8,5 +8,15 @@
       <jdbc-url>jdbc:postgresql://192.168.56.12:5432/E-Inscription</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="FulBank@192.168.56.12" uuid="2837bd4a-7310-4e35-8ba3-e2b8499c6122">
+      <driver-ref>mariadb</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mariadb://192.168.56.12:3306/FulBank</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="database.introspection.mysql.dbe5060" value="true" />
+      </jdbc-additional-properties>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
