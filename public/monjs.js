@@ -27,11 +27,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Ajoute la logique de traitement des valeurs ici (ex : envoyer à un serveur, validation, etc.)
     }
+<<<<<<< HEAD
 });
 
 document.addEventListener('DOMContentLoaded', function () {
     // Gestion du bouton de validation de la première section
     const validateFirstBtn = document.getElementById('validateFirstMdl');
+=======
+
+    // Gestion du bouton de validation de la première section
+    const validateFirstBtn = document.getElementById('validateFirst');
+>>>>>>> eInscription/hugorouff
     if (validateFirstBtn) {
         validateFirstBtn.addEventListener('click', function () {
             const acceptYes = document.getElementById('acceptYes').checked;
@@ -39,19 +45,32 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Si "Oui" est sélectionné, afficher la deuxième section
             if (acceptYes) {
+<<<<<<< HEAD
                 document.getElementById('mdlFirst').style.display = 'none';
                 document.getElementById('mdlSecond').style.display = 'block';
+=======
+                document.getElementById('intFirst').style.display = 'none';
+                document.getElementById('intSecond').style.display = 'block';
+>>>>>>> eInscription/hugorouff
             }
 
             // Si "Non" est sélectionné, afficher une alerte et rester sur intFirst
             if (acceptNo) {
+<<<<<<< HEAD
                 alert("Vous avez refusé l'inscription à l'Adhésion à la Mdl BTS.");
+=======
+                alert("Vous avez refusé l'inscription à l'Intendance BTS.");
+>>>>>>> eInscription/hugorouff
             }
         });
     }
 
     // Gestion du bouton de validation de la deuxième section
+<<<<<<< HEAD
     const validateSecondBtn = document.getElementById('validateSecondMdl');
+=======
+    const validateSecondBtn = document.getElementById('validateSecond');
+>>>>>>> eInscription/hugorouff
     if (validateSecondBtn) {
         validateSecondBtn.addEventListener('click', function () {
             const paymentMethodCheque = document.getElementById('radio-rich-payment-1').checked;
@@ -76,9 +95,13 @@ document.addEventListener('DOMContentLoaded', function () {
             // document.getElementById('mdlSecondForm').submit(); // Décommentez pour envoyer le formulaire
         });
     }
+<<<<<<< HEAD
 });
 
 document.addEventListener('DOMContentLoaded', function () {
+=======
+
+>>>>>>> eInscription/hugorouff
     const validFirstBtn = document.getElementById('validFirst');
     
     // Vérifier si l'élément existe
