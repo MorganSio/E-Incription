@@ -27,9 +27,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Ajoute la logique de traitement des valeurs ici (ex : envoyer à un serveur, validation, etc.)
     }
+});
 
+document.addEventListener('DOMContentLoaded', function () {
     // Gestion du bouton de validation de la première section
-    const validateFirstBtn = document.getElementById('validateFirst');
+    const validateFirstBtn = document.getElementById('validateFirstMdl');
     if (validateFirstBtn) {
         validateFirstBtn.addEventListener('click', function () {
             const acceptYes = document.getElementById('acceptYes').checked;
@@ -37,19 +39,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Si "Oui" est sélectionné, afficher la deuxième section
             if (acceptYes) {
-                document.getElementById('intFirst').style.display = 'none';
-                document.getElementById('intSecond').style.display = 'block';
+                document.getElementById('mdlFirst').style.display = 'none';
+                document.getElementById('mdlSecond').style.display = 'block';
             }
 
             // Si "Non" est sélectionné, afficher une alerte et rester sur intFirst
             if (acceptNo) {
-                alert("Vous avez refusé l'inscription à l'Intendance BTS.");
+                alert("Vous avez refusé l'inscription à l'Adhésion à la Mdl BTS.");
             }
         });
     }
 
     // Gestion du bouton de validation de la deuxième section
-    const validateSecondBtn = document.getElementById('validateSecond');
+    const validateSecondBtn = document.getElementById('validateSecondMdl');
     if (validateSecondBtn) {
         validateSecondBtn.addEventListener('click', function () {
             const paymentMethodCheque = document.getElementById('radio-rich-payment-1').checked;
@@ -74,7 +76,9 @@ document.addEventListener('DOMContentLoaded', function () {
             // document.getElementById('mdlSecondForm').submit(); // Décommentez pour envoyer le formulaire
         });
     }
+});
 
+document.addEventListener('DOMContentLoaded', function () {
     const validFirstBtn = document.getElementById('validFirst');
     
     // Vérifier si l'élément existe
