@@ -1,0 +1,27 @@
+#RegistrationFirst {
+    display: block; /* Affiche le bloc par défaut */
+}
+#RegistrationSecond {
+    display: none; /* Masque le bloc par défaut */
+}
+#RegistrationThird {
+    display: none; /* Masque le bloc par défaut */
+}
+#RegistrationFourth {
+    display: none; /* Masque le bloc par défaut */
+}
+
+#mdlFirst{
+    display: block;
+}
+#mdlSecond{
+    display: none;
+}
+
+#intFirst {
+    display: block;
+}
+
+#intSecond {
+    display: none;
+}

@@ -48,6 +48,8 @@ class RegistrationFormType extends AbstractType
                     'style' => 'width: 1000 px',
                 ],
             ])
+            
+
 
         ;
     }
