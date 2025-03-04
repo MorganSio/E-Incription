@@ -38,17 +38,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $Nom = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?TypeUser $role = null;
-
     #[ORM\ManyToOne(inversedBy: 'utilisateur')]
     #[ORM\JoinColumn(nullable: true)]
     private ?AccedeEleve $accedeEleve = null;
-
-    #[ORM\ManyToOne(inversedBy: 'utilisateur')]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?AccedeRepresentant $accedeRepresentant = null;
 
     #[ORM\Column]
     public bool $isVerified = false;
@@ -140,18 +132,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getRole(): ?TypeUser
-    {
-        return $this->role;
-    }
-
-    public function setRole(?TypeUser $role): static
-    {
-        $this->role = $role;
-
-        return $this;
-    }
-
     public function getAccedeEleve(): ?AccedeEleve
     {
         return $this->accedeEleve;
@@ -160,18 +140,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAccedeEleve(?AccedeEleve $accedeEleve): static
     {
         $this->accedeEleve = $accedeEleve;
-
-        return $this;
-    }
-
-    public function getAccedeRepresentant(): ?AccedeRepresentant
-    {
-        return $this->accedeRepresentant;
-    }
-
-    public function setAccedeRepresentant(?AccedeRepresentant $accedeRepresentant): static
-    {
-        $this->accedeRepresentant = $accedeRepresentant;
 
         return $this;
     }

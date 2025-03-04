@@ -39,10 +39,6 @@ class RepresentantLegal
     #[ORM\OneToMany(targetEntity: InfoEleve::class, mappedBy: 'responsable_un')]
     private Collection $infoEleves;
 
-    #[ORM\ManyToOne(inversedBy: 'representant')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?AccedeRepresentant $accedeRepresentant = null;
-
     public function __construct()
     {
         $this->infoEleves = new ArrayCollection();
@@ -162,15 +158,4 @@ class RepresentantLegal
         return $this;
     }
 
-    public function getAccedeRepresentant(): ?AccedeRepresentant
-    {
-        return $this->accedeRepresentant;
-    }
-
-    public function setAccedeRepresentant(?AccedeRepresentant $accedeRepresentant): static
-    {
-        $this->accedeRepresentant = $accedeRepresentant;
-
-        return $this;
-    }
 }

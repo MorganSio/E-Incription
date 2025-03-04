@@ -2,9 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\InfoEleveRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\InfoEleveRepository;
 
 #[ORM\Entity(repositoryClass: InfoEleveRepository::class)]
 class InfoEleve
@@ -287,7 +287,7 @@ class InfoEleve
         return $this;
     }
 
-    public function setId(Humain $id): static
+    public function setId(User $id): static
     {
         $this->id = $id;
 
