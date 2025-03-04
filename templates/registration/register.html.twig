@@ -6,6 +6,8 @@
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
+    {{ form_errors(registrationForm) }}
+
 
     <main role="main" id="content">
         <div class="fr-container fr-mt-8v fr-mt-md-14v fr-mb-2v fr-mb-md-8v">
@@ -164,7 +166,8 @@
                                                                 {{ form_row(registrationForm.nom, {
                                                                     id: 'family-name-9537',
                                                                     label_attr: {'class': 'fr-label'},
-                                                                    attr: {'class': 'fr-input', 'autocapitalize': 'off', 'autocorrect': 'off', 'required': 'required'}
+                                                                    attr: {'class': 'fr-input', 'autocapitalize': 'off', 'autocorrect': 'off', 'required': 'required'},
+                                                                    /placeholder: {'Hugo'}
                                                                 }) }}
                                                                 <div class="fr-messages-group" id="family-name-9537-messages" aria-live="polite">
                                                                 </div>
@@ -263,26 +266,49 @@
                                         </fieldset>
                                     </form>
                                 </div>
-                                {{ form_end(registrationForm) }}
                                     <div class="fr-fieldset__element">
                                         <ul class="fr-mt-2v fr-btns-group fr-btns-group--right fr-btns-group--inline-reverse fr-btns-group--inline-sm fr-btns-group fr-btns-group--right fr-btns-group--inline-reverse fr-btns-group--inline-sm">
                                             <li>
-                                                <button class="fr-btn" id="button-9361" type="submit" onclick="suivant(2)">
+                                                <button class="fr-btn" id="button-9361" type="submit" onclick="suivant(5)">
                                                    Valider
                                                 </button>
+                                                        <button type="submit" class="btn">Register</button>
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="fr-messages-group" id="login-9355-fieldset-messages" aria-live="polite">
+                                    <div class="fr-messages-group" id="login-9355-fieldset-messages" aria-live="polite"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
+        </main>
     </article>
+    {{ form_row(registrationForm.agreeTerms) }}
+    {{ form_end(registrationForm) }}
+
+    <script>
+        function suivant(nb) {
+        if (nb == 1) {
+            document.getElementById('RegistrationFirst').style.display = 'block';
+            document.getElementById('RegistrationFourth').style.display = 'none';
+        }
+        if (nb == 2) {
+            document.getElementById('RegistrationFirst').style.display = 'none';
+            document.getElementById('RegistrationSecond').style.display = 'block';
+        } else if (nb == 3) {
+            document.getElementById('RegistrationSecond').style.display = 'none';
+            document.getElementById('RegistrationThird').style.display = 'block';
+        } else if (nb == 4) {
+            document.getElementById('RegistrationThird').style.display = 'none';
+            document.getElementById('RegistrationFourth').style.display = 'block';
+        } else if (nb == 5) {
+        document.getElementById('RegistrationFirst').style.display = 'none';
+        document.getElementById('RegistrationSecond').style.display = 'block';
+        }
+    }
+    </script>
 
 {#}    <article id="RegistrationSecond">
     <main role="main" id="content">
