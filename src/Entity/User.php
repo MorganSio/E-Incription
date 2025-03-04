@@ -2,17 +2,16 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserRepository;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
-
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -38,9 +37,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $Nom = null;
 
-    #[ORM\ManyToOne(inversedBy: 'utilisateur')]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?AccedeEleve $accedeEleve = null;
+    #[ORM\Column]
+    private ?string $prenom = null;
 
     #[ORM\Column]
     public bool $isVerified = false;
@@ -132,17 +130,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getAccedeEleve(): ?AccedeEleve
+    public function getPrenom(): ?string
     {
-        return $this->accedeEleve;
+        return $this->prenom;
     }
 
-    public function setAccedeEleve(?AccedeEleve $accedeEleve): static
+    public function setPrenom(?string $prenom): static
     {
-        $this->accedeEleve = $accedeEleve;
+        $this->prenom = $prenom;
 
         return $this;
     }
+
 
     public function isVerified(): bool
     {

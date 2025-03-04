@@ -3,18 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\RepresentantLegalRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RepresentantLegalRepository::class)]
-class RepresentantLegal
+class RepresentantLegal extends Humain
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
     #[ORM\Column(length: 15, nullable: true)]
     private ?string $telephone_fixe = null;
 
@@ -33,21 +26,9 @@ class RepresentantLegal
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $RIB = null;
 
-    /**
-     * @var Collection<int, InfoEleve>
-     */
-    #[ORM\OneToMany(targetEntity: InfoEleve::class, mappedBy: 'responsable_un')]
-    private Collection $infoEleves;
+    #[ORM\OneToOne]
+    private InfoEleve $infoEleve;
 
-    public function __construct()
-    {
-        $this->infoEleves = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getTelephoneFixe(): ?string
     {
@@ -81,13 +62,6 @@ class RepresentantLegal
     public function setPoste(?string $poste): static
     {
         $this->poste = $poste;
-
-        return $this;
-    }
-
-    public function setId(Humain $id): static
-    {
-        $this->id = $id;
 
         return $this;
     }
@@ -128,34 +102,16 @@ class RepresentantLegal
         return $this;
     }
 
-    /**
-     * @return Collection<int, InfoEleve>
-     */
-    public function getInfoEleves(): Collection
+    public function getInfoEleves(): InfoEleve
     {
-        return $this->infoEleves;
+        return $this->infoEleve;
     }
 
-    public function addInfoElefe(InfoEleve $infoElefe): static
+    public function removeInfoElefe(InfoEleve $infoEleve): static
     {
-        if (!$this->infoEleves->contains($infoElefe)) {
-            $this->infoEleves->add($infoElefe);
-            $infoElefe->setResponsableUn($this);
-        }
-
+        $this->infoEleve = $infoEleve;
         return $this;
-    }
 
-    public function removeInfoElefe(InfoEleve $infoElefe): static
-    {
-        if ($this->infoEleves->removeElement($infoElefe)) {
-            // set the owning side to null (unless already changed)
-            if ($infoElefe->getResponsableUn() === $this) {
-                $infoElefe->setResponsableUn(null);
-            }
-        }
-
-        return $this;
     }
 
 }
