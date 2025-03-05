@@ -35,9 +35,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 50, nullable: true)]
-    private ?string $Nom = null;
+    private ?string $nom = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?string $prenom = null;
 
     #[ORM\Column]
@@ -49,7 +49,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     public function getEmail(): ?string
-    {
+    {   
         return $this->email;
     }
 
@@ -120,12 +120,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getNom(): ?string
     {
-        return $this->Nom;
+        return $this->nom;
     }
 
-    public function setNom(?string $Nom): static
+    public function setNom(?string $nom): static
     {
-        $this->Nom = $Nom;
+        $this->nom = $nom;
 
         return $this;
     }

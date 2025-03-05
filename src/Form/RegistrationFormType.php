@@ -22,6 +22,7 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('nom')
             ->add('email')
+            ->add('prenom')
             ->add('plainPassword', PasswordType::class, [
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
@@ -48,9 +49,6 @@ class RegistrationFormType extends AbstractType
                     'style' => 'width: 1000 px',
                 ],
             ])
-            
-
-
         ;
     }
 
