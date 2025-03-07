@@ -6,13 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class FicheUrgenceController extends AbstractController
+class CookiesController extends AbstractController
 {
-    #[Route('fiche-urgence', name: 'fiche-urgence')]
+    #[Route('/cookies', name: 'cookies')]
     public function index(): Response
     {
-        return $this->render('/forms/urgence.html.twig', [
-            'controller_name' => 'FicheUrgenceController',
+        return $this->render('autre/cookies.html.twig', [
+            'controller_name' => 'CookiesController',
         ]);
     }
 }
