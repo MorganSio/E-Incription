@@ -10,10 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 class FormulaireMDLController extends AbstractController
 {
-    #[Route('/fiche-mdl', name: 'fiche-mdl')]
+    #[Route('fiche-mdl', name: 'fiche-mdl')]
     public function index(): Response
     {
-        return $this->render('index/formulaire_mdl.html.twig', [
+        return $this->render('/forms/mdl.html.twig', [
             'controller_name' => 'FormulaireMDLController',
         ]);
     }

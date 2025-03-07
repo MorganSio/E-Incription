@@ -8,10 +8,10 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class FicheIntendanceController extends AbstractController
 {
-    #[Route('/fiche-intendance', name: 'fiche-intendance')]
+    #[Route('fiche-intendance', name: 'fiche-intendance')]
     public function index(): Response
     {
-        return $this->render('fiche_intendance/index.html.twig', [
+        return $this->render('/forms/intendance.html.twig', [
             'controller_name' => 'FicheIntendanceController',
         ]);
     }
