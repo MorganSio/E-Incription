@@ -1,5 +1,4 @@
-<?php
-
+<?php 
 namespace App\Entity;
 
 use App\Repository\UserRepository;
@@ -37,10 +36,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $Nom = null;
-
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?TypeUser $role = null;
 
     #[ORM\ManyToOne(inversedBy: 'utilisateur')]
     #[ORM\JoinColumn(nullable: true)]
@@ -136,18 +131,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setNom(?string $Nom): static
     {
         $this->Nom = $Nom;
-
-        return $this;
-    }
-
-    public function getRole(): ?TypeUser
-    {
-        return $this->role;
-    }
-
-    public function setRole(?TypeUser $role): static
-    {
-        $this->role = $role;
 
         return $this;
     }
