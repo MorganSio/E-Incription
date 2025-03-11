@@ -35,7 +35,7 @@
                                                     <div class="fr-radio-group fr-radio-rich">
                                                         <input value="non" type="radio" id="acceptNo" name="accepter" required>
                                                         <label class="fr-label" for="acceptNo">
-                                                            Non, je refuse
+                                                            Non, je veux être externe
                                                         </label>
                                                     </div>
                                                 </div>
@@ -98,15 +98,6 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                            <div class="fr-fieldset__element">
-                                                <div class="fr-radio-group fr-radio-rich">
-                                                    <input value="externe" type="radio" id="regime-externe" name="regime" required>
-                                                    <label class="fr-label" for="regime-externe">
-                                                        Externe
-                                                        <span class="fr-hint-text">Pas de repas à la cantine</span>
-                                                    </label>
-                                                </div>
-                                            </div>
                                         </fieldset>
 
                                         <!-- Mode de paiement -->
@@ -142,8 +133,17 @@
                                                     </label>
                                                 </div>
                                             </div>
+                                            <div class="fr-fieldset__element">
+                                                <div class="fr-radio-group fr-radio-rich">
+                                                    <input value="telepaiement" type="radio" id="payment-cash" name="mode_paiement" required>
+                                                    <label class="fr-label" for="payment-cash">
+                                                        Télépaiement
+                                                        <span class="fr-hint-text">Paiement par télépaiment</span>
+                                                    </label>
+                                                </div>
+                                            </div>
                                         </fieldset>
-
+                                        <h2><strong>RIB OBLIGATOIRE (Si besoin d’effectuer un remboursement tout au long de la scolarité) </strong></h2>
                                         <div class="fr-form-group">
                                             <button type="submit" class="fr-btn">Soumettre</button>
                                         </div>
