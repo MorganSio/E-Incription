@@ -98,8 +98,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 alert("Vous avez refusé l'inscription à l'Intendance BTS.");
             }
         });
-    } else {
-        console.error("Le bouton avec l'ID 'validFirst' n'a pas été trouvé.");
     }
 
     const validSecondBtn = document.getElementById('validSecond');
@@ -132,4 +130,61 @@ document.addEventListener('DOMContentLoaded', function () {
             // document.getElementById('mdlSecondForm').submit(); // Décommentez pour envoyer le formulaire
         });
     }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("JavaScript chargé, vérification des formulaires...");
+
+    // Vérifie que les formulaires sont bien détectés
+    document.querySelectorAll("form[id^='identity']").forEach(form => {
+        console.log("Formulaire détecté :", form.id);
+    });
+
+    // Vérifie que les boutons de validation sont bien détectés
+    document.querySelectorAll("[id^='validateRepresentantLegaux']").forEach(button => {
+        console.log("Bouton détecté :", button.id);
+
+        button.addEventListener("click", function () {
+            console.log("Bouton cliqué :", button.id);
+
+            let index = button.dataset.index;
+            let form = document.getElementById("identity" + index);
+
+            if (!form) {
+                console.error("Formulaire identity" + index + " non trouvé !");
+                return;
+            }
+
+            console.log("Formulaire récupéré :", form.id);
+
+            let formData = new FormData(form);
+            let data = {};
+
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            console.log("Données du formulaire envoyées :", data);
+
+            fetch("/representant/legal/save", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    alert("Identité " + index + " enregistrée !");
+                } else {
+                    alert("Erreur : " + result.message);
+                }
+            })
+            .catch(error => {
+                console.error("Erreur d'envoi des données :", error);
+                alert("Erreur de connexion avec le serveur.");
+            });
+        });
+    });
 });
