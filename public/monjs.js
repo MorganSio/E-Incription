@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', function () {
         } else if (nb == 4) {
             document.getElementById('RegistrationThird').style.display = 'none';
             document.getElementById('RegistrationFourth').style.display = 'block';
+        } else if (nb == 5) {
+        document.getElementById('RegistrationFirst').style.display = 'none';
+        document.getElementById('RegistrationFourth').style.display = 'block';
         }
     }
 

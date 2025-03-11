@@ -6,13 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class FicheIntendanceController extends AbstractController
+class CookiesController extends AbstractController
 {
-    #[Route('fiche-intendance', name: 'fiche-intendance')]
+    #[Route('/cookies', name: 'cookies')]
     public function index(): Response
     {
-        return $this->render('/forms/intendance.html.twig', [
-            'controller_name' => 'FicheIntendanceController',
+        return $this->render('autre/cookies.html.twig', [
+            'controller_name' => 'CookiesController',
         ]);
     }
 }

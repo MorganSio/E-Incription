@@ -6,13 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class FicheIntendanceController extends AbstractController
+class MentionsLegalesController extends AbstractController
 {
-    #[Route('fiche-intendance', name: 'fiche-intendance')]
+    #[Route('mentions-legales', name: 'mentions_legales')]
     public function index(): Response
     {
-        return $this->render('/forms/intendance.html.twig', [
-            'controller_name' => 'FicheIntendanceController',
+        return $this->render('/autre/mentions.html.twig', [
+            'controller_name' => 'MentionsLegalesController',
         ]);
     }
 }
