@@ -128,8 +128,8 @@
                 <div class="fr-card__body">
                     <div class="fr-card__content">
                         <div>
-                            <h3 class="fr-card__title">Signature électronique</h3>
-                            <p class="fr-card__desc">Veuillez signer ci-dessous :</p>
+                            <h3 class="fr-card__title">Signature électronique du représentant légal</h3>
+                            <p class="fr-card__desc">Veuillez signer ci-dessous ( élève ou parents considérer comme responsable légal ), <strong>SIGNATURE À FAIRE SUR PC</strong> :</p>
                         </div>
                         <div>
                             <div class="signature-container">
@@ -148,7 +148,7 @@
         </form>
     </main>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function () {
         const allowedFormats = ["image/jpeg", "image/png", "application/pdf"];
         function validateFile(inputId, errorId) {
             const input = document.getElementById(inputId);
@@ -156,18 +156,15 @@
             input.addEventListener("change", function () {
                 let files = input.files;
                 let isValid = true;
-
+                const allowedFormats = ["image/jpeg", "image/png", "application/pdf"];
+        
                 for (let i = 0; i < files.length; i++) {
                     if (!allowedFormats.includes(files[i].type)) {
                         isValid = false;
                         break;
                     }
                 }
-                if (isValid) {
-                    errorDiv.style.display = "none";
-                } else {
-                    errorDiv.style.display = "block";
-                }
+                errorDiv.style.display = isValid ? "none" : "block";
             });
         }
         validateFile("photo-upload", "photo-upload-error");
@@ -183,10 +180,10 @@
         const clearButton = document.getElementById("clear-signature");
         const saveButton = document.getElementById("save-signature");
         const signatureInput = document.getElementById("signature-input");
+
         function resizeCanvas() {
-            const container = canvas.parentElement;
+            const rect = canvas.getBoundingClientRect();
             const devicePixelRatio = window.devicePixelRatio || 1;
-            const rect = container.getBoundingClientRect();
             canvas.width = rect.width * devicePixelRatio;
             canvas.height = rect.height * devicePixelRatio;
             canvas.style.width = `${rect.width}px`;
@@ -197,14 +194,19 @@
             ctx.lineJoin = "round";
             ctx.strokeStyle = "#000";
         }
+
         function clearCanvas() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             signatureInput.value = "";
         }
+
         let drawing = false;
-        let lastX, lastY;
+        let lastX = 0, lastY = 0;
+
         function getPosition(event) {
             const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
             let clientX, clientY;
             if (event.touches) {
                 clientX = event.touches[0].clientX;
@@ -214,47 +216,42 @@
                 clientY = event.clientY;
             }
             return {
-                x: clientX - rect.left,
-                y: clientY - rect.top
+                x: (clientX - rect.left) * scaleX,
+                y: (clientY - rect.top) * scaleY
             };
         }
-        function startDrawing(e) {
-            e.preventDefault();
+
+        function startDrawing(event) {
+            event.preventDefault();
             drawing = true;
-            const pos = getPosition(e);
+            const pos = getPosition(event);
             lastX = pos.x;
             lastY = pos.y;
             ctx.beginPath();
             ctx.moveTo(lastX, lastY);
         }
-        function draw(e) {
+
+        function draw(event) {
             if (!drawing) return;
-            e.preventDefault();
-            const pos = getPosition(e);
+            event.preventDefault();
+            const pos = getPosition(event);
             ctx.lineTo(pos.x, pos.y);
             ctx.stroke();
             lastX = pos.x;
             lastY = pos.y;
         }
+
         function stopDrawing() {
-            if (drawing) {
-                drawing = false;
-                ctx.closePath();
-                signatureInput.value = canvas.toDataURL("image/png");
-            }
+            drawing = false;
+            ctx.closePath();
+            signatureInput.value = canvas.toDataURL("image/png");
         }
-        canvas.addEventListener("mousedown", startDrawing);
-        canvas.addEventListener("mousemove", draw);
-        canvas.addEventListener("touchstart", startDrawing);
-        canvas.addEventListener("touchmove", draw);
-        canvas.addEventListener("mouseup", stopDrawing);
-        canvas.addEventListener("touchend", stopDrawing);
-        canvas.addEventListener("mouseleave", stopDrawing);
-        clearButton.addEventListener("click", clearCanvas);
-        saveButton.addEventListener("click", function() {
+
+        function saveSignature() {
             const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
             const data = imageData.data;
             let isEmpty = true;
+
             for (let i = 0; i < data.length; i += 4) {
                 if (data[i + 3] > 0) {
                     isEmpty = false;
@@ -266,11 +263,24 @@
                 return;
             }
             signatureInput.value = canvas.toDataURL("image/png");
-            alert("Signature enregistrée");
-        });
+            alert("Signature enregistrée !");
+        }
+
+        canvas.addEventListener("mousedown", startDrawing);
+        canvas.addEventListener("mousemove", draw);
+        canvas.addEventListener("mouseup", stopDrawing);
+        canvas.addEventListener("mouseleave", stopDrawing);
+        canvas.addEventListener("touchstart", startDrawing, { passive: false });
+        canvas.addEventListener("touchmove", draw, { passive: false });
+        canvas.addEventListener("touchend", stopDrawing);
+        canvas.addEventListener("touchcancel", stopDrawing);
+
+        clearButton.addEventListener("click", clearCanvas);
+        saveButton.addEventListener("click", saveSignature);
+
         window.addEventListener("resize", resizeCanvas);
         resizeCanvas();
         clearCanvas();
-        });
-    </script>
+    });
+</script>
 {% endblock %}

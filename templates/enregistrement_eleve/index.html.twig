@@ -65,34 +65,32 @@
                                                             <label class="fr-label" for="student-birth-city">Commune de naissance</label>
                                                             <input class="fr-input" type="text" id="student-birth-city" name="student-birth-city" required>
                                                         </div>
-
-                                                        <div class="fr-fieldset__element">
-                                                            <label class="fr-label" for="student-lv2">Responsable Légal</label>
-                                                            <select class="fr-select" id="student-lv2" name="student-lv2">
-                                                                <option value="non">Non</option>
-                                                                <option value="oui">Oui</option>
-                                                            </select>
-                                                        </div>
-
+                                                    </fieldset>
+                                                    <fieldset class="fr-fieldset">
                                                         <!-- REPRÉSENTANT LÉGAL -->
                                                         <fieldset class="fr-fieldset">
                                                             <div class="fr-fieldset__element">
+                                                                <h3 class="fr-h5">Étudiant en représentant légal</h3>
                                                                 <p class="fr-text">Autorisez-vous la communication de votre adresse aux associations de parents d'élèves ?</p>
                                                                 <div class="fr-radio-group">
                                                                     <input type="radio" id="autorisation_oui" name="autorisation" value="oui">
                                                                     <label class="fr-label" for="autorisation_oui">Oui</label>
                                                                 </div>
+                                                                <p>
                                                                 <div class="fr-radio-group">
                                                                     <input type="radio" id="autorisation_non" name="autorisation" value="non">
                                                                     <label class="fr-label" for="autorisation_non">Non</label>
                                                                 </div>
                                                             </div>
 
-                                                            <legend class="fr-fieldset__legend"><h3 class="fr-h5">Étudiant en représentant légal</h3></legend>
-
                                                             <div class="fr-fieldset__element">
                                                                 <label class="fr-label" for="resp-name">Adresse</label>
                                                                 <input class="fr-input" type="text" id="resp-name" name="resp-name" placeholder="1 rue du lycée Fulbert" required>
+                                                            </div>
+
+                                                            <div class="fr-fieldset__element">
+                                                                <label class="fr-label" for="resp-codepostal">Code Postal</label>
+                                                                <input class="fr-input" type="text" id="resp-codepostal" name="resp-codepostal" placeholder="75001" required>
                                                             </div>
 
                                                             <div class="fr-fieldset__element">
@@ -120,7 +118,7 @@
                                                                 <label class="fr-label" for="resp-sms">Accepter les SMS</label>
                                                             </div>
                                                         </fieldset>
-                                                    </fieldset>
+                                                   </fieldset>
 
                                                     <!-- SCOLARITÉ -->
                                                     <fieldset class="fr-fieldset">
@@ -208,20 +206,20 @@
                                                                             </thead>
                                                                             <tbody>
                                                                                 <tr>
-                                                                                    <td><input class="fr-input" style="padding: 0rem 0rem;" type="text" name="annee-1" placeholder="2024/2025"></td>
-                                                                                    <td><input class="fr-input" style="padding: 0rem 0rem;" type="text" name="classe-1" placeholder="SIO 2"></td>
-                                                                                    <td><input class="fr-input" style="padding: 0rem 0rem;" type="text" name="lv1-1" placeholder="Anglais"></td>
-                                                                                    <td><input class="fr-input" style="padding: 0rem 0rem;" type="text" name="lv2-1" placeholder="Espagnol"></td>
-                                                                                    <td><input class="fr-input" style="padding: 0rem 0rem;" type="text" name="option-1"></td>
-                                                                                    <td><input class="fr-input" style="padding: 0rem 0rem;" type="text" name="etablissement-1" placeholder="lycée Fulbert"></td>
+                                                                                    <td data-label="Année Scolaire :"><p><input class="fr-input" style="padding: 0rem 0rem;" type="text" name="annee-1" placeholder="2024/2025"></td>
+                                                                                    <td data-label="Classe :"><p><input class="fr-input" style="padding: 0rem 0rem;" type="text" name="classe-1" placeholder="SIO 2"></td>
+                                                                                    <td data-label="Langue LV1 :"><p><input class="fr-input" style="padding: 0rem 0rem;" type="text" name="lv1-1" placeholder="Anglais"></td>
+                                                                                    <td data-label="Langue LV2 :"><p><input class="fr-input" style="padding: 0rem 0rem;" type="text" name="lv2-1" placeholder="Espagnol"></td>
+                                                                                    <td data-label="Option :"><p><input class="fr-input" style="padding: 0rem 0rem;" type="text" name="option-1"></td>
+                                                                                    <td data-label="Établissement :"><p><input class="fr-input" style="padding: 0rem 0rem;" type="text" name="etablissement-1" placeholder="lycée Fulbert"></td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td><input class="fr-input" style="padding: 0rem 0rem;" type="text" name="annee-2" placeholder="2024/2025"></td>
-                                                                                    <td><input class="fr-input" style="padding: 0rem 0rem;" type="text" name="classe-2" placeholder="SIO 2"></td>
-                                                                                    <td><input class="fr-input" style="padding: 0rem 0rem;" type="text" name="lv1-2" placeholder="Anglais"></td>
-                                                                                    <td><input class="fr-input" style="padding: 0rem 0rem;" type="text" name="lv2-2" placeholder="Espagnol"></td>
-                                                                                    <td><input class="fr-input" style="padding: 0rem 0rem;" type="text" name="option-2"></td>
-                                                                                    <td><input class="fr-input" style="padding: 0rem 0rem;" type="text" name="etablissement-2" placeholder="lycée Fulbert"></td>
+                                                                                    <td data-label="Année Scolaire :"><p><input class="fr-input" style="padding: 0rem 0rem;" type="text" name="annee-2" placeholder="2024/2025"></td>
+                                                                                    <td data-label="Classe :"><p><input class="fr-input" style="padding: 0rem 0rem;" type="text" name="classe-2" placeholder="SIO 2"></td>
+                                                                                    <td data-label="Langue LV1 :"><p><input class="fr-input" style="padding: 0rem 0rem;" type="text" name="lv1-2" placeholder="Anglais"></td>
+                                                                                    <td data-label="Langue LV2 :"><p><input class="fr-input" style="padding: 0rem 0rem;" type="text" name="lv2-2" placeholder="Espagnol"></td>
+                                                                                    <td data-label="Option :"><p><input class="fr-input" style="padding: 0rem 0rem;" type="text" name="option-2"></td>
+                                                                                    <td data-label="Établissement :"><p><input class="fr-input" style="padding: 0rem 0rem;" type="text" name="etablissement-2" placeholder="lycée Fulbert"></td>
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>
@@ -230,10 +228,11 @@
                                                             </div>
                                                         </div>
 
-                                                        <!-- Dernier diplôme obtenu -->
-                                                        <p class="fr-text--bold fr-mt-4">Dernier diplôme obtenu :</p>
-                                                        <input class="fr-input" type="text" name="etablissement-2022">
-
+                                                        <div class="fr-fieldset__element">
+                                                            <!-- Dernier diplôme obtenu -->
+                                                            <p class="fr-text--bold fr-mt-4">Dernier diplôme obtenu :</p>
+                                                            <input class="fr-input" type="text" name="etablissement-2022">
+                                                        </div>
                                                     </fieldset>
 
                                                     <div class="fr-fieldset__element">
@@ -259,4 +258,103 @@
         </article>
         </form>
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // REPRESENTANT LEGAL
+        const radioOui = document.getElementById('autorisation_oui');
+        if (radioOui) {
+            const parentFieldset = radioOui.closest('fieldset.fr-fieldset');
+            if (parentFieldset) {
+            parentFieldset.id = 'representant-legal-fieldset';
+            }
+        }
+        
+        const autorisationOui = document.getElementById('autorisation_oui');
+        const autorisationNon = document.getElementById('autorisation_non');
+        
+        const representantLegalFieldset = document.getElementById('representant-legal-fieldset');
+        
+        if (representantLegalFieldset) {
+            const representantLegalLegend = representantLegalFieldset.querySelector('legend.fr-fieldset__legend');
+            const representantLegalFields = Array.from(representantLegalFieldset.querySelectorAll('.fr-fieldset__element, .fr-checkbox-group')).filter(el => {
+            return !el.querySelector('.fr-radio-group');
+            });
+            
+            function toggleFields() {
+            if (autorisationOui.checked) {
+                if (representantLegalLegend) {
+                representantLegalLegend.style.display = 'block';
+                }
+                representantLegalFields.forEach(field => {
+                field.style.display = 'block';
+                });
+            } else {
+                if (representantLegalLegend) {
+                representantLegalLegend.style.display = 'none';
+                }
+                representantLegalFields.forEach(field => {
+                field.style.display = 'none';
+                });
+            }
+            }
+            
+            if (representantLegalLegend) {
+            representantLegalLegend.style.display = 'none';
+            }
+            representantLegalFields.forEach(field => {
+            field.style.display = 'none';
+            });
+            
+            autorisationOui.addEventListener('change', toggleFields);
+            autorisationNon.addEventListener('change', toggleFields);
+            
+            if (autorisationOui.checked) {
+            toggleFields();
+            }
+        }
+
+        // TYPE DE TRANSPORTS
+        const selects = document.querySelectorAll('#student-transport');
+        if (selects.length > 1) {
+            selects[1].id = 'transport-type';
+        }
+
+        const transportSelect = document.getElementById('student-transport');
+        const transportTypeSelect = document.getElementById('transport-type');
+        const immatriculationField = document.getElementById('immatriculation').closest('.fr-fieldset__element');
+        const transportTypeContainer = transportTypeSelect ? transportTypeSelect.closest('.fr-fieldset__element') : null;
+        
+        function toggleTransportType() {
+            if (transportTypeContainer) {
+            if (transportSelect.value === 'oui-transport') {
+                transportTypeContainer.style.display = 'block';
+                toggleImmatriculation();
+            } else {
+                transportTypeContainer.style.display = 'none';
+                immatriculationField.style.display = 'none';
+            }
+            }
+        }
+        
+        function toggleImmatriculation() {
+            if (transportSelect.value === 'oui-transport' && transportTypeSelect.value === 'voiture-transport') {
+            immatriculationField.style.display = 'block';
+            } else {
+            immatriculationField.style.display = 'none';
+            }
+        }
+        
+        if (transportTypeContainer) {
+            transportTypeContainer.style.display = 'none';
+        }
+        immatriculationField.style.display = 'none';
+        
+        transportSelect.addEventListener('change', toggleTransportType);
+        if (transportTypeSelect) {
+            transportTypeSelect.addEventListener('change', toggleImmatriculation);
+        }
+        
+        toggleTransportType();
+    });
+    </script>
 {% endblock %}
