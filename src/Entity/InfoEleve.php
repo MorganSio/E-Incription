@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\InfoEleveRepository;
 use Doctrine\DBAL\Types\Types;
+use App\Entity\RepresentantLegal;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\InfoEleveRepository;
 
 #[ORM\Entity(repositoryClass: InfoEleveRepository::class)]
 class InfoEleve
@@ -96,7 +97,7 @@ class InfoEleve
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Sexe $sexee = null;
+    private ?Sexe $sexe = null;
 
     #[ORM\ManyToOne]
     private ?RegimeCantine $regime = null;
@@ -110,9 +111,13 @@ class InfoEleve
     #[ORM\ManyToOne]
     private ?AssuranceScolaire $assureur = null;
 
-    #[ORM\ManyToOne(inversedBy: 'eleve')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?AccedeEleve $accedeEleve = null;
+    #[ORM\OneToOne]
+    private User $user;
+
+    public function __construct(user $user)
+    {
+        $this->user = $user;
+    }
 
     public function getId(): ?int
     {
@@ -136,7 +141,7 @@ class InfoEleve
         return $this->classe;
     }
 
-    public function setClasse(?string $classe): static
+    public function setClasse(?Classe $classe): static
     {
         $this->classe = $classe;
 
@@ -287,13 +292,6 @@ class InfoEleve
         return $this;
     }
 
-    public function setId(Humain $id): static
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
     public function getImmattriculationVeic(): ?string
     {
         return $this->immattriculationVeic;
@@ -438,14 +436,14 @@ class InfoEleve
         return $this;
     }
 
-    public function getSexee(): ?Sexe
+    public function getsexe(): ?Sexe
     {
-        return $this->sexee;
+        return $this->sexe;
     }
 
-    public function setSexee(?Sexe $sexee): static
+    public function setsexe(?Sexe $sexe): static
     {
-        $this->sexee = $sexee;
+        $this->sexe = $sexe;
 
         return $this;
     }
@@ -498,15 +496,16 @@ class InfoEleve
         return $this;
     }
 
-    public function getAccedeEleve(): ?AccedeEleve
+    public function getUser(): User
     {
-        return $this->accedeEleve;
+        return $this->user;
     }
 
-    public function setAccedeEleve(?AccedeEleve $accedeEleve): static
+    public function switchResponsable()
     {
-        $this->accedeEleve = $accedeEleve;
-
-        return $this;
+        $repLegaltemp = $this->getResponsableDeux();
+        $this->setResponsableDeux($this->getResponsableUn());
+        $this->setResponsableUn($repLegaltemp);
     }
+
 }

@@ -6,12 +6,8 @@ use App\Repository\ResposableFinancierRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ResposableFinancierRepository::class)]
-class ResposableFinancier
+class ResposableFinancier extends Humain
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $RIB = null;
@@ -21,11 +17,6 @@ class ResposableFinancier
 
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $adresse_employeur = null;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getRIB(): ?string
     {
@@ -59,13 +50,6 @@ class ResposableFinancier
     public function setAdresseEmployeur(?string $adresse_employeur): static
     {
         $this->adresse_employeur = $adresse_employeur;
-
-        return $this;
-    }
-
-    public function setId(Humain $id): static
-    {
-        $this->id = $id;
 
         return $this;
     }

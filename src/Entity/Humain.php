@@ -4,8 +4,10 @@ namespace App\Entity;
 
 use App\Repository\HumainRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\MappedSuperclass;
 
-#[ORM\Entity(repositoryClass: HumainRepository::class)]
+#[MappedSuperclass]
+// #[ORM\Entity(repositoryClass: HumainRepository::class)]
 class Humain
 {
     #[ORM\Id]
