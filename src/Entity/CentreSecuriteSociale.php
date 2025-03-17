@@ -19,9 +19,6 @@ class CentreSecuriteSociale
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $addresse = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $numeroAssurance = null;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -47,18 +44,6 @@ class CentreSecuriteSociale
     public function setAddresse(?string $addresse): static
     {
         $this->addresse = $addresse;
-
-        return $this;
-    }
-
-    public function getNumeroAssurance(): ?string
-    {
-        return $this->numeroAssurance;
-    }
-
-    public function setNumeroAssurance(?string $numeroAssurance): static
-    {
-        $this->numeroAssurance = $numeroAssurance;
 
         return $this;
     }

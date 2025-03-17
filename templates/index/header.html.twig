@@ -47,9 +47,12 @@
                                 {% endif %}
                             </li>
                             <li>
+                                {% if is_granted('IS_AUTHENTICATED') %}
+                                {% else %}
                                 <a class="fr-btn fr-icon-account-line" href="/register">
                                     S’enregistrer
                                 </a>
+                                {% endif %}
                             </li>
                             <li>
                                 <button class="fr-btn fr-footer__bottom-link fr-icon-theme-fill fr-btn--icon-left" aria-controls="fr-theme-modal" data-fr-opened="false">Paramètres d'affichage</button>

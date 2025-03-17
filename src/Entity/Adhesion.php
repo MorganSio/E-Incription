@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use App\Repository\AdhesionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\AdhesionRepository;
 
 #[ORM\Entity(repositoryClass: AdhesionRepository::class)]
 class Adhesion
@@ -27,7 +27,6 @@ class Adhesion
     {
         return $this->id;
     }
-
     public function isAccepted(): ?bool
     {
         return $this->accepted;

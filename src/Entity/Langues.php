@@ -29,7 +29,6 @@ class Langues
     public function setLabel(string $label): static
     {
         $this->label = $label;
-
         return $this;
     }
 }
