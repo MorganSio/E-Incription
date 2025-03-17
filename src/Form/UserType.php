@@ -21,11 +21,11 @@ class UserType extends AbstractType
             ->add('password')
             ->add('Nom')
             //->add('isVerified')
-            ->add('role', EntityType::class, 
-            [
-                'class' => TypeUser::class,
-                'choice_label' => 'id',
-            ])
+            // ->add('role', EntityType::class, 
+            // [
+            //     'class' => TypeUser::class,
+            //     'choice_label' => 'id',
+            // ])
 //             ->add('accedeEleve', EntityType::class, [
 //                 'class' => AccedeEleve::class,
 // 'choice_label' => 'id',
