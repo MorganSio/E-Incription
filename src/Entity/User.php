@@ -42,6 +42,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     public bool $isVerified = false;
 
+    #[ORM\OneToOne]
+    public ?InfoEleve $infoEleve = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -150,6 +153,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getInfoEleve(): InfoEleve
+    {
+        return $this->infoEleve;
+    }
+
+    public function setInfoEleve(InfoEleve $eleve): static
+    {
+        $this->infoEleve = $eleve;
 
         return $this;
     }

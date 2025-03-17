@@ -1,10 +1,7 @@
 <?php
-
+// useful ?
 namespace App\Form;
 
-use App\Entity\AccedeEleve;
-use App\Entity\AccedeRepresentant;
-use App\Entity\TypeUser;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -23,17 +20,7 @@ class UserType extends AbstractType
             //->add('isVerified')
             ->add('role', EntityType::class, 
             [
-                'class' => TypeUser::class,
-                'choice_label' => 'id',
             ])
-//             ->add('accedeEleve', EntityType::class, [
-//                 'class' => AccedeEleve::class,
-// 'choice_label' => 'id',
-//             ])
-//             ->add('accedeRepresentant', EntityType::class, [
-//                 'class' => AccedeRepresentant::class,
-// 'choice_label' => 'id',
-//             ])
         ;
     }
 

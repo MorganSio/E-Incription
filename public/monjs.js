@@ -27,11 +27,9 @@ document.addEventListener('DOMContentLoaded', function () {
  
         // Ajoute la logique de traitement des valeurs ici (ex : envoyer à un serveur, validation, etc.)
     }
-});
- 
-document.addEventListener('DOMContentLoaded', function () {
+
     // Gestion du bouton de validation de la première section
-    const validateFirstBtn = document.getElementById('validateFirstMdl');
+    const validateFirstBtn = document.getElementById('validateFirst');
     if (validateFirstBtn) {
         validateFirstBtn.addEventListener('click', function () {
             const acceptYes = document.getElementById('acceptYes').checked;
@@ -39,19 +37,19 @@ document.addEventListener('DOMContentLoaded', function () {
  
             // Si "Oui" est sélectionné, afficher la deuxième section
             if (acceptYes) {
-                document.getElementById('mdlFirst').style.display = 'none';
-                document.getElementById('mdlSecond').style.display = 'block';
+                document.getElementById('intFirst').style.display = 'none';
+                document.getElementById('intSecond').style.display = 'block';
             }
  
             // Si "Non" est sélectionné, afficher une alerte et rester sur intFirst
             if (acceptNo) {
-                alert("Vous avez refusé l'inscription à l'Adhésion à la Mdl BTS.");
+                alert("Vous avez refusé l'inscription à l'Intendance BTS.");
             }
         });
     }
  
     // Gestion du bouton de validation de la deuxième section
-    const validateSecondBtn = document.getElementById('validateSecondMdl');
+    const validateSecondBtn = document.getElementById('validateSecond');
     if (validateSecondBtn) {
         validateSecondBtn.addEventListener('click', function () {
             const paymentMethodCheque = document.getElementById('radio-rich-payment-1').checked;
@@ -76,9 +74,6 @@ document.addEventListener('DOMContentLoaded', function () {
             // document.getElementById('mdlSecondForm').submit(); // Décommentez pour envoyer le formulaire
         });
     }
-});
- 
-document.addEventListener('DOMContentLoaded', function () {
     const validFirstBtn = document.getElementById('validFirst');
    
     // Vérifier si l'élément existe
@@ -136,7 +131,7 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("JavaScript chargé, vérification des formulaires...");
  
     // Vérifie que les formulaires sont bien détectés
-    document.querySelectorAll("form[id^='identity']").forEach(form => {
+    document.querySelectorAll("form[id^='represantant']").forEach(form => {
         console.log("Formulaire détecté :", form.id);
     });
  
@@ -148,10 +143,10 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("Bouton cliqué :", button.id);
  
             let index = button.dataset.index;
-            let form = document.getElementById("identity" + index);
+            let form = document.getElementById("representant" + index);
  
             if (!form) {
-                console.error("Formulaire identity" + index + " non trouvé !");
+                console.error("Formulaire representant" + index + " non trouvé !");
                 return;
             }
  

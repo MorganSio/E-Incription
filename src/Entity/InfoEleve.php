@@ -73,50 +73,61 @@ class InfoEleve
     private $attestation_reusite = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?ResposableFinancier $responsable_financier = null;
 
     #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: true)]
     private ?CentreSecuriteSociale $secu_sociale = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: true)]
     private ?ScolariteAnterieur $anne_scolaire_un = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: true)]
     private ?ScolariteAnterieur $anne_scolaire_deux = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Langues $LVUn = null;
 
     #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Langues $LVDeux = null;
 
     #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: true)]
     private ?MedecinTraitant $medecin_traitant = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Sexe $sexe = null;
 
     #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: true)]
     private ?RegimeCantine $regime = null;
 
     #[ORM\ManyToOne(inversedBy: 'infoEleves')]
+    #[ORM\JoinColumn(nullable: true)]
     private ?RepresentantLegal $responsable_un = null;
 
     #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: true)]
     private ?RepresentantLegal $responsable_deux = null;
 
     #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: true)]
     private ?AssuranceScolaire $assureur = null;
 
     #[ORM\OneToOne]
+    #[ORM\JoinColumn(nullable: true)]
     private User $user;
 
     public function __construct(user $user)
     {
         $this->user = $user;
+        $user->setInfoEleve($this);
     }
 
     public function getId(): ?int

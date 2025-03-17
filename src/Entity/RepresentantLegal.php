@@ -26,6 +26,9 @@ class RepresentantLegal extends Humain
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $RIB = null;
 
+    #[ORM\Column(length: 64, nullable: true)]
+    private ?string $lien_eleve;
+
     #[ORM\OneToOne]
     private InfoEleve $infoEleve;
 
@@ -102,6 +105,18 @@ class RepresentantLegal extends Humain
         return $this;
     }
 
+    public function getLienEleve(): ?string
+    {
+        return $this->lien_eleve;
+    }
+
+    public function setLienEleve(?string $new_lien_eleve): static
+    {
+        $this->lien_eleve = $new_lien_eleve;
+
+        return $this;
+    }
+
     public function getInfoEleves(): InfoEleve
     {
         return $this->infoEleve;
@@ -113,5 +128,4 @@ class RepresentantLegal extends Humain
         return $this;
 
     }
-
 }
