@@ -149,7 +149,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.error("Formulaire representant" + index + " non trouvé !");
                 return;
             }
-            //test
  
             console.log("Formulaire récupéré :", form.id);
  

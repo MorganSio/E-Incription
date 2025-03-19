@@ -14,7 +14,7 @@
                 <th>Password</th>
                 <th>Nom</th>
                 <th>IsVerified</th>
-                <th>Actions</th>
+                <th>actions</th>
             </tr>
         </thead>
         <tbody>
@@ -29,9 +29,6 @@
                 <td>
                     <a href="{{ path('app_user_show', {'id': user.id}) }}">show</a>
                     <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
-                    <a class="btn btn-success" href="{{ path('generer_pdf', { id: user.id }) }}">
-                        Télécharger PDF
-                    </a>
                 </td>
             </tr>
         {% else %}
