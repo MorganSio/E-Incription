@@ -154,6 +154,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.error("Formulaire identity" + index + " non trouvé !");
                 return;
             }
+            //test
  
             console.log("Formulaire récupéré :", form.id);
  
