@@ -16,13 +16,11 @@ class PdfController extends AbstractController
     #[Route('/admin/generer-pdf/{id}', name: 'generer_pdf')]
     public function genererPdf(int $id, EntityManagerInterface $entityManager): Response
     {
-        // 🔹 Récupération de l'utilisateur
         $user = $entityManager->getRepository(User::class)->find($id);
         if (!$user) {
             throw $this->createNotFoundException('Utilisateur non trouvé.');
         }
 
-        // 🔹 Récupération des données de l'étudiant et du représentant légal
         $etudiant = $entityManager->getRepository(Humain::class)->findOneBy(['user' => $user]);
         $representant = $entityManager->getRepository(RepresentantLegal::class)->findOneBy(['etudiant' => $etudiant]);
 
@@ -30,7 +28,6 @@ class PdfController extends AbstractController
             throw $this->createNotFoundException('Données manquantes pour cet utilisateur.');
         }
 
-        // 🔹 Charger le modèle PDF existant
         $pdfPath = $this->getParameter('kernel.project_dir') . '/public/pdf/dossier_bts.pdf';
         $pdf = new Fpdi();
         $pdf->AddPage();
@@ -38,11 +35,9 @@ class PdfController extends AbstractController
         $tplIdx = $pdf->importPage(1);
         $pdf->useTemplate($tplIdx, 0, 0, 210);
 
-        // 🔹 Configuration de la police
         $pdf->SetFont('Arial', '', 10);
         $pdf->SetTextColor(0, 0, 0);
 
-        // 🔹 Ajout des informations dans le PDF
         $pdf->SetXY(50, 50);
         $pdf->Write(10, "Nom : " . $user->getNom());
 
@@ -73,7 +68,6 @@ class PdfController extends AbstractController
         $pdf->SetXY(50, 180);
         $pdf->Write(10, "Téléphone Resp. : " . $representant->getTelephoneMobile());
 
-        // 🔹 Sauvegarde et téléchargement du PDF
         $pdfFilename = 'dossier_etudiant_' . $user->getId() . '.pdf';
         $pdfOutputPath = $this->getParameter('kernel.project_dir') . '/public/generated_pdfs/' . $pdfFilename;
         $pdf->Output($pdfOutputPath, 'F');
