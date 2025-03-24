@@ -1,3 +1,4 @@
+// Form register
 document.addEventListener('DOMContentLoaded', function () {
     // Fonction suivant pour naviguer entre les sections
     function suivant(nb) {
@@ -27,7 +28,6 @@ document.addEventListener('DOMContentLoaded', function () {
  
         // Ajoute la logique de traitement des valeurs ici (ex : envoyer à un serveur, validation, etc.)
     }
-
     // Gestion du bouton de validation de la première section
     const validateFirstBtn = document.getElementById('validateFirst');
     if (validateFirstBtn) {
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById('intSecond').style.display = 'block';
             }
  
-            // Si "Non" est sélectionné, afficher une alerte et rester sur intFirst
+            // Si "Non" est sélectionné, soumettre le formulaire
             if (acceptNo) {
                 alert("Vous avez refusé l'inscription à l'Intendance BTS.");
             }
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
  
             // Soumettre le formulaire ou afficher un message de confirmation
-            alert("Merci ! Votre formulaire a été soumis.");
+            // alert("Merci ! Votre formulaire a été soumis.");
             // document.getElementById('mdlSecondForm').submit(); // Décommentez pour envoyer le formulaire
         });
     }
@@ -127,6 +127,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
  
+// Form représentant légal 
 document.addEventListener("DOMContentLoaded", function () {
     console.log("JavaScript chargé, vérification des formulaires...");
  
