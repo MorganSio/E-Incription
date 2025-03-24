@@ -8,131 +8,120 @@
     {% endfor %}
 
     <main role="main" id="content">
+        <!-- Un seul formulaire global -->
         <form method="post" action="{{ path('fiche-mdl') }}">
-        <!-- Section 1 -->
-        <article id="mdlFirst">
-            <div class="fr-container fr-container--fluid fr-mb-md-14v">
-                <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--center">
-                    <div class="fr-col-12 fr-col-md-10 fr-col-lg-8">
-                        <div class="fr-container fr-background-alt--grey fr-px-md-0 fr-pt-10v fr-pt-md-14v fr-pb-6v fr-pb-md-10v">
-                            <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--center">
-                                <div class="fr-col-12 fr-col-md-10 fr-col-lg-9">
-                                    <h1 class="fr-h1">Adhésion à la MDL</h1>
-                                    <form id="mdlFirstForm">
-                                        <fieldset class="fr-fieldset" id="radio-rich" aria-labelledby="radio-rich-legend radio-rich-messages">
-                                            <legend class="fr-fieldset__legend fr-text--regular" id="radio-rich-messages">
+            <!-- Section 1 -->
+            <article id="mdlFirst">
+                <div class="fr-container fr-container--fluid fr-mb-md-14v">
+                    <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--center">
+                        <div class="fr-col-12 fr-col-md-10 fr-col-lg-8">
+                            <div class="fr-container fr-background-alt--grey fr-px-md-0 fr-pt-10v fr-pt-md-14v fr-pb-6v fr-pb-md-10v">
+                                <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--center">
+                                    <div class="fr-col-12 fr-col-md-10 fr-col-lg-9">
+                                        <h1 class="fr-h1">Adhésion à la MDL</h1>
+                                        <fieldset id="mdlFirstForm">
+                                            <legend class="fr-fieldset__legend fr-text--regular">
                                                 <h3>Qu'est-ce que la MDL ?</h3>
-                                                <p><strong>La MDL de Fulbert</strong><p>
-                                                <p>La Maison Des Lycéens (MDL) du lycée Fulbert à Chartres est un espace dynamique et collaboratif géré par et pour les élèves.</p>
-                                                <p>Elle a pour but de favoriser le développement culturel et associatif au sein de l'établissement.</p> 
-                                                <ul><p>Voici quelques éléments clés concernant la MDL de Fulbert :<p>
-                                                <li>Objectifs : La MDL vise à responsabiliser les élèves en leur permettant de gérer des activités, de promouvoir la diversité culturelle et de créer des espaces d'expression.</li>
-                                                <li>Activités : Les élèves de la MDL organisent une variété d'événements, notamment des projets culturels, sportifs et humanitaires. Par exemple, ils ont mis en place une initiative originale pour la Saint-Valentin, où ils distribuent des roses aux autres élèves, un projet qui a connu un succès croissant au fil des ans.</li>
-                                                <li>Engagement des élèves : La présidente de la MDL, souligne l'importance de ces événements pour son orientation professionnelle.</li>
-                                                <li>Soutien de l'administration : La conseillère principale d'éducation (CPE) du lycée, soutient les élèves dans leurs projets, contribuant ainsi à leur succès.</li></ul>
-                                                <p>En résumé, la MDL de Fulbert est un acteur clé de la vie scolaire, offrant aux élèves des opportunités d'engagement et de développement personnel à travers diverses initiatives. <strong>Et ça ne vous coûte que 10€ à l'année.</strong></p>
                                             </legend>
-                                            <legend class="fr-fieldset__legend fr-text--regular" id="radio-rich-legend">
+                                            <p><strong>La MDL de Fulbert</strong></p>
+                                            <p>La Maison Des Lycéens (MDL) du lycée Fulbert à Chartres est un espace dynamique et collaboratif géré par et pour les élèves.</p>
+                                            <p>Elle a pour but de favoriser le développement culturel et associatif au sein de l'établissement.</p> 
+                                            <ul>
+                                                <li>Objectifs : Responsabiliser les élèves, promouvoir la diversité culturelle et créer des espaces d'expression.</li>
+                                                <li>Activités : Organisation d'événements culturels, sportifs et humanitaires.</li>
+                                                <li>Engagement des élèves et soutien de l'administration.</li>
+                                            </ul>
+                                            <p>En résumé, la MDL offre des opportunités d'engagement et de développement personnel. <strong>Et ça ne vous coûte que 10€ à l'année.</strong></p>
+                                            
+                                            <legend class="fr-fieldset__legend fr-text--regular">
                                                 <h2>Voulez-vous adhérer à la MDL ?</h2>
                                             </legend>
                                             <div class="fr-fieldset__element">
                                                 <div class="fr-radio-group fr-radio-rich">
-                                                    <input value="oui" type="radio" id="acceptYes" name="accepter" required>
-                                                    <label class="fr-label" for="acceptYes">
-                                                        Oui, j'accepte
-                                                    </label>
+                                                    <input value="true" type="radio" id="acceptYes" name="accepter" required>
+                                                    <label class="fr-label" for="acceptYes">Oui, j'accepte</label>
                                                 </div>
                                             </div>
                                             <div class="fr-fieldset__element">
                                                 <div class="fr-radio-group fr-radio-rich">
-                                                    <input value="non" type="radio" id="acceptNo" name="accepter" required>
-                                                    <label class="fr-label" for="acceptNo">
-                                                        Non, je refuse
-                                                    </label>
+                                                    <input value="false" type="radio" id="acceptNo" name="accepter" required>
+                                                    <label class="fr-label" for="acceptNo">Non, je refuse</label>
                                                 </div>
                                             </div>
                                             <div class="fr-form-group">
+                                                <!-- Bouton pour passer à la section suivante -->
                                                 <button type="button" class="fr-btn" id="validateFirstMdl">Valider</button>
                                             </div>
                                         </fieldset>
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </article>
+            </article>
 
-        <!-- Section 2 -->
-        <article id="mdlSecond">
-            <div class="fr-container fr-container--fluid fr-mb-md-14v">
-                <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--center">
-                    <div class="fr-col-12 fr-col-md-10 fr-col-lg-8">
-                        <div class="fr-container fr-background-alt--grey fr-px-md-0 fr-pt-10v fr-pt-md-14v fr-pb-6v fr-pb-md-10v">
-                            <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--center">
-                                <div class="fr-col-12 fr-col-md-10 fr-col-lg-9">
-                                    <h1 class="fr-h2">Adhésion à la MDL</h1>
-                                    <form id="mdlSecondForm" method="post">
-                                        <!-- Paiement -->
-                                        <fieldset class="fr-fieldset" id="radio-rich-payment" aria-labelledby="radio-rich-payment-legend radio-rich-payment-messages">
-                                            <legend class="fr-fieldset__legend--regular fr-fieldset__legend" id="radio-rich-payment-legend">
-                                                Mode de paiement
-                                            </legend>
-                                            <p>10€ à l'ordre de la MDL, paiement de préférence par chèque.</p>
-                                            <div class="fr-fieldset__element">
-                                                <div class="fr-radio-group fr-radio-rich">
-                                                    <input value="cheque" type="radio" id="radio-rich-payment-1" name="payment_method" required>
-                                                    <label class="fr-label" for="radio-rich-payment-1">
-                                                        Chèque
-                                                    </label>
+            <!-- Section 2 -->
+            <article id="mdlSecond">
+                <div class="fr-container fr-container--fluid fr-mb-md-14v">
+                    <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--center">
+                        <div class="fr-col-12 fr-col-md-10 fr-col-lg-8">
+                            <div class="fr-container fr-background-alt--grey fr-px-md-0 fr-pt-10v fr-pt-md-14v fr-pb-6v fr-pb-md-10v">
+                                <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--center">
+                                    <div class="fr-col-12 fr-col-md-10 fr-col-lg-9">
+                                        <h1 class="fr-h2">Adhésion à la MDL</h1>
+                                        <fieldset id="mdlSecondForm">
+                                            <!-- Paiement -->
+                                            <fieldset class="fr-fieldset" id="radio-rich-payment">
+                                                <legend class="fr-fieldset__legend--regular fr-fieldset__legend">
+                                                    Mode de paiement
+                                                </legend>
+                                                <p>10€ à l'ordre de la MDL, paiement de préférence par chèque.</p>
+                                                <div class="fr-fieldset__element">
+                                                    <div class="fr-radio-group fr-radio-rich">
+                                                        <input value="cheque" type="radio" id="radio-rich-payment-1" name="payment_method" required>
+                                                        <label class="fr-label" for="radio-rich-payment-1">Chèque</label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="fr-fieldset__element">
-                                                <div class="fr-radio-group fr-radio-rich">
-                                                    <input value="cash" type="radio" id="radio-rich-payment-2" name="payment_method" required>
-                                                    <label class="fr-label" for="radio-rich-payment-2">
-                                                        Espèces
-                                                    </label>
+                                                <div class="fr-fieldset__element">
+                                                    <div class="fr-radio-group fr-radio-rich">
+                                                        <input value="especes" type="radio" id="radio-rich-payment-2" name="payment_method" required>
+                                                        <label class="fr-label" for="radio-rich-payment-2">Espèces</label>
+                                                    </div>
                                                 </div>
+                                            </fieldset>
+
+                                            <!-- Droit à l'image -->
+                                            <fieldset class="fr-fieldset" id="radio-rich-image">
+                                                <legend class="fr-fieldset__legend--regular fr-fieldset__legend">
+                                                    Autorisation droit à l'image
+                                                </legend>
+                                                <div class="fr-fieldset__element">
+                                                    <div class="fr-radio-group fr-radio-rich">
+                                                        <input value="autorise" type="radio" id="radio-rich-image-1" name="image_rights" required>
+                                                        <label class="fr-label" for="radio-rich-image-1">Autorise</label>
+                                                    </div>
+                                                </div>
+                                                <div class="fr-fieldset__element">
+                                                    <div class="fr-radio-group fr-radio-rich">
+                                                        <input value="refus" type="radio" id="radio-rich-image-2" name="image_rights" required>
+                                                        <label class="fr-label" for="radio-rich-image-2">N'autorise pas</label>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+
+                                            <!-- Bouton Valider pour soumettre le formulaire complet -->
+                                            <div class="fr-form-group">
+                                                <button type="submit" class="fr-btn" id="validateSecondMdl">Valider</button>
                                             </div>
                                         </fieldset>
-
-                                        <!-- Droit à l'image -->
-                                        <fieldset class="fr-fieldset" id="radio-rich-image" aria-labelledby="radio-rich-image-legend radio-rich-image-messages">
-                                            <legend class="fr-fieldset__legend--regular fr-fieldset__legend" id="radio-rich-image-legend">
-                                                Autorisation droit à l'image
-                                            </legend>
-                                            <div class="fr-fieldset__element">
-                                                <div class="fr-radio-group fr-radio-rich">
-                                                    <input value="authorize" type="radio" id="radio-rich-image-1" name="image_rights" required>
-                                                    <label class="fr-label" for="radio-rich-image-1">
-                                                        Autorise
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div class="fr-fieldset__element">
-                                                <div class="fr-radio-group fr-radio-rich">
-                                                    <input value="do_not_authorize" type="radio" id="radio-rich-image-2" name="image_rights" required>
-                                                    <label class="fr-label" for="radio-rich-image-2">
-                                                        N'autorise pas
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </fieldset>
-
-                                        <!-- Bouton Valider -->
-                                        <div class="fr-form-group">
-                                            <button type="button" class="fr-btn" id="validateSecondMdl">Valider</button>
-                                        </div>
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </article>
+            </article>
         </form>
     </main>
 {% endblock %}
