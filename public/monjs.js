@@ -1,3 +1,4 @@
+// Form register
 document.addEventListener('DOMContentLoaded', function () {
     // Fonction suivant pour naviguer entre les sections
     function suivant(nb) {
@@ -27,11 +28,8 @@ document.addEventListener('DOMContentLoaded', function () {
  
         // Ajoute la logique de traitement des valeurs ici (ex : envoyer à un serveur, validation, etc.)
     }
-});
- 
-document.addEventListener('DOMContentLoaded', function () {
     // Gestion du bouton de validation de la première section
-    const validateFirstBtn = document.getElementById('validateFirstMdl');
+    const validateFirstBtn = document.getElementById('validateFirst');
     if (validateFirstBtn) {
         validateFirstBtn.addEventListener('click', function () {
             const acceptYes = document.getElementById('acceptYes').checked;
@@ -39,19 +37,19 @@ document.addEventListener('DOMContentLoaded', function () {
  
             // Si "Oui" est sélectionné, afficher la deuxième section
             if (acceptYes) {
-                document.getElementById('mdlFirst').style.display = 'none';
-                document.getElementById('mdlSecond').style.display = 'block';
+                document.getElementById('intFirst').style.display = 'none';
+                document.getElementById('intSecond').style.display = 'block';
             }
  
-            // Si "Non" est sélectionné, afficher une alerte et rester sur intFirst
+            // Si "Non" est sélectionné, soumettre le formulaire
             if (acceptNo) {
-                alert("Vous avez refusé l'inscription à l'Adhésion à la Mdl BTS.");
+                alert("Vous avez refusé l'inscription à l'Intendance BTS.");
             }
         });
     }
  
     // Gestion du bouton de validation de la deuxième section
-    const validateSecondBtn = document.getElementById('validateSecondMdl');
+    const validateSecondBtn = document.getElementById('validateSecond');
     if (validateSecondBtn) {
         validateSecondBtn.addEventListener('click', function () {
             const paymentMethodCheque = document.getElementById('radio-rich-payment-1').checked;
@@ -72,13 +70,10 @@ document.addEventListener('DOMContentLoaded', function () {
             }
  
             // Soumettre le formulaire ou afficher un message de confirmation
-            alert("Merci ! Votre formulaire a été soumis.");
+            // alert("Merci ! Votre formulaire a été soumis.");
             // document.getElementById('mdlSecondForm').submit(); // Décommentez pour envoyer le formulaire
         });
     }
-});
- 
-document.addEventListener('DOMContentLoaded', function () {
     const validFirstBtn = document.getElementById('validFirst');
    
     // Vérifier si l'élément existe
@@ -132,11 +127,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
  
+// Form représentant légal 
 document.addEventListener("DOMContentLoaded", function () {
     console.log("JavaScript chargé, vérification des formulaires...");
  
     // Vérifie que les formulaires sont bien détectés
-    document.querySelectorAll("form[id^='identity']").forEach(form => {
+    document.querySelectorAll("form[id^='represantant']").forEach(form => {
         console.log("Formulaire détecté :", form.id);
     });
  
@@ -148,21 +144,33 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("Bouton cliqué :", button.id);
  
             let index = button.dataset.index;
-            let form = document.getElementById("identity" + index);
+            let form = document.getElementById("representant" + index);
  
             if (!form) {
-                console.error("Formulaire identity" + index + " non trouvé !");
+                console.error("Formulaire representant" + index + " non trouvé !");
                 return;
             }
+            //test
  
             console.log("Formulaire récupéré :", form.id);
  
             let formData = new FormData(form);
             let data = {};
- 
+            
+            console.log(form);
+            data['repNumber']=index
+
+
             formData.forEach((value, key) => {
                 data[key] = value;
             });
+
+            if (typeof data["lien"+index] !== 'undefined' && data["lien"+index] == "autre" )
+            {
+                data["lien"+index] = data["preciser"+index];
+            }
+
+            // data["addresse"+index] = data["addresse-voie"+index]+data["postal-code"+index]+data["addresse-city"+index]
  
             console.log("Données du formulaire envoyées :", data);
  
@@ -183,6 +191,7 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .catch(error => {
                 console.error("Erreur d'envoi des données :", error);
+                
                 alert("Erreur de connexion avec le serveur.");
             });
         });
