@@ -28,6 +28,10 @@ document.addEventListener('DOMContentLoaded', function () {
  
         // Ajoute la logique de traitement des valeurs ici (ex : envoyer à un serveur, validation, etc.)
     }
+});
+ 
+// Form mdl
+document.addEventListener('DOMContentLoaded', function () {
     // Gestion du bouton de validation de la première section
     const validateFirstBtn = document.getElementById('validateFirst');
     if (validateFirstBtn) {
@@ -37,13 +41,17 @@ document.addEventListener('DOMContentLoaded', function () {
  
             // Si "Oui" est sélectionné, afficher la deuxième section
             if (acceptYes) {
-                document.getElementById('intFirst').style.display = 'none';
-                document.getElementById('intSecond').style.display = 'block';
+                document.getElementById('mdlFirst').style.display = 'none';
+                document.getElementById('mdlSecond').style.display = 'block';
             }
  
-            // Si "Non" est sélectionné, soumettre le formulaire
+            // Si "Non" est sélectionné, afficher une alerte et rester sur intFirst
             if (acceptNo) {
-                alert("Vous avez refusé l'inscription à l'Intendance BTS.");
+                // Récupérer le formulaire parent du bouton
+                const form = document.querySelector('form');
+                if (form) {
+                    form.submit();
+                }
             }
         });
     }
@@ -74,6 +82,10 @@ document.addEventListener('DOMContentLoaded', function () {
             // document.getElementById('mdlSecondForm').submit(); // Décommentez pour envoyer le formulaire
         });
     }
+});
+ 
+// Form self
+document.addEventListener('DOMContentLoaded', function () {
     const validFirstBtn = document.getElementById('validFirst');
    
     // Vérifier si l'élément existe
@@ -127,7 +139,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
  
-// Form représentant légal 
+// Form représentant légal
 document.addEventListener("DOMContentLoaded", function () {
     console.log("JavaScript chargé, vérification des formulaires...");
  
@@ -155,20 +167,20 @@ document.addEventListener("DOMContentLoaded", function () {
  
             let formData = new FormData(form);
             let data = {};
-            
+           
             console.log(form);
             data['repNumber']=index
-
-
+ 
+ 
             formData.forEach((value, key) => {
                 data[key] = value;
             });
-
+ 
             if (typeof data["lien"+index] !== 'undefined' && data["lien"+index] == "autre" )
             {
                 data["lien"+index] = data["preciser"+index];
             }
-
+ 
             // data["addresse"+index] = data["addresse-voie"+index]+data["postal-code"+index]+data["addresse-city"+index]
  
             console.log("Données du formulaire envoyées :", data);
@@ -190,7 +202,7 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .catch(error => {
                 console.error("Erreur d'envoi des données :", error);
-                
+               
                 alert("Erreur de connexion avec le serveur.");
             });
         });
