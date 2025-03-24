@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\RepresentantLegalRepository;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Nullable;
 
 #[ORM\Entity(repositoryClass: RepresentantLegalRepository::class)]
 class RepresentantLegal extends Humain
@@ -13,6 +14,12 @@ class RepresentantLegal extends Humain
 
     #[ORM\Column(length: 15, nullable: true)]
     private ?string $telephone_pro = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $sms_send = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $com_addr_asso = null;
 
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $poste = null;
@@ -29,9 +36,8 @@ class RepresentantLegal extends Humain
     #[ORM\Column(length: 64, nullable: true)]
     private ?string $lien_eleve;
 
-    #[ORM\OneToOne]
+    #[ORM\ManyToOne]
     private InfoEleve $infoEleve;
-
 
     public function getTelephoneFixe(): ?string
     {
@@ -56,6 +62,31 @@ class RepresentantLegal extends Humain
 
         return $this;
     }
+
+    public function getSmsSend(): ?bool
+    {
+        return $this->sms_send;
+    }
+
+    public function setSmsSend(?bool $sms_send): static
+    {
+        $this->sms_send = $sms_send;
+
+        return $this;
+    }
+
+    public function getComAddrAsso(): ?bool
+    {
+        return $this->com_addr_asso;
+    }
+
+    public function setComAddrAsso(?bool $com_addr_asso): static
+    {
+        $this->com_addr_asso = $com_addr_asso;
+
+        return $this;
+    }
+
 
     public function getPoste(): ?string
     {
@@ -117,15 +148,14 @@ class RepresentantLegal extends Humain
         return $this;
     }
 
+    public function setInfoEleve(InfoEleve $eleve)
+    {
+        $this->infoEleve = $eleve;
+    }
+    
     public function getInfoEleves(): InfoEleve
     {
         return $this->infoEleve;
     }
 
-    public function removeInfoElefe(InfoEleve $infoEleve): static
-    {
-        $this->infoEleve = $infoEleve;
-        return $this;
-
-    }
 }
