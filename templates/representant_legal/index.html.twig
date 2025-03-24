@@ -9,6 +9,7 @@
 
     <main role="main" id="content">
         <form method="post" action="{{ path('fiche-representant-legal') }}">
+        
         <!-- Section 1 -->
         <article id="mdlFirst">
             <div class="fr-container fr-container--fluid fr-mb-md-14v">
@@ -18,7 +19,9 @@
                             <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--center">
                                 <div class="fr-col-12 fr-col-md-10 fr-col-lg-9">
                                     <h1 class="fr-h1">Représentants Légaux</h1>
-                                    
+                                
+                                    <form id='fixes an issue with the forms, might be bad practice,shoud suerly do a fieldset instead of a form in a form'>
+                                    </form>
                                     {% for i in 1..2 %}
                                     <div>
                                         <form class="fr-mb-0" id="representant{{ i }}">
@@ -45,13 +48,13 @@
                                                                     </legend>
                                                                     <div class="fr-fieldset__element">
                                                                         <div class="fr-radio-group fr-radio-group--sm">
-                                                                            <input type="radio" id="pere-{{ i }}" name="lien{{ i }}">
+                                                                            <input type="radio" id="pere-{{ i }}" value="pere" name="lien{{ i }}">
                                                                             <label class="fr-label" for="pere-{{ i }}">Père</label>
                                                                         </div>
                                                                     </div>
                                                                     <div class="fr-fieldset__element">
                                                                         <div class="fr-radio-group fr-radio-group--sm">
-                                                                            <input type="radio" id="mere-{{ i }}" name="lien{{ i }}">
+                                                                            <input type="radio" id="mere-{{ i }}" value="mere" name="lien{{ i }}">
                                                                             <label class="fr-label" for="mere-{{ i }}">
                                                                                 Mère
                                                                             </label>
@@ -59,7 +62,7 @@
                                                                     </div>
                                                                     <div class="fr-fieldset__element">
                                                                         <div class="fr-radio-group fr-radio-group--sm">
-                                                                            <input type="radio" id="autre-{{ i }}" name="lien{{ i }}">
+                                                                            <input type="radio" id="autre-{{ i }}" value="autre" name="lien{{ i }}">
                                                                             <label class="fr-label" for="autre-{{ i }}">
                                                                                 Autre
                                                                             </label>
@@ -145,9 +148,9 @@
                                                                                 Adresse
                                                                                 <span class="fr-hint-text">Indication : numéro et voie</span>
                                                                             </label>
-                                                                            <input class="fr-input" aria-describedby="address-9725-messages{{ i }}" name="address-line1{{ i }}" 
+                                                                            <input class="fr-input" aria-describedby="address-9725-messages{{ i }}" name="addresse-voie{{ i }}" 
                                                                                 autocomplete="address-line1" id="address-9725{{ i }}" type="text" placeholder="Ex : 12 rue de Paris" required>
-                                                                            <div class="fr-messages-group" id="address-9725-messages{{ i }}" aria-live="polite"></div>
+                                                                            {# <div class="fr-messages-group" id="address-9725-messages{{ i }}" aria-live="polite"></div> #}
                                                                         </div>
                                                                     </div>
                                                                     <div class="fr-fieldset__element fr-fieldset__element--inline fr-fieldset__element--postal">
@@ -159,18 +162,18 @@
                                                                             <input class="fr-input" aria-describedby="postal-9727-messages{{ i }}" name="postal-code{{ i }}" 
                                                                                 autocomplete="postal-code" id="postal-9727{{ i }}" type="text" pattern="\d{5}" 
                                                                                 placeholder="75001" required>
-                                                                            <div class="fr-messages-group" id="postal-9727-messages{{ i }}" aria-live="polite"></div>
+                                                                            {# <div class="fr-messages-group" id="postal-9727-messages{{ i }}" aria-live="polite"></div> #}
                                                                         </div>
                                                                     </div>
                                                                     <div class="fr-fieldset__element fr-fieldset__element--inline@md fr-fieldset__element--inline-grow">
                                                                         <div class="fr-input-group" id="input-group-9739{{ i }}">
                                                                             <label class="fr-label" for="city-9728{{ i }}">
                                                                                 Ville ou commune
-                                                                                <span class="fr-hint-text">Exemple : Montpellier</span>
+                                                                                <span class="fr-hint-text">Exemple : Chartre</span>
                                                                             </label>
-                                                                            <input class="fr-input" aria-describedby="city-9728-messages{{ i }}" name="address-level2{{ i }}" 
+                                                                            <input class="fr-input" aria-describedby="city-9728-messages{{ i }}" name="addresse-city{{ i }}" 
                                                                                 autocomplete="address-level2" id="city-9728{{ i }}" type="text" placeholder="Ex : Lyon" required>
-                                                                            <div class="fr-messages-group" id="city-9728-messages{{ i }}" aria-live="polite"></div>
+                                                                            {# <div class="fr-messages-group" id="city-9728-messages{{ i }}" aria-live="polite"></div> #}
                                                                         </div>
                                                                     </div>
                                                                     <div class="fr-messages-group" id="address-9729-messages{{ i }}" aria-live="polite"></div>

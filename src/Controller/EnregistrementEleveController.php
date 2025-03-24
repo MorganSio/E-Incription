@@ -11,7 +11,7 @@ class EnregistrementEleveController extends AbstractController
     #[Route('/info-eleve', name: 'fiche-etudiant')]
     public function index(): Response
     {
-        return $this->render('forms/enregistrement_eleve.html.twig', [
+        return $this->render('enregistrement_eleve/index.html.twig', [
             'controller_name' => 'EnregistrementEleveController',
         ]);
     }
