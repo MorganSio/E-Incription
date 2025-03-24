@@ -1,3 +1,4 @@
+// Form register
 document.addEventListener('DOMContentLoaded', function () {
     // Fonction suivant pour naviguer entre les sections
     function suivant(nb) {
@@ -28,7 +29,8 @@ document.addEventListener('DOMContentLoaded', function () {
         // Ajoute la logique de traitement des valeurs ici (ex : envoyer à un serveur, validation, etc.)
     }
 });
- 
+
+// Form mdl
 document.addEventListener('DOMContentLoaded', function () {
     // Gestion du bouton de validation de la première section
     const validateFirstBtn = document.getElementById('validateFirstMdl');
@@ -43,9 +45,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById('mdlSecond').style.display = 'block';
             }
  
-            // Si "Non" est sélectionné, afficher une alerte et rester sur intFirst
+            // Si "Non" est sélectionné, soumettre le formulaire
             if (acceptNo) {
-                alert("Vous avez refusé l'inscription à l'Adhésion à la Mdl BTS.");
+                // Récupérer le formulaire parent du bouton
+                const form = document.querySelector('form');
+                if (form) {
+                    form.submit();
+                }
             }
         });
     }
@@ -72,12 +78,13 @@ document.addEventListener('DOMContentLoaded', function () {
             }
  
             // Soumettre le formulaire ou afficher un message de confirmation
-            alert("Merci ! Votre formulaire a été soumis.");
+            // alert("Merci ! Votre formulaire a été soumis.");
             // document.getElementById('mdlSecondForm').submit(); // Décommentez pour envoyer le formulaire
         });
     }
 });
  
+// Form self
 document.addEventListener('DOMContentLoaded', function () {
     const validFirstBtn = document.getElementById('validFirst');
    
@@ -132,6 +139,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
  
+// Form représentant légal 
 document.addEventListener("DOMContentLoaded", function () {
     console.log("JavaScript chargé, vérification des formulaires...");
  
