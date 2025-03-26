@@ -278,6 +278,9 @@
     "symfony/ux-turbo": {
         "version": "v2.19.3"
     },
+    "symfony/ux-twig-component": {
+        "version": "v2.23.0"
+    },
     "symfony/validator": {
         "version": "7.1",
         "recipe": {
