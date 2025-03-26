@@ -17,7 +17,7 @@ class RepresentantLegalControlller extends AbstractController
     #[Route('/fiche-representant-legal', name: 'fiche-representant-legal')]
     public function index(): Response
     {
-        return $this->render('forms/representant_legal.html.twig', [
+        return $this->render('representant_legal/index.html.twig', [
             'controller_name' => 'RepresentantLegalControlller',
         ]);
     }

@@ -18,6 +18,7 @@ class PdfController extends AbstractController
     #[Route('/admin/generer-pdf/{id}', name: 'generer_pdf')]
     public function genererPdf(int $id, EntityManagerInterface $entityManager): Response
     {
+<<<<<<< HEAD
         $eleve = $entityManager->getRepository(InfoEleve::class)->find($id);
         if (!$eleve) {
             throw $this->createNotFoundException('Étudiant non trouvé.');
@@ -26,6 +27,8 @@ class PdfController extends AbstractController
         $pdfPath = $this->getParameter('kernel.project_dir') . '/public/pdf/template.pdf'; // Remplacez par votre fichier PDF existant
         $outputPath = $this->getParameter('kernel.project_dir') . '/public/pdf/dossiers/dossier_' . $eleve->getId() . '.pdf';
 
+=======
+>>>>>>> 2f251d8c9d9d252f7fbb3ece642eec1ad4a23fd9
         $user = $entityManager->getRepository(User::class)->find($id);
         if (!$user) {
             throw $this->createNotFoundException('Utilisateur non trouvé.');
