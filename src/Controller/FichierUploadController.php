@@ -14,7 +14,7 @@ class FichierUploadController extends AbstractController
     #[Route('/fichier-upload', name: 'fichier-upload')]
     public function index(): Response
     {
-        return $this->render('forms/fichier_upload.html.twig', [
+        return $this->render('fichier_upload/index.html.twig', [
             'controller_name' => 'FichierUploadController',
         ]);
     }

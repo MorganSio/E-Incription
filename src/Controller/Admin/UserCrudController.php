@@ -10,7 +10,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 
 
 class UserCrudController extends AbstractCrudController
@@ -24,22 +23,19 @@ class UserCrudController extends AbstractCrudController
     {
         return [
             // IdField::new('id')->onlyOnIndex()	,
-            IdField::new('id')->onlyOnIndex(),
-            ArrayField::new('email')->hideOnForm(),
+            ArrayField::new('roles')->hideOnForm(),
             TextField::new('password')->onlyOnForms()->hideOnForm(), // Pour ne pas afficher le mot de passe en clair
             TextField::new('Nom'),
             TextField::new('prenom'),
             BooleanField::new('isVerified')->hideOnForm(),
-            // Field::new('pdf', 'Générer PDF')
-            //     ->onlyOnIndex()
-            //     ->formatValue(function ($value, $entity) {
-            //         return sprintf(
-            //             '<a class="btn btn-success" href="%s" target="_blank">
-            //                 <i class="fas fa-file-pdf"></i> Télécharger PDF
-            //             </a>',
-            //             '/admin/generer-docx/' . $entity->getId()
-            //         );
-            //     }),
+            // UrlField::new('pdf', 'PDF')
+            // ->onlyOnIndex()
+            // ->setLabel('PDF')
+            // ->setCustomOption('renderAsButton', true)
+            // ->setCustomOption('buttonLabel', '<i class="fa fa-file-pdf"></i> Générer PDF')
+            // ->formatValue(function ($value, $entity) {
+            //     return '/admin/generer-pdf/' . $entity->getId();
+            // }),
         ];
     }
 }
