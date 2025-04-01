@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
  
-// Form self
+// // Form self
 document.addEventListener('DOMContentLoaded', function () {
     const validFirstBtn = document.getElementById('validFirst');
    
@@ -137,6 +137,55 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
+document.addEventListener("DOMContentLoaded", function (){
+    console.log('test');
+
+    form = document.querySelector("form[id^='etudiant-form'");
+    if (!form){
+        console.error("formulairenon trouver");
+        return;
+    }
+    else{
+        console.log(form);
+        
+    }
+    
+    button = document.getElementById("validateEtudiant");
+    button.addEventListener("click", function(){
+        console.log(form);
+        let formData = new FormData(form);
+        let data ={};
+
+        formData.forEach((value,key) => {            
+            data[key] = value;            
+        });
+        console.log(data);
+        console.log(JSON.stringify(data));
+        
+        fetch("/info-eleve/save",{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                alert("Identité enregistrée !");
+            } else {
+                alert("Erreur a : " + result.message);
+            }
+        })
+        .catch(error => {
+            console.error("", error);
+            alert("Erreur de connexion avec le serveur.");
+        });
+       
+    })
+});
+
  
 // Form représentant légal
 document.addEventListener("DOMContentLoaded", function () {
@@ -168,7 +217,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let data = {};
            
             console.log(form);
-            data['repNumber']=index
+            data['repNumber']=index;
  
  
             formData.forEach((value, key) => {
@@ -180,7 +229,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 data["lien"+index] = data["preciser"+index];
             }
  
-            // data["addresse"+index] = data["addresse-voie"+index]+data["postal-code"+index]+data["addresse-city"+index]
+            data["addresse"+index] = data["addresse-voie"+index]+data["postal-code"+index]+data["addresse-city"+index]
  
             console.log("Données du formulaire envoyées :", data);
  

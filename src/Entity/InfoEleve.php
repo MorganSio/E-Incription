@@ -18,6 +18,9 @@ class InfoEleve
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $date_de_naissance = null;
 
+    #[ORM\Column]
+    private ?string $promotion = null;
+
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $classe = null;
 
@@ -146,6 +149,19 @@ class InfoEleve
 
         return $this;
     }
+
+    public function getPromotion(): ?string
+    {
+        return $this->promotion;
+    }
+
+    public function setPromotion(?string $promo):static
+    {
+        $this->promotion = $promo;
+
+        return $this;
+    }
+
 
     public function getClasse(): ?string
     {
@@ -415,7 +431,7 @@ class InfoEleve
     {
         return $this->LVUn;
     }
-
+    
     public function setLVUn(?Langues $LVUn): static
     {
         $this->LVUn = $LVUn;
