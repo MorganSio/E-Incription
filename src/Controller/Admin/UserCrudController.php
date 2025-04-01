@@ -43,16 +43,52 @@ class UserCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
-        $generateDocxAction = Action::new('generateDocx', 'Générer DOCX')
+        $generateDocxIntendanceAction = Action::new('generateDocxIntendance', 'Générer DOCX Intendance')
             ->linkToUrl(function (User $user) {
                 $infoEleve = $user->getInfoEleve();
                 return $infoEleve ? $this->adminUrlGenerator
-                    ->setRoute('generer_docx', ['id' => $infoEleve->getId()])
+                    ->setRoute('generer_docx_intendance', ['id' => $infoEleve->getId()])
                     ->generateUrl() : '#';
             });
 
         return $actions
-            ->add(Crud::PAGE_INDEX, $generateDocxAction)
-            ->add(Crud::PAGE_DETAIL, $generateDocxAction);
+            ->add(Crud::PAGE_INDEX, $generateDocxIntendanceAction)
+            ->add(Crud::PAGE_DETAIL, $generateDocxIntendanceAction);
+
+        $generateDocxUrgenceAction = Action::new('generateDocxUrgence', 'Générer DOCX Urgence')
+            ->linkToUrl(function (User $user) {
+                $infoEleve = $user->getInfoEleve();
+                return $infoEleve ? $this->adminUrlGenerator
+                    ->setRoute('generer_docx_urgence', ['id' => $infoEleve->getId()])
+                    ->generateUrl() : '#';
+            });
+
+        return $actions
+            ->add(Crud::PAGE_INDEX, $generateDocxUrgenceAction)
+            ->add(Crud::PAGE_DETAIL, $generateDocxUrgenceAction);
+
+        $generateDocxMdlAction = Action::new('generateDocxMdl', 'Générer DOCX Mdl')
+            ->linkToUrl(function (User $user) {
+                $infoEleve = $user->getInfoEleve();
+                return $infoEleve ? $this->adminUrlGenerator
+                    ->setRoute('generer_docx_mdl', ['id' => $infoEleve->getId()])
+                    ->generateUrl() : '#';
+            });
+
+        return $actions
+            ->add(Crud::PAGE_INDEX, $generateDocxMdlAction)
+            ->add(Crud::PAGE_DETAIL, $generateDocxMdlAction);
+
+        $generateDocxdossierAction = Action::new('generateDocxDossier', 'Générer DOCX Dossier')
+            ->linkToUrl(function (User $user) {
+                $infoEleve = $user->getInfoEleve();
+                return $infoEleve ? $this->adminUrlGenerator
+                    ->setRoute('generer_docx_dosssier', ['id' => $infoEleve->getId()])
+                    ->generateUrl() : '#';
+            });
+
+        return $actions
+            ->add(Crud::PAGE_INDEX, $generateDocxdossierAction)
+            ->add(Crud::PAGE_DETAIL, $generateDocxdossierAction);
     }
 }

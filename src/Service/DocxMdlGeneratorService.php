@@ -8,7 +8,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use App\Entity\InfoEleve;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-class DocxIntendanceGeneratorService
+class DocxMdlGeneratorService
 {
     private EntityManagerInterface $entityManager;
 
@@ -24,8 +24,8 @@ class DocxIntendanceGeneratorService
             throw new NotFoundHttpException("Étudiant non trouvé.");
         }
 
-        $templatePath = __DIR__ . '/../../public/templates/Fiche intendance BTS.docx';
-        $outputDocxPath = __DIR__ . '/../../public/generated/Fiche_Intendance_'.$etudiant->getUser()->getNom().'.docx';
+        $templatePath = __DIR__ . '/../../public/templates/formulaire Adhésion MDL.docx';
+        $outputDocxPath = __DIR__ . '/../../public/generated/formulaire_Adhésion_MDL'.$etudiant->getUser()->getNom().'.docx';
 
         // Charger et remplir le modèle Word
         $templateProcessor = new TemplateProcessor($templatePath);
