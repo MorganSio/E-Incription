@@ -25,7 +25,7 @@ class DocxMdlGeneratorService
         }
 
         $templatePath = __DIR__ . '/../../public/templates/formulaire Adhésion MDL.docx';
-        $outputDocxPath = __DIR__ . '/../../public/generated/formulaire_Adhésion_MDL'.$etudiant->getUser()->getNom().'.docx';
+        $outputDocxPath = __DIR__ . '/../../public/generated/formulaire_Adhésion_MDL_'.$etudiant->getUser()->getNom().'.docx';
 
         // Charger et remplir le modèle Word
         $templateProcessor = new TemplateProcessor($templatePath);

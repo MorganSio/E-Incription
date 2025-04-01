@@ -25,7 +25,7 @@ class DocxdossierGeneratorService
         }
 
         $templatePath = __DIR__ . '/../../public/templates/dossier bts.docx';
-        $outputDocxPath = __DIR__ . '/../../public/generated/dossier_bts'.$etudiant->getUser()->getNom().'.docx';
+        $outputDocxPath = __DIR__ . '/../../public/generated/dossier_bts_'.$etudiant->getUser()->getNom().'.docx';
 
         // Charger et remplir le modèle Word
         $templateProcessor = new TemplateProcessor($templatePath);

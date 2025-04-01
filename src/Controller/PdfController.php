@@ -33,7 +33,7 @@ class PdfController extends AbstractController
     }
 
 
-    #[Route('/admin/generer-docx/{id}', name: 'generer_docx_intendance')]
+    #[Route('/admin/generer-docx_intendance/{id}', name: 'generer_docx_intendance')]
     public function generateDocxIntendance(int $id): Response
     {
         try {
@@ -45,7 +45,7 @@ class PdfController extends AbstractController
         }
     }
 
-    #[Route('/admin/generer-docx/{id}', name: 'generer_docx_urgence')]
+    #[Route('/admin/generer-docx_urgence/{id}', name: 'generer_docx_urgence')]
     public function generateDocxUrgence(int $id): Response
     {
         try {
@@ -57,7 +57,7 @@ class PdfController extends AbstractController
         }
     }
 
-    #[Route('/admin/generer-docx/{id}', name: 'generer_docx_mdl')]
+    #[Route('/admin/generer-docx_mdl/{id}', name: 'generer_docx_mdl')]
     public function generateDocxMdl(int $id): Response
     {
         try {
@@ -69,7 +69,7 @@ class PdfController extends AbstractController
         }
     }
 
-    #[Route('/admin/generer-docx/{id}', name: 'generer_docx_dossier')]
+    #[Route('/admin/generer-docx_dossier/{id}', name: 'generer_docx_dossier')]
     public function generateDocx(int $id): Response
     {
         try {

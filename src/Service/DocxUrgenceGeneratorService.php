@@ -25,7 +25,7 @@ class DocxUrgenceGeneratorService
         }
 
         $templatePath = __DIR__ . "/../../public/templates/Fiche d'urgence.docx";
-        $outputDocxPath = __DIR__ . "/../../public/generated/Fiche_d_urgence".$etudiant->getUser()->getNom().'.docx';
+        $outputDocxPath = __DIR__ . "/../../public/generated/Fiche_d_urgence_".$etudiant->getUser()->getNom().'.docx';
 
         // Charger et remplir le modèle Word
         $templateProcessor = new TemplateProcessor($templatePath);

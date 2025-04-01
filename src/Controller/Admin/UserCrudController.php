@@ -41,54 +41,148 @@ class UserCrudController extends AbstractCrudController
         ];
     }
 
+    // public function configureActions(Actions $actions): Actions
+    // {
+    //     $generateDocxIntendanceAction = Action::new('generateDocxIntendance', 'Générer DOCX Intendance')
+    //         ->linkToUrl(function (User $user) {
+    //             $infoEleve = $user->getInfoEleve();
+    //             return $infoEleve ? $this->adminUrlGenerator
+    //                 ->setRoute('generer_docx_intendance', ['id' => $infoEleve->getId()])
+    //                 ->generateUrl() : '#';
+    //         });
+
+    //     return $actions
+    //         ->add(Crud::PAGE_INDEX, $generateDocxIntendanceAction)
+    //         ->add(Crud::PAGE_DETAIL, $generateDocxIntendanceAction);
+
+    //     $generateDocxUrgenceAction = Action::new('generateDocxUrgence', 'Générer DOCX Urgence')
+    //         ->linkToUrl(function (User $user) {
+    //             $infoEleve = $user->getInfoEleve();
+    //             return $infoEleve ? $this->adminUrlGenerator
+    //                 ->setRoute('generer_docx_urgence', ['id' => $infoEleve->getId()])
+    //                 ->generateUrl() : '#';
+    //         });
+
+    //     return $actions
+    //         ->add(Crud::PAGE_INDEX, $generateDocxUrgenceAction)
+    //         ->add(Crud::PAGE_DETAIL, $generateDocxUrgenceAction);
+
+    //     $generateDocxMdlAction = Action::new('generateDocxMdl', 'Générer DOCX Mdl')
+    //         ->linkToUrl(function (User $user) {
+    //             $infoEleve = $user->getInfoEleve();
+    //             return $infoEleve ? $this->adminUrlGenerator
+    //                 ->setRoute('generer_docx_mdl', ['id' => $infoEleve->getId()])
+    //                 ->generateUrl() : '#';
+    //         });
+
+    //     return $actions
+    //         ->add(Crud::PAGE_INDEX, $generateDocxMdlAction)
+    //         ->add(Crud::PAGE_DETAIL, $generateDocxMdlAction);
+
+    //     $generateDocxdossierAction = Action::new('generateDocxDossier', 'Générer DOCX Dossier')
+    //         ->linkToUrl(function (User $user) {
+    //             $infoEleve = $user->getInfoEleve();
+    //             return $infoEleve ? $this->adminUrlGenerator
+    //                 ->setRoute('generer_docx_dosssier', ['id' => $infoEleve->getId()])
+    //                 ->generateUrl() : '#';
+    //         });
+
+    //     return $actions
+    //         ->add(Crud::PAGE_INDEX, $generateDocxdossierAction)
+    //         ->add(Crud::PAGE_DETAIL, $generateDocxdossierAction);
+    // }
+
+
+
+    // public function configureActionsIntendance(Actions $actions): Actions
+    // {
+    //     $generateDocxIntendanceAction = Action::new('generateDocxIntendance', 'Générer DOCX Intendance')
+    //         ->linkToUrl(function (User $user) {
+    //             $infoEleve = $user->getInfoEleve();
+    //             return $infoEleve ? $this->adminUrlGenerator
+    //                 ->setRoute('generer_docx_intendance', ['id' => $infoEleve->getId()])
+    //                 ->generateUrl() : '#';
+    //         });
+
+    //     return $actions
+    //         ->add(Crud::PAGE_INDEX, $generateDocxIntendanceAction)
+    //         ->add(Crud::PAGE_DETAIL, $generateDocxIntendanceAction);
+    // }
+    
+    // public function configureActionsUrgence(Actions $actions): Actions
+    // {
+    //     $generateDocxUrgenceAction = Action::new('generateDocxUrgence', 'Générer DOCX Urgence')
+    //         ->linkToUrl(function (User $user) {
+    //             $infoEleve = $user->getInfoEleve();
+    //             return $infoEleve ? $this->adminUrlGenerator
+    //                 ->setRoute('generer_docx_urgence', ['id' => $infoEleve->getId()])
+    //                 ->generateUrl() : '#';
+    //         });
+
+    //     return $actions
+    //         ->add(Crud::PAGE_INDEX, $generateDocxUrgenceAction)
+    //         ->add(Crud::PAGE_DETAIL, $generateDocxUrgenceAction);
+    // }
+
+    // public function configureActionsMdl(Actions $actions): Actions
+    // {
+    //     $generateDocxMdlAction = Action::new('generateDocxMdl', 'Générer DOCX Mdl')
+    //         ->linkToUrl(function (User $user) {
+    //             $infoEleve = $user->getInfoEleve();
+    //             return $infoEleve ? $this->adminUrlGenerator
+    //                 ->setRoute('generer_docx_mdl', ['id' => $infoEleve->getId()])
+    //                 ->generateUrl() : '#';
+    //         });
+
+    //     return $actions
+    //         ->add(Crud::PAGE_INDEX, $generateDocxMdlAction)
+    //         ->add(Crud::PAGE_DETAIL, $generateDocxMdlAction);
+    // }
+    
+    // public function configureActionsDossier(Actions $actions): Actions
+    // {
+    //     $generateDocxdossierAction = Action::new('generateDocxDossier', 'Générer DOCX Dossier')
+    //         ->linkToUrl(function (User $user) {
+    //             $infoEleve = $user->getInfoEleve();
+    //             return $infoEleve ? $this->adminUrlGenerator
+    //                 ->setRoute('generer_docx_dosssier', ['id' => $infoEleve->getId()])
+    //                 ->generateUrl() : '#';
+    //         });
+
+    //     return $actions
+    //         ->add(Crud::PAGE_INDEX, $generateDocxdossierAction)
+    //         ->add(Crud::PAGE_DETAIL, $generateDocxdossierAction);
+    // }
+
     public function configureActions(Actions $actions): Actions
     {
-        $generateDocxIntendanceAction = Action::new('generateDocxIntendance', 'Générer DOCX Intendance')
-            ->linkToUrl(function (User $user) {
-                $infoEleve = $user->getInfoEleve();
-                return $infoEleve ? $this->adminUrlGenerator
-                    ->setRoute('generer_docx_intendance', ['id' => $infoEleve->getId()])
-                    ->generateUrl() : '#';
-            });
+        $actions = parent::configureActions($actions);
 
         return $actions
-            ->add(Crud::PAGE_INDEX, $generateDocxIntendanceAction)
-            ->add(Crud::PAGE_DETAIL, $generateDocxIntendanceAction);
+            ->add(Crud::PAGE_INDEX, $this->createGenerateDocxAction('generateDocxIntendance', 'Générer DOCX Intendance', 'generer_docx_intendance'))
+            ->add(Crud::PAGE_DETAIL, $this->createGenerateDocxAction('generateDocxIntendance', 'Générer DOCX Intendance', 'generer_docx_intendance'))
 
-        $generateDocxUrgenceAction = Action::new('generateDocxUrgence', 'Générer DOCX Urgence')
-            ->linkToUrl(function (User $user) {
+            ->add(Crud::PAGE_INDEX, $this->createGenerateDocxAction('generateDocxUrgence', 'Générer DOCX Urgence', 'generer_docx_urgence'))
+            ->add(Crud::PAGE_DETAIL, $this->createGenerateDocxAction('generateDocxUrgence', 'Générer DOCX Urgence', 'generer_docx_urgence'))
+
+            ->add(Crud::PAGE_INDEX, $this->createGenerateDocxAction('generateDocxMdl', 'Générer DOCX Mdl', 'generer_docx_mdl'))
+            ->add(Crud::PAGE_DETAIL, $this->createGenerateDocxAction('generateDocxMdl', 'Générer DOCX Mdl', 'generer_docx_mdl'))
+
+            ->add(Crud::PAGE_INDEX, $this->createGenerateDocxAction('generateDocxDossier', 'Générer DOCX Dossier', 'generer_docx_dossier'))
+            ->add(Crud::PAGE_DETAIL, $this->createGenerateDocxAction('generateDocxDossier', 'Générer DOCX Dossier', 'generer_docx_dossier'));
+    }
+
+    private function createGenerateDocxAction(string $actionName, string $label, string $route): Action
+    {
+        return Action::new($actionName, $label)
+            ->linkToUrl(function (User $user) use ($route) {
                 $infoEleve = $user->getInfoEleve();
-                return $infoEleve ? $this->adminUrlGenerator
-                    ->setRoute('generer_docx_urgence', ['id' => $infoEleve->getId()])
-                    ->generateUrl() : '#';
+                if (!$infoEleve) {
+                    return '#';
+                }
+                return $this->adminUrlGenerator
+                    ->setRoute($route, ['id' => $infoEleve->getId()])
+                    ->generateUrl();
             });
-
-        return $actions
-            ->add(Crud::PAGE_INDEX, $generateDocxUrgenceAction)
-            ->add(Crud::PAGE_DETAIL, $generateDocxUrgenceAction);
-
-        $generateDocxMdlAction = Action::new('generateDocxMdl', 'Générer DOCX Mdl')
-            ->linkToUrl(function (User $user) {
-                $infoEleve = $user->getInfoEleve();
-                return $infoEleve ? $this->adminUrlGenerator
-                    ->setRoute('generer_docx_mdl', ['id' => $infoEleve->getId()])
-                    ->generateUrl() : '#';
-            });
-
-        return $actions
-            ->add(Crud::PAGE_INDEX, $generateDocxMdlAction)
-            ->add(Crud::PAGE_DETAIL, $generateDocxMdlAction);
-
-        $generateDocxdossierAction = Action::new('generateDocxDossier', 'Générer DOCX Dossier')
-            ->linkToUrl(function (User $user) {
-                $infoEleve = $user->getInfoEleve();
-                return $infoEleve ? $this->adminUrlGenerator
-                    ->setRoute('generer_docx_dosssier', ['id' => $infoEleve->getId()])
-                    ->generateUrl() : '#';
-            });
-
-        return $actions
-            ->add(Crud::PAGE_INDEX, $generateDocxdossierAction)
-            ->add(Crud::PAGE_DETAIL, $generateDocxdossierAction);
     }
 }
