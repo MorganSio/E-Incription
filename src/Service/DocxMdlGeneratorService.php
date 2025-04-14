@@ -2,11 +2,12 @@
 
 namespace App\Service;
 
+use App\Entity\InfoEleve;
+use App\Entity\Humain;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpOffice\PhpWord\TemplateProcessor;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use App\Entity\InfoEleve;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DocxMdlGeneratorService
 {
@@ -24,56 +25,86 @@ class DocxMdlGeneratorService
             throw new NotFoundHttpException("Étudiant non trouvé.");
         }
 
+        $nom = $etudiant->getUser()?->getNom() ?? 'etudiant';
         $templatePath = __DIR__ . '/../../public/templates/formulaire Adhésion MDL.docx';
-        $outputDocxPath = __DIR__ . '/../../public/generated/formulaire_Adhésion_MDL_'.$etudiant->getUser()->getNom().'.docx';
+        $outputDocxPath = __DIR__ . '/../../public/generated/formulaire_Adhésion_MDL_' . $nom . '.docx';
 
-        // Charger et remplir le modèle Word
         $templateProcessor = new TemplateProcessor($templatePath);
         $this->fillTemplate($templateProcessor, $etudiant);
         $templateProcessor->saveAs($outputDocxPath);
 
-        // Retourner une réponse qui permet le téléchargement du fichier DOCX
         return $this->createDocxDownloadResponse($outputDocxPath);
     }
 
-    private function fillTemplate(TemplateProcessor $templateProcessor, InfoEleve $etudiant)
+    private function fillTemplate(TemplateProcessor $templateProcessor, InfoEleve $etudiant): void
     {
-        // Remplir les informations de l'étudiant
-        $templateProcessor->setValue('etudiant.nom', $etudiant->getUser()->getNom());
-        $templateProcessor->setValue('etudiant.prenom', $etudiant->getUser()->getPrenom());
-        $templateProcessor->setValue('etudiant.date_naissance', $etudiant->getDateDeNaissance() ? $etudiant->getDateDeNaissance()->format('d/m/Y') : 'Non renseigné');
+        $user = $etudiant->getUser();
+
+        // Étudiant
+        $templateProcessor->setValue('etudiant.nom', $user?->getNom() ?? 'Non renseigné');
+        $templateProcessor->setValue('etudiant.prenom', $user?->getPrenom() ?? 'Non renseigné');
+        $templateProcessor->setValue('etudiant.date_naissance', $etudiant->getDateDeNaissance()?->format('d/m/Y') ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.classe', $etudiant->getClasse() ?? 'Non renseigné');
+        $templateProcessor->setValue('etudiant.mail', $user?->getEmail() ?? 'Non renseigné');
 
-        // Remplir les informations du responsable légal
-        $responsableLegal = $etudiant->getResponsableUn() ?? $etudiant;
-        $this->setResponsableValues($templateProcessor, 'representant', $responsableLegal);
+        // Téléphone & email depuis Humain (User hérite de Humain)
+        if ($user instanceof \App\Entity\Humain) {
+            $templateProcessor->setValue('etudiant.tel', $user->getTelephonePerso() ?? 'Non renseigné');
+        } else {
+            $templateProcessor->setValue('etudiant.tel', 'Non renseigné');
+        }
 
-        // Remplir les informations du responsable financier
-        if ($etudiant->getResponsableUn()) {
-            $this->setResponsableValues($templateProcessor, 'responsable_financier', $etudiant->getResponsableUn());
+        // === Photo de l'étudiant ===
+        if ($etudiant->getPhotoIdentite()) {
+            $photoPath = $this->convertBlobToImage($etudiant->getPhotoIdentite(), 'photo_identite.jpg');
+            $templateProcessor->setImageValue('etudiant.photo', [
+                'path' => $photoPath,
+                'width' => 120,
+                'height' => 120,
+                'ratio' => true
+            ]);
+        }
+
+        // === Choix du représentant en fonction de l'âge ===
+        $aujourdHui = new \DateTimeImmutable();
+        $dateNaissance = $etudiant->getDateDeNaissance();
+        $age = $dateNaissance ? $dateNaissance->diff($aujourdHui)->y : null;
+
+        $representant = ($age !== null && $age >= 18)
+            ? $etudiant // majeur = lui-même
+            : ($etudiant->getResponsableUn() ?: $etudiant); // sinon représentant (ou fallback sur lui-même)
+
+        $this->setRepresentantValues($templateProcessor, 'represantant', $representant);
+    }
+
+    private function setRepresentantValues(TemplateProcessor $templateProcessor, string $prefix, $source): void
+    {
+        if ($source instanceof InfoEleve) {
+            $user = $source->getUser();
+
+            if ($user instanceof Humain) {
+                $templateProcessor->setValue("{$prefix}.nom", $user->getNom() ?? 'Non renseigné');
+                $templateProcessor->setValue("{$prefix}.adresse", $user->getAdresse() ?? 'Non renseigné');
+            } else {
+                $templateProcessor->setValue("{$prefix}.nom", 'Non renseigné');
+                $templateProcessor->setValue("{$prefix}.adresse", 'Non renseigné');
+            }
+        } else {
+            $templateProcessor->setValue("{$prefix}.nom", $source->getNom() ?? 'Non renseigné');
+            $templateProcessor->setValue("{$prefix}.adresse", $source->getAdresse() ?? 'Non renseigné');
         }
     }
 
-    private function setResponsableValues(TemplateProcessor $templateProcessor, string $prefix, $responsable)
+    private function convertBlobToImage($blobData, string $filename): string
     {
-        if (!$responsable || !method_exists($responsable, 'getUser')) {
-            return;
-        }
-
-        $templateProcessor->setValue("{$prefix}.nom", $responsable->getUser()->getNom());
-        $templateProcessor->setValue("{$prefix}.prenom", $responsable->getUser()->getPrenom());
-        $templateProcessor->setValue("{$prefix}.adresse", method_exists($responsable, 'getAdresse') ? $responsable->getAdresse() : 'Non renseigné');
-        $templateProcessor->setValue("{$prefix}.code_postal", method_exists($responsable, 'getCodePostal') ? $responsable->getCodePostal() : 'Non renseigné');
-        $templateProcessor->setValue("{$prefix}.ville", method_exists($responsable, 'getVille') ? $responsable->getVille() : 'Non renseigné');
-        $templateProcessor->setValue("{$prefix}.telephone", method_exists($responsable, 'getTelephone') ? $responsable->getTelephone() : 'Non renseigné');
-        $templateProcessor->setValue("{$prefix}.email", method_exists($responsable, 'getEmail') ? $responsable->getEmail() : 'Non renseigné');
-        $templateProcessor->setValue("{$prefix}.nom_employeur", method_exists($responsable, 'getNomEmployeur') ? $responsable->getNomEmployeur() : 'Non renseigné');
-        $templateProcessor->setValue("{$prefix}.adresse_employeur", method_exists($responsable, 'getAdresseEmployeur') ? $responsable->getAdresseEmployeur() : 'Non renseigné');
+        $tmpDir = sys_get_temp_dir();
+        $filePath = $tmpDir . DIRECTORY_SEPARATOR . uniqid($filename);
+        file_put_contents($filePath, stream_get_contents($blobData));
+        return $filePath;
     }
 
     private function createDocxDownloadResponse(string $filePath): BinaryFileResponse
     {
-        // Créer une réponse HTTP pour le téléchargement du fichier DOCX
         return new BinaryFileResponse($filePath, 200, [
             'Content-Type' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
             'Content-Disposition' => 'attachment; filename="' . basename($filePath) . '"',

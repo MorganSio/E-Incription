@@ -28,6 +28,9 @@ class InfoEleve
     private ?string $departement = null;
 
     #[ORM\Column(length: 50, nullable: true)]
+    private ?string $communenaissance = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
     private ?string $nom_contacte_urgence = null;
 
     #[ORM\Column(length: 50, nullable: true)]
@@ -50,6 +53,9 @@ class InfoEleve
 
     #[ORM\Column(nullable: true)]
     private ?bool $redoublant = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $dernier_diplome = null;
 
     #[ORM\Column(type: Types::BLOB, nullable: true)]
     private $carte_vitale = null;
@@ -183,6 +189,18 @@ class InfoEleve
         return $this;
     }
 
+    public function getCommuneNaissance(): ?string
+    {
+        return $this->communenaissance;
+    }
+
+    public function setCommuneNaissance(?string $commune): static
+    {
+        $this->communenaissance = $commune;
+
+        return $this;
+    }
+
     public function getNomContacteUrgence(): ?string
     {
         return $this->nom_contacte_urgence;
@@ -275,6 +293,18 @@ class InfoEleve
     public function setRedoublant(?bool $redoublant): static
     {
         $this->redoublant = $redoublant;
+
+        return $this;
+    }
+
+    public function getDernierDiplome(): ?string
+    {
+        return $this->dernier_diplome;
+    }
+
+    public function setDernierDiplome(?string $dernier_diplome): static
+    {
+        $this->dernier_diplome = $dernier_diplome;
 
         return $this;
     }

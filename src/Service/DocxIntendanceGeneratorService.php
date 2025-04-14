@@ -2,11 +2,11 @@
 
 namespace App\Service;
 
+use App\Entity\InfoEleve;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpOffice\PhpWord\TemplateProcessor;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use App\Entity\InfoEleve;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DocxIntendanceGeneratorService
 {
@@ -24,56 +24,54 @@ class DocxIntendanceGeneratorService
             throw new NotFoundHttpException("Étudiant non trouvé.");
         }
 
+        $nom = $etudiant->getUser()?->getNom() ?? 'etudiant';
         $templatePath = __DIR__ . '/../../public/templates/Fiche intendance BTS.docx';
-        $outputDocxPath = __DIR__ . '/../../public/generated/Fiche_Intendance_'.$etudiant->getUser()->getNom().'.docx';
+        $outputDocxPath = __DIR__ . '/../../public/generated/Fiche_Intendance_' . $nom . '.docx';
 
-        // Charger et remplir le modèle Word
         $templateProcessor = new TemplateProcessor($templatePath);
         $this->fillTemplate($templateProcessor, $etudiant);
         $templateProcessor->saveAs($outputDocxPath);
 
-        // Retourner une réponse qui permet le téléchargement du fichier DOCX
         return $this->createDocxDownloadResponse($outputDocxPath);
     }
 
-    private function fillTemplate(TemplateProcessor $templateProcessor, InfoEleve $etudiant)
+    private function fillTemplate(TemplateProcessor $templateProcessor, InfoEleve $etudiant): void
     {
-        // Remplir les informations de l'étudiant
-        $templateProcessor->setValue('etudiant.nom', $etudiant->getUser()->getNom());
-        $templateProcessor->setValue('etudiant.prenom', $etudiant->getUser()->getPrenom());
-        $templateProcessor->setValue('etudiant.date_naissance', $etudiant->getDateDeNaissance() ? $etudiant->getDateDeNaissance()->format('d/m/Y') : 'Non renseigné');
+        $user = $etudiant->getUser();
+
+        // Étudiant
+        $templateProcessor->setValue('etudiant.nom', $user?->getNom() ?? 'Non renseigné');
+        $templateProcessor->setValue('etudiant.prenom', $user?->getPrenom() ?? 'Non renseigné');
+        $templateProcessor->setValue('etudiant.date_naissance', $etudiant->getDateDeNaissance()?->format('d/m/Y') ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.classe', $etudiant->getClasse() ?? 'Non renseigné');
 
-        // Remplir les informations du responsable légal
-        $responsableLegal = $etudiant->getResponsableUn() ?? $etudiant;
-        $this->setResponsableValues($templateProcessor, 'representant', $responsableLegal);
-
-        // Remplir les informations du responsable financier
-        if ($etudiant->getResponsableUn()) {
-            $this->setResponsableValues($templateProcessor, 'responsable_financier', $etudiant->getResponsableUn());
+        // Représentant légal 1 = Responsable financier
+        $responsable = $etudiant->getResponsableUn();
+        if ($responsable) {
+            $this->setResponsableValues($templateProcessor, 'representant', $responsable);
+            $this->setResponsableValues($templateProcessor, 'representant_financier', $responsable);
         }
     }
 
-    private function setResponsableValues(TemplateProcessor $templateProcessor, string $prefix, $responsable)
+    private function setResponsableValues(TemplateProcessor $templateProcessor, string $prefix, $responsable): void
     {
-        if (!$responsable || !method_exists($responsable, 'getUser')) {
+        if (!$responsable) {
             return;
         }
 
-        $templateProcessor->setValue("{$prefix}.nom", $responsable->getUser()->getNom());
-        $templateProcessor->setValue("{$prefix}.prenom", $responsable->getUser()->getPrenom());
-        $templateProcessor->setValue("{$prefix}.adresse", method_exists($responsable, 'getAdresse') ? $responsable->getAdresse() : 'Non renseigné');
-        $templateProcessor->setValue("{$prefix}.code_postal", method_exists($responsable, 'getCodePostal') ? $responsable->getCodePostal() : 'Non renseigné');
-        $templateProcessor->setValue("{$prefix}.ville", method_exists($responsable, 'getVille') ? $responsable->getVille() : 'Non renseigné');
-        $templateProcessor->setValue("{$prefix}.telephone", method_exists($responsable, 'getTelephone') ? $responsable->getTelephone() : 'Non renseigné');
-        $templateProcessor->setValue("{$prefix}.email", method_exists($responsable, 'getEmail') ? $responsable->getEmail() : 'Non renseigné');
-        $templateProcessor->setValue("{$prefix}.nom_employeur", method_exists($responsable, 'getNomEmployeur') ? $responsable->getNomEmployeur() : 'Non renseigné');
-        $templateProcessor->setValue("{$prefix}.adresse_employeur", method_exists($responsable, 'getAdresseEmployeur') ? $responsable->getAdresseEmployeur() : 'Non renseigné');
+        $templateProcessor->setValue("{$prefix}.nom", $responsable->getNom() ?? 'Non renseigné');
+        $templateProcessor->setValue("{$prefix}.prenom", $responsable->getPrenom() ?? 'Non renseigné');
+        $templateProcessor->setValue("{$prefix}.adresse", $responsable->getAdresse() ?? 'Non renseigné');
+        $templateProcessor->setValue("{$prefix}.code_postal", $responsable->getCodePostal() ?? 'Non renseigné');
+        $templateProcessor->setValue("{$prefix}.ville", $responsable->getCommune() ?? 'Non renseigné');
+        $templateProcessor->setValue("{$prefix}.telephone", $responsable->getTelephoneFixe() ?? 'Non renseigné');
+        $templateProcessor->setValue("{$prefix}.email", $responsable->getCourriel() ?? 'Non renseigné');
+        $templateProcessor->setValue("{$prefix}.nom_employeur", $responsable->getNomEmployeur() ?? 'Non renseigné');
+        $templateProcessor->setValue("{$prefix}.adresse_employeur", $responsable->getAdresseEmployeur() ?? 'Non renseigné');
     }
 
     private function createDocxDownloadResponse(string $filePath): BinaryFileResponse
     {
-        // Créer une réponse HTTP pour le téléchargement du fichier DOCX
         return new BinaryFileResponse($filePath, 200, [
             'Content-Type' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
             'Content-Disposition' => 'attachment; filename="' . basename($filePath) . '"',
