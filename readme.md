@@ -94,22 +94,19 @@ sudo nano /etc/nginx/sites-available/e-inscription
 
 # Contenu exemple :
 
+
 server {
     listen 80;
     server_name your-domain.com;
-
     root /var/www/E-Incription/public;
     index index.php index.html;
-
     location / {
         try_files $uri /index.php$is_args$args;
     }
-
     location ~ \.php$ {
         include snippets/fastcgi-php.conf;
         fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
     }
-
     location ~ /\.ht {
         deny all;
     }
