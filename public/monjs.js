@@ -41,8 +41,8 @@ document.addEventListener('DOMContentLoaded', function () {
  
             // Si "Oui" est sélectionné, afficher la deuxième section
             if (acceptYes) {
-                document.getElementById('intFirst').style.display = 'none';
-                document.getElementById('intSecond').style.display = 'block';
+                document.getElementById('mdlFirst').style.display = 'none';
+                document.getElementById('mdlSecond').style.display = 'block';
             }
  
             // Si "Non" est sélectionné, afficher une alerte et rester sur intFirst
