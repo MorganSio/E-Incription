@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Ajoute la logique de traitement des valeurs ici (ex : envoyer à un serveur, validation, etc.)
     }
 });
+
  
 // Form mdl
 document.addEventListener('DOMContentLoaded', function () {
