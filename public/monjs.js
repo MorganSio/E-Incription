@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+ 
 // Form mdl
 document.addEventListener('DOMContentLoaded', function () {
     // Gestion du bouton de validation de la première section
@@ -139,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
  
-// Form représentant légal 
+// Form représentant légal
 document.addEventListener("DOMContentLoaded", function () {
     console.log("JavaScript chargé, vérification des formulaires...");
  
@@ -167,20 +168,20 @@ document.addEventListener("DOMContentLoaded", function () {
  
             let formData = new FormData(form);
             let data = {};
-            
+           
             console.log(form);
             data['repNumber']=index
-
-
+ 
+ 
             formData.forEach((value, key) => {
                 data[key] = value;
             });
-
+ 
             if (typeof data["lien"+index] !== 'undefined' && data["lien"+index] == "autre" )
             {
                 data["lien"+index] = data["preciser"+index];
             }
-
+ 
             // data["addresse"+index] = data["addresse-voie"+index]+data["postal-code"+index]+data["addresse-city"+index]
  
             console.log("Données du formulaire envoyées :", data);
@@ -202,7 +203,7 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .catch(error => {
                 console.error("Erreur d'envoi des données :", error);
-                
+               
                 alert("Erreur de connexion avec le serveur.");
             });
         });
