@@ -19,5 +19,12 @@ services:
             $connection: '@doctrine.dbal.default_connection'
         tags:
             - { name: 'console.command' }
+    
+    # App\Service\PdfGeneratorService:
+    #     arguments:
+    #         $mpdf: '@mpdf'
+
+    # mpdf:
+    #     class: Mpdf\Mpdf
 parameters:
     upload_directory: '%kernel.project_dir%/public/uploads'

@@ -157,7 +157,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getInfoEleve(): InfoEleve
+    public function getInfoEleve(): ?InfoEleve
     {
         return $this->infoEleve;
     }

@@ -28,10 +28,13 @@
                 <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
                 <td>
                     <a href="{{ path('app_user_show', {'id': user.id}) }}">show</a>
+
                     <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
                     <a class="btn btn-success" href="{{ path('generer_pdf', { id: user.id }) }}">
                         Télécharger PDF
                     </a>
+                    {# <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a> #}
+
                     <a href="{{ path('generer_pdf', { id: user.id }) }}">Télécharger PDF</a>
                 </td>
             </tr>
