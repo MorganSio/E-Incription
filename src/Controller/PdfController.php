@@ -2,76 +2,82 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
-use App\Entity\Humain;
-use App\Entity\RepresentantLegal;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Service\DocxIntendanceGeneratorService;
+use App\Service\DocxUrgenceGeneratorService;
+use App\Service\DocxMdlGeneratorService;
+use App\Service\DocxdossierGeneratorService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use setasign\Fpdi\Fpdi;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PdfController extends AbstractController
 {
-    #[Route('/admin/generer-pdf/{id}', name: 'generer_pdf')]
-    public function genererPdf(int $id, EntityManagerInterface $entityManager): Response
+    // #[Route('/admin/generer-pdf/{id}', name: 'generer_pdf')]
+    // public function generatePdf(int $id, PdfFillerService $pdfFillerService): Response
+    // {
+    //     return $pdfFillerService->generatePdf($id);
+    // }
+
+    private DocxIntendanceGeneratorService $docxIntendanceGeneratorService;
+    private DocxUrgenceGeneratorService $docxUrgenceGeneratorService;
+    private DocxMdlGeneratorService $docxMdlGeneratorService;
+    private DocxdossierGeneratorService $docxdossierGeneratorService;
+
+    public function __construct(DocxIntendanceGeneratorService $docxIntendanceGeneratorService, DocxUrgenceGeneratorService $docxUrgenceGeneratorService, DocxMdlGeneratorService $docxMdlGeneratorService, DocxdossierGeneratorService $docxdossierGeneratorService) 
     {
-        $user = $entityManager->getRepository(User::class)->find($id);
-        if (!$user) {
-            throw $this->createNotFoundException('Utilisateur non trouvé.');
+
+        $this->docxIntendanceGeneratorService = $docxIntendanceGeneratorService;
+        $this->docxUrgenceGeneratorService = $docxUrgenceGeneratorService;
+        $this->docxMdlGeneratorService = $docxMdlGeneratorService;
+        $this->docxdossierGeneratorService = $docxdossierGeneratorService;
+    }
+
+
+    #[Route('/admin/generer-docx_intendance/{id}', name: 'generer_docx_intendance')]
+    public function generateDocxIntendance(int $id): Response
+    {
+        try {
+            // Appeler la méthode du service pour générer le fichier DOCX
+            return $this->docxIntendanceGeneratorService->generateDocx($id);
+        } catch (\Exception $e) {
+            // Gestion des erreurs
+            return new Response("Erreur lors de la génération du fichier DOCX : " . $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
 
-        $etudiant = $entityManager->getRepository(Humain::class)->findOneBy(['user' => $user]);
-        $representant = $entityManager->getRepository(RepresentantLegal::class)->findOneBy(['etudiant' => $etudiant]);
-
-        if (!$etudiant || !$representant) {
-            throw $this->createNotFoundException('Données manquantes pour cet utilisateur.');
+    #[Route('/admin/generer-docx_urgence/{id}', name: 'generer_docx_urgence')]
+    public function generateDocxUrgence(int $id): Response
+    {
+        try {
+            // Appeler la méthode du service pour générer le fichier DOCX
+            return $this->docxUrgenceGeneratorService->generateDocx($id);
+        } catch (\Exception $e) {
+            // Gestion des erreurs
+            return new Response("Erreur lors de la génération du fichier DOCX : " . $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
 
-        $pdfPath = $this->getParameter('kernel.project_dir') . '/public/pdf/dossier_bts.pdf';
-        $pdf = new Fpdi();
-        $pdf->AddPage();
-        $pdf->setSourceFile($pdfPath);
-        $tplIdx = $pdf->importPage(1);
-        $pdf->useTemplate($tplIdx, 0, 0, 210);
+    #[Route('/admin/generer-docx_mdl/{id}', name: 'generer_docx_mdl')]
+    public function generateDocxMdl(int $id): Response
+    {
+        try {
+            // Appeler la méthode du service pour générer le fichier DOCX
+            return $this->docxMdlGeneratorService->generateDocx($id);
+        } catch (\Exception $e) {
+            // Gestion des erreurs
+            return new Response("Erreur lors de la génération du fichier DOCX : " . $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 
-        $pdf->SetFont('Arial', '', 10);
-        $pdf->SetTextColor(0, 0, 0);
-
-        $pdf->SetXY(50, 50);
-        $pdf->Write(10, "Nom : " . $user->getNom());
-
-        $pdf->SetXY(50, 60);
-        $pdf->Write(10, "Email : " . $user->getEmail());
-
-        $pdf->SetXY(50, 70);
-        $pdf->Write(10, "N° Sécurité Sociale : " . $etudiant->getNumSecuriteSociale());
-
-        $pdf->SetXY(50, 80);
-        $pdf->Write(10, "Nationalité : " . $etudiant->getNationalite());
-
-        $pdf->SetXY(50, 90);
-        $pdf->Write(10, "Téléphone Mobile : " . $etudiant->getTelephoneMobile());
-
-        $pdf->SetXY(50, 100);
-        $pdf->Write(10, "Date de naissance : " . $etudiant->getDateNaissance()->format('d/m/Y'));
-
-        $pdf->SetXY(50, 140);
-        $pdf->Write(10, "Nom Resp. : " . $representant->getNom());
-
-        $pdf->SetXY(50, 150);
-        $pdf->Write(10, "Prénom Resp. : " . $representant->getPrenom());
-
-        $pdf->SetXY(50, 160);
-        $pdf->Write(10, "Adresse : " . $representant->getAdresse());
-
-        $pdf->SetXY(50, 180);
-        $pdf->Write(10, "Téléphone Resp. : " . $representant->getTelephoneMobile());
-
-        $pdfFilename = 'dossier_etudiant_' . $user->getId() . '.pdf';
-        $pdfOutputPath = $this->getParameter('kernel.project_dir') . '/public/generated_pdfs/' . $pdfFilename;
-        $pdf->Output($pdfOutputPath, 'F');
-
-        return $this->file($pdfOutputPath, $pdfFilename, Response::HTTP_OK);
+    #[Route('/admin/generer-docx_dossier/{id}', name: 'generer_docx_dossier')]
+    public function generateDocx(int $id): Response
+    {
+        try {
+            // Appeler la méthode du service pour générer le fichier DOCX
+            return $this->docxdossierGeneratorService->generateDocx($id);
+        } catch (\Exception $e) {
+            // Gestion des erreurs
+            return new Response("Erreur lors de la génération du fichier DOCX : " . $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }

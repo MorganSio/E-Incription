@@ -13,13 +13,16 @@ use Symfony\Component\DomCrawler\Form;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\VarDumper\Cloner\Data;
+use App\Entity\User;
 
 class FicheUrgenceController extends AbstractController
 {
     #[Route('fiche-urgence', name: 'fiche-urgence')]
     public function ficheUrgence(Request $request,EntityManagerInterface $entityManagerInterface): Response
     {
+        //dd($this->getUser());
         $infoUser = $this->getUser()->getInfoEleve();
+
         $secuSocial = null;
 
         $assurance = null;

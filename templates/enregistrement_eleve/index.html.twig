@@ -69,18 +69,28 @@
                                                     <fieldset class="fr-fieldset">
                                                         <!-- REPRÉSENTANT LÉGAL -->
                                                         <fieldset class="fr-fieldset">
+
                                                             <div class="fr-fieldset__element">
                                                                 <h3 class="fr-h5">Étudiant en représentant légal</h3>
-                                                                <p class="fr-text">Autorisez-vous la communication de votre adresse aux associations de parents d'élèves ?</p>
+                                                                <p class="fr-text">Voulez-vous être votre propre représentant légal ?</p>
                                                                 <div class="fr-radio-group">
                                                                     <input type="radio" id="autorisation_oui" name="autorisation" value="oui">
-                                                                    <label class="fr-label" for="autorisation_oui">Oui</label>
+                                                                    <label class="fr-label" for="autorisation_oui">Je me représente moi meme</label>
                                                                 </div>
                                                                 <p>
                                                                 <div class="fr-radio-group">
                                                                     <input type="radio" id="autorisation_non" name="autorisation" value="non">
-                                                                    <label class="fr-label" for="autorisation_non">Non</label>
+                                                                    <label class="fr-label" for="autorisation_non">Autres représentants légaux (Représentant Légal 1)</label>
                                                                 </div>
+                                                            </div>
+
+                                                            <div class="fr-fieldset__element">
+                                                                <h3 class="fr-h5">Étudiant en représentant légal</h3>
+                                                                <label class="fr-label" for="student-legal">Autorisez-vous la communication de votre adresse aux associations de parents d'élèves ?</label>
+                                                                <select class="fr-select" id="student-legal" name="student-legal">
+                                                                    <option value="non">Non</option>
+                                                                    <option value="oui">Oui</option>
+                                                                </select>
                                                             </div>
 
                                                             <div class="fr-fieldset__element">
