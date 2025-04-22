@@ -1,17 +1,17 @@
-📋 E-Inscription
-Bienvenue dans E-Inscription, un projet Symfony permettant la gestion des inscriptions via une interface web. Ce projet utilise Symfony comme framework principal et Doctrine ORM pour l’interaction avec une base de données PostgreSQL.
+## 📋 E-Inscription
+# Bienvenue dans E-Inscription, un projet Symfony permettant la gestion des inscriptions via une interface web. Ce projet utilise Symfony comme framework principal et Doctrine ORM pour l’interaction avec une base de données PostgreSQL.
 
-🚀 Fonctionnalités principales
-Gestion des utilisateurs
+## 🚀 Fonctionnalités principales
+# Gestion des utilisateurs
 
-Interface d’inscription en ligne
+# Interface d’inscription en ligne
 
-Interaction avec une base de données PostgreSQL
+# Interaction avec une base de données PostgreSQL
 
-Architecture MVC avec Symfony
+# Architecture MVC avec Symfony
 
-✅ Prérequis
-Assurez-vous d’avoir les éléments suivants installés :
+## ✅ Prérequis
+# Assurez-vous d’avoir les éléments suivants installés :
 
 PHP >= 7.4
 Composer
@@ -21,39 +21,39 @@ Symfony CLI (recommandé)
 
 
 
-🛠️ Installation en local
-1. Cloner le dépôt
+## 🛠️ Installation en local
+## 1. Cloner le dépôt
 
 git clone https://github.com/MorganSio/E-Incription.git
 cd E-Incription
 
 
-2. Installer les dépendances
+## 2. Installer les dépendances
 
 composer install
 
 
-3. Configurer la base de données
-Modifiez le fichier .env à la racine du projet :
+## 3. Configurer la base de données
+# Modifiez le fichier .env à la racine du projet :
 
 DATABASE_URL="postgresql://votre_user:votre_motdepasse@localhost:5432/E-Inscription?serverVersion=15.8&charset=utf8"
 
 
-4. Vérifier la connexion à la base de données
+## 4. Vérifier la connexion à la base de données
 
 php bin/console app:check-database-connection
 
 
-5. Démarrer le serveur de développement
+## 5. Démarrer le serveur de développement
 
 symfony server:start
 
 
-🌐 Déploiement sur un serveur distant (Linux - Ubuntu recommandé)
-Voici les étapes pour installer l'application et la base de données sur un serveur distant.
+## 🌐 Déploiement sur un serveur distant (Linux - Ubuntu recommandé)
+# Voici les étapes pour installer l'application et la base de données sur un serveur distant.
 
 
-1. Installer les dépendances nécessaires
+## 1. Installer les dépendances nécessaires
 
 sudo apt update && sudo apt install -y \
     php php-cli php-mbstring php-xml php-curl php-pgsql php-intl \
@@ -61,7 +61,7 @@ sudo apt update && sudo apt install -y \
     composer
 
 
-2. Cloner le dépôt et configurer le projet
+## 2. Cloner le dépôt et configurer le projet
 
 cd /var/www/
 sudo git clone https://github.com/MorganSio/E-Incription.git
@@ -69,30 +69,30 @@ cd E-Incription
 composer install
 
 
-3. Configurer la base de données PostgreSQL
-Créer un utilisateur et une base :
+## 3. Configurer la base de données PostgreSQL
+# Créer un utilisateur et une base :
 
 sudo -u postgres createuser euser -P
 sudo -u postgres createdb e_inscription -O euser
 
 
-Mettre à jour le fichier .env :
+# Mettre à jour le fichier .env :
 
 DATABASE_URL="postgresql://euser:motdepasse@127.0.0.1:5432/e_inscription?serverVersion=15.8&charset=utf8"
 
 
-4. Vérifier la connexion
+## 4. Vérifier la connexion
 
 php bin/console app:check-database-connection
 
 
-5. Configurer Nginx
-Créer un fichier de configuration Nginx :
+## 5. Configurer Nginx
+# Créer un fichier de configuration Nginx :
 
 sudo nano /etc/nginx/sites-available/e-inscription
 
 
-Contenu exemple :
+# Contenu exemple :
 
 server {
     listen 80;
@@ -116,19 +116,19 @@ server {
 }
 
 
-Activer le site et recharger Nginx :
+# Activer le site et recharger Nginx :
 
 sudo ln -s /etc/nginx/sites-available/e-inscription /etc/nginx/sites-enabled/
 sudo systemctl reload nginx
 
 
-6. Lancer les migrations et créer le schéma
+## 6. Lancer les migrations et créer le schéma
 
 php bin/console doctrine:migrations:migrate
 
 
-📦 Autres commandes utiles
-Lancer les tests :
+## 📦 Autres commandes utiles
+# Lancer les tests :
 
 php bin/phpunit
 
