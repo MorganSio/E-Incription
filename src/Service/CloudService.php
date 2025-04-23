@@ -2,47 +2,36 @@
 
 namespace App\Service;
 
-use CloudConvert\CloudConvert;
-use CloudConvert\Models\Job;
-use CloudConvert\Models\Task;
-
 class CloudService
 {
-    private CloudConvert $cloudconvert;
+    private string $sofficePath;
 
-    public function __construct(string $cloudconvertApiKey)
+    public function __construct(string $sofficePath)
     {
-        $this->cloudconvert = new CloudConvert([
-            'api_key' => $cloudconvertApiKey,
-            'sandbox' => false
-        ]);
+        $this->sofficePath = $sofficePath;
     }
 
-    public function convertDocxToPdf(string $filePath): string
+    public function convert(string $docxPath, string $outputDir): string
     {
-        $job = new Job();
+        if (!file_exists($docxPath)) {
+            throw new \Exception("Fichier DOCX introuvable : $docxPath");
+        }
 
-        $job->addTask(new Task('import/upload', 'upload-task'));
-        $job->addTask(
-            (new Task('convert', 'convert-task'))
-                ->set('input', 'upload-task')
-                ->set('input_format', 'docx')
-                ->set('output_format', 'pdf')
-        );
-        $job->addTask(
-            (new Task('export/url', 'export-task'))
-                ->set('input', 'convert-task')
+        $outputDir = rtrim($outputDir, '\\/');
+        $command = sprintf(
+            '"%s" --headless --convert-to pdf --outdir "%s" "%s"',
+            $this->sofficePath,
+            $outputDir,
+            $docxPath
         );
 
-        $job = $this->cloudconvert->jobs()->create($job);
+        exec($command, $output, $returnCode);
 
-        $uploadTask = $job->getTasks()->whereName('upload-task')[0];
-        $this->cloudconvert->tasks()->upload($uploadTask, fopen($filePath, 'r'));
+        if ($returnCode !== 0) {
+            throw new \Exception("Erreur conversion : " . implode("\n", $output));
+        }
 
-        $exportTask = $this->cloudconvert->tasks()->wait(
-            $job->getTasks()->whereName('export-task')[0]
-        );        
-
-        return $exportTask->getResult()->files[0]->url;
+        $outputFilename = pathinfo($docxPath, PATHINFO_FILENAME) . '.pdf';
+        return $outputDir . DIRECTORY_SEPARATOR . $outputFilename;
     }
 }
