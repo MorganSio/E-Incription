@@ -22,9 +22,13 @@ class EnregistrementEleveController extends AbstractController
     #[Route('/info-eleve', name: 'fiche-etudiant')]
     public function index(): Response
     {
+        
+    // dd("2025-04-24");
+    // dd(\DateTime::createFromFormat("Y-m-d","2025-04-24"));
         return $this->render('enregistrement_eleve/index.html.twig', [
             'controller_name' => 'EnregistrementEleveController',
         ]);
+
     }
     
     #[Route('/info-eleve/save' ,name: 'save_info_eleve', methods: ['POST'])]
@@ -204,7 +208,7 @@ class EnregistrementEleveController extends AbstractController
             if ($data["student-birth-dept"] != "") {
                 $infoEleve->setDepartement($data["student-birth-city"]);
             }
-            return new JsonResponse(['success' => false, 'message' => 'DEBUG '. /**/$data["student-birthdate"] /*\DateTime::createFromFormat("y-m-d",$data["student-birthdate"])/**/], 400);
+            return new JsonResponse(['success' => false, 'message' => 'DEBUG '. \DateTime::createFromFormat("Y-m-d",$data["student-birthdate"]) ], 400);
             if ($data["student-birthdate"] != "") {
                 $infoEleve->setDateDeNaissance($data["student-birthdate"]);
             }
