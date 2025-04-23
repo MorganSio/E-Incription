@@ -2,12 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Classe;
 use App\Entity\User;
 use App\Entity\Langues;
 use App\Entity\InfoEleve;
 use App\Entity\RepresentantLegal;
 use App\Entity\ScolariteAnterieur;
 use App\Repository\LanguesRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -58,11 +60,12 @@ class EnregistrementEleveController extends AbstractController
 
             { // langues
                 $label = $data["lv1-1"] ;
+                $langueRepo = $entityManager->getRepository(get_class(new Langues));
                 if (!$label = ""){
-                    $langue = $entityManager->getRepository("Langues")->findOneBy(array("label" => $label ));
-                    
+                    $langue = $langueRepo->findOneBy(array("label" => $label ));
                     if(is_null($langue)){
                         $langue = new Langues();
+                        $langue->setLabel($label);
                         $entityManager->persist($langue);
                     }
                     if ($anneScolaireUn->getLVUn() instanceof Langues) {
@@ -78,7 +81,7 @@ class EnregistrementEleveController extends AbstractController
 
                 $label = $data["lv1-2"] ;
                 if (!$label = ""){
-                    $langue = $entityManager->getRepository("Langues")->findOneBy(array("label" => $label ));
+                    $langue = $langueRepo->findOneBy(array("label" => $label ));
                     
                     if(is_null($langue)){
                         $langue = new Langues();
@@ -98,7 +101,7 @@ class EnregistrementEleveController extends AbstractController
 
                 $label = $data["lv2-1"] ;
                 if (!$label = ""){
-                    $langue = $entityManager->getRepository("Langues")->findOneBy(array("label" => $label ));
+                    $langue = $langueRepo->findOneBy(array("label" => $label ));
                     
                     if(is_null($langue)){
                         $langue = new Langues();
@@ -118,7 +121,7 @@ class EnregistrementEleveController extends AbstractController
 
                 $label = $data["lv2-2"] ;
                 if (!$label = ""){
-                    $langue = $entityManager->getRepository("Langues")->findOneBy(array("label" => $label ));
+                    $langue = $langueRepo->findOneBy(array("label" => $label ));
                     
                     if(is_null($langue)){
                         $langue = new Langues();
@@ -135,7 +138,26 @@ class EnregistrementEleveController extends AbstractController
                         $anneScolaireDeux->setLVDeux($langue);
                     }
                 }
+
+                $label = $data["student-lv1"];
+                if ($label != "") {
+                    $langue = $langueRepo->findOneBy(array("label" => $label ));
+                    
+                    if(is_null($langue)){
+                        return new JsonResponse(['success' => false, 'message' => "LV1 pour l'annee a venir non valide"],400);
+                    }
+                    $infoEleve->setLVUn($langue);
+                }
+                $label = $data["student-lv2"];
+                if ($label != "") {
+                    $langue = $langueRepo->findOneBy(array("label" => $label ));
+                    if(is_null($langue)){
+                        return new JsonResponse(['success' => false, 'message' => "LV2 pour l'annee a venir non valide"],400);
+                    }
+                    $infoEleve->setLVDeux($langue);
+                }
             }
+
             if ($data["annee-1"] != ""){
                 $anneScolaireUn->setAnneScolaire($data["annee-1"]);
             }
@@ -164,8 +186,7 @@ class EnregistrementEleveController extends AbstractController
             }
 
             if ($data["last-certif"] != "") {
-                // $infoEleve->$data["last-certif"]);
-                // data missing in entity
+                $infoEleve->setDernierDiplome($data["last-certif"]);
             }
             if ($data["option-1"] != "") {
                 $anneScolaireUn->setOption($data["option-1"]);
@@ -176,81 +197,92 @@ class EnregistrementEleveController extends AbstractController
             }
 
             if ($data["student-birth-city"] != "") {
-                // $infoEleve->
-                // data miss entity
+                $infoEleve->setCommuneNaissance($data["student-birth-city"]);
             }
+
 
             if ($data["student-birth-dept"] != "") {
                 $infoEleve->setDepartement($data["student-birth-city"]);
             }
-
+            return new JsonResponse(['success' => false, 'message' => 'DEBUG '. /**/$data["student-birthdate"] /*\DateTime::createFromFormat("y-m-d",$data["student-birthdate"])/**/], 400);
             if ($data["student-birthdate"] != "") {
                 $infoEleve->setDateDeNaissance($data["student-birthdate"]);
             }
-
+            // return new JsonResponse(['success' => false, 'message' => 'donnée invalides ou non récupérée'], 400);
             if ($data["student-class"] != "") {
-                
-            }
-
-            if ($data["student-lv1"] != "") {
-
-            }
-
-            if ($data["student-lv2"] != "") {
-
+                $infoEleve->setClasse($entityManager->getRepository(get_class(new Classe))->findOneBy(array("label" => $data["student-class"])));
             }
 
             if ($data["student-mobile"] != "") {
-
+                $infoEleve->setNumeroMobile($data["student-mobile"]);
             }
 
             if ($data["student-natio"] != "") {
-
+                $infoEleve->setNationalite($data["student-natio"]);
             }
 
             if ($data["student-redoubling"] != "") {
-
+                if($data["student-redoubling"] == "oui"){
+                    $infoEleve->setRedoublant(true);
+                }
+                else {
+                    $infoEleve->setRedoublant(false);
+                }
             }
 
             if ($data["student-secu"] != "") {
-
+                $infoEleve->setNumSecuSocial($data["student-secu"]);
             }
 
-            if ($data["student-transport"] != "") {
-
+            if ($data["student-has-transport"]) {
+                $infoEleve->setTransportScolaire($data["student-transport"]);
             }
-
-            // if ($data[""] != "") {
-
-            // }
-
-            // if ($data[""] != "") {
-
-            // }
 
             if (isset($data['student-legal']) and $data['student-legal'] == "true"){
+                // $user = $this->getUser();
+                $user = new User;
+                if ($infoEleve->getResponsableUn() instanceof RepresentantLegal){
+                    $representantUn = $infoEleve->getResponsableUn();
+                }
+                else {
+                    $representantUn = new RepresentantLegal();
+                    $representantUn->setNom($user->getNom());
+                    $representantUn->setPrenom($user->getPrenom());
+                    $entityManager->persist($representantUn);
+                    $infoEleve->setResponsableUn($representantUn);
+                    $representantUn->setInfoEleve($infoEleve);
+                }
                 if ($data["resp-codepostal"] != "") {
-
+                    $representantUn->setCodePostal($data["resp-codepostal"]);
                 }
                 if ($data["resp-comm"] != "") {
-
+                    if ($data["resp-comm"]  == "oui"){
+                        $representantUn->setComAddrAsso(true);
+                    }
+                    else {
+                        $representantUn->setComAddrAsso(false);
+                    }
                 }
+
                 if ($data["resp-email"] != "") {
-
+                    $representantUn->setCourriel($data["resp-email"]);
                 }
-                if ($data["resp-firstname"] != "") {
-
+                if ($data["resp-commune"] != "") {
+                    $representantUn->setCommune($data["resp-commune"]);
                 }
-                if ($data["resp-name"] != "") {
-
+                if ($data["resp-adresse"] != "") {
+                    $representantUn->setAdresse($data["resp-adresse"]);
                 }
                 if ($data["resp-phone"] != "") {
-
+                    $representantUn->setTelephonePerso($data["resp-phone"]);
                 }
                 if ($data["resp-phone-dom"] != "") {
-
+                    $representantUn->setTelephoneFixe($data["resp-phone-dom"]);
                 }
             }
+            
+            $entityManager->flush();
+
             return new JsonResponse(['success' => true, 'message' => 'donée récupérée et traité'],200);
         }
         catch (\Exception $error) {
