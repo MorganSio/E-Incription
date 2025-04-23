@@ -18,7 +18,8 @@ services:
 
     App\Service\CloudService:
         arguments:
-            $cloudconvertApiKey: '%env(CLOUDCONVERT_API_KEY)%'
+            $sofficePath: '%app.soffice_path%'
 
 parameters:
     upload_directory: '%kernel.project_dir%/public/uploads'
+    app.soffice_path: 'C:\\Program Files\\LibreOffice\\program\\soffice.exe'
