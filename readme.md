@@ -87,13 +87,72 @@
 
 
 ## 5. Configurer Nginx
+
+# Installation de Nginx
+
+# Étape 1 : Installer Nginx
+
+    sudo apt update
+    sudo apt upgrade
+    sudo apt install nginx
+    sudo systemctl status nginx
+    
+# Étape 2 : Installer PHP et PHP-FPM
+
+    sudo apt install php-fpm php-mysql php-xml php-mbstring php-curl php-intl php-zip
+    sudo systemctl status php8.2-fpm   # ou vérifie ta version de PHP installée (7.4, 8.1, etc)
+    (ajoute php-curl, php-intl et php-zip, utiles pour Symfony)
+
+# Étape 3 : Cloner ton projet Symfony depuis GitHub
+
+    cd /var/www
+    git clone https://github.com/MorganSio/E-Inscription.git mon_site
+    cd mon_site
+    composer install
+
+# Étape 4 : Configurer Nginx pour Symfony
+# Créer le fichier de config :
+
+    sudo nano /etc/nginx/sites-available/mon_site
+# Voici un exemple de configuration :
+
+    server {
+        listen 80;
+        server_name mon_site.com;
+    
+        root /var/www/mon_site/public;
+        index index.php index.html index.htm;
+    
+        location / {
+            try_files $uri /index.php$is_args$args;
+        }
+    
+        location ~ \.php$ {
+            include snippets/fastcgi-php.conf;
+            fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;  # Vérifie bien ta version de PHP
+            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            include fastcgi_params;
+        }
+    
+        location ~ /\.ht {
+            deny all;
+        }
+    }
+    
+# Ensuite :
+
+    sudo ln -s /etc/nginx/sites-available/mon_site /etc/nginx/sites-enabled/
+    sudo nginx -t    # pour tester la config
+    sudo systemctl reload nginx
+# Étape 5 : Donner les bonnes permissions
+    
+    sudo chown -R www-data:www-data /var/www/mon_site
+    sudo chmod -R 755 /var/www/mon_site
 # Créer un fichier de configuration Nginx :
 
     sudo nano /etc/nginx/sites-available/e-inscription
 
-
 # Contenu exemple :
-
 
     server {
 
