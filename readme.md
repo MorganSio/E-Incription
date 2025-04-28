@@ -230,6 +230,7 @@ sudo chmod -R 755 /var/www/E-Inscription
 ### 6. Lancer les migrations et créer le schéma
 
 ```bash
+php bin/console make:migration  
 php bin/console doctrine:migrations:migrate
 ```
 
