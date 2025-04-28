@@ -273,7 +273,7 @@
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         // REPRESENTANT LEGAL
-        const radioOui = document.getElementById('autorisation_oui');
+        const radioOui = document.getElementById('student_legal_yes');
         if (radioOui) {
             const parentFieldset = radioOui.closest('fieldset.fr-fieldset');
             if (parentFieldset) {
@@ -281,8 +281,8 @@
             }
         }
         
-        const autorisationOui = document.getElementById('autorisation_oui');
-        const autorisationNon = document.getElementById('autorisation_non');
+        const autorisationOui = document.getElementById('student_legal_yes');
+        const autorisationNon = document.getElementById('student_legal_no');
         
         const representantLegalFieldset = document.getElementById('representant-legal-fieldset');
         
@@ -331,14 +331,14 @@
             selects[1].id = 'transport-type';
         }
 
-        const transportSelect = document.getElementById('student-transport');
-        const transportTypeSelect = document.getElementById('transport-type');
+        const transportSelect = document.getElementById('student-has-transport');
+        const transportTypeSelect = document.getElementById('student-transport');
         const immatriculationField = document.getElementById('immatriculation').closest('.fr-fieldset__element');
         const transportTypeContainer = transportTypeSelect ? transportTypeSelect.closest('.fr-fieldset__element') : null;
         
         function toggleTransportType() {
             if (transportTypeContainer) {
-            if (transportSelect.value === 'oui-transport') {
+            if (transportSelect.value === 'true') {
                 transportTypeContainer.style.display = 'block';
                 toggleImmatriculation();
             } else {
@@ -349,7 +349,7 @@
         }
         
         function toggleImmatriculation() {
-            if (transportSelect.value === 'oui-transport' && transportTypeSelect.value === 'voiture-transport') {
+            if (transportSelect.value === 'true' && transportTypeSelect.value === 'voiture-transport') {
             immatriculationField.style.display = 'block';
             } else {
             immatriculationField.style.display = 'none';

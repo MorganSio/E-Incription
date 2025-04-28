@@ -9,7 +9,7 @@ use App\Entity\InfoEleve;
 use App\Entity\RepresentantLegal;
 use App\Entity\ScolariteAnterieur;
 use App\Repository\LanguesRepository;
-use DateTime;
+// use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,18 +32,18 @@ class EnregistrementEleveController extends AbstractController
     }
     
     #[Route('/info-eleve/save' ,name: 'save_info_eleve', methods: ['POST'])]
-    public function save(Request $request, EntityManagerInterface $entityManager): JsonResponse
+    public function save(Request $request, EntityManagerInterface $entityManager) : JsonResponse #*/
     {
         $data = json_decode($request->getContent(),true);
-
 
         if (!$data) {
             return new JsonResponse(['success' => false, 'message' => 'donnée invalides ou non récupérée'], 400);
         }
+        
 
         try {
-            $infoEleve = new InfoEleve(new User());
-            // $this->getUser()->getInfoEleve();
+            // $infoEleve = new InfoEleve(new User());
+            $infoEleve = $this->getUser()->getInfoEleve();
 
             if ($infoEleve->getAnneScolaireUn() instanceof ScolariteAnterieur){
                 $anneScolaireUn = $infoEleve->getAnneScolaireUn();
@@ -203,16 +203,12 @@ class EnregistrementEleveController extends AbstractController
             if ($data["student-birth-city"] != "") {
                 $infoEleve->setCommuneNaissance($data["student-birth-city"]);
             }
-
-
             if ($data["student-birth-dept"] != "") {
                 $infoEleve->setDepartement($data["student-birth-city"]);
             }
-            return new JsonResponse(['success' => false, 'message' => 'DEBUG '. \DateTime::createFromFormat("Y-m-d",$data["student-birthdate"]) ], 400);
             if ($data["student-birthdate"] != "") {
-                $infoEleve->setDateDeNaissance($data["student-birthdate"]);
+                $infoEleve->setDateDeNaissance(\DateTime::createFromFormat("Y-m-d",$data["student-birthdate"]));
             }
-            // return new JsonResponse(['success' => false, 'message' => 'donnée invalides ou non récupérée'], 400);
             if ($data["student-class"] != "") {
                 $infoEleve->setClasse($entityManager->getRepository(get_class(new Classe))->findOneBy(array("label" => $data["student-class"])));
             }
@@ -238,13 +234,17 @@ class EnregistrementEleveController extends AbstractController
                 $infoEleve->setNumSecuSocial($data["student-secu"]);
             }
 
-            if ($data["student-has-transport"]) {
+            if ($data["student-has-transport"] == "true") {
                 $infoEleve->setTransportScolaire($data["student-transport"]);
+
+                if (isset($data["immatriculation"]) and $data["student-transport"] == "voiture-transport") {
+                    $infoEleve->setImmattriculationVeic($data["immatriculation"]);
+                }
             }
 
             if (isset($data['student-legal']) and $data['student-legal'] == "true"){
-                // $user = $this->getUser();
-                $user = new User;
+                $user = $this->getUser();
+                // $user = new User;
                 if ($infoEleve->getResponsableUn() instanceof RepresentantLegal){
                     $representantUn = $infoEleve->getResponsableUn();
                 }
@@ -286,7 +286,6 @@ class EnregistrementEleveController extends AbstractController
             }
             
             $entityManager->flush();
-
             return new JsonResponse(['success' => true, 'message' => 'donée récupérée et traité'],200);
         }
         catch (\Exception $error) {
