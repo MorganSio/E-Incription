@@ -13,7 +13,7 @@
 ## ✅ Prérequis
 # Assurez-vous d’avoir les éléments suivants installés :
 
-    PHP >= 7.4
+    PHP = 8.2
     Composer
     PostgreSQL 15.8
     Un serveur Web (Apache, Nginx, ou le serveur Symfony en local)
