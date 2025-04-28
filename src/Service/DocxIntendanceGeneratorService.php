@@ -50,6 +50,16 @@ class DocxIntendanceGeneratorService
         $templateProcessor->setValue('etudiant.date_naissance', $etudiant->getDateDeNaissance()?->format('d/m/Y') ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.classe', $etudiant->getClasse() ?? 'Non renseigné');
 
+        $regime = strtolower($etudiant->getRegime()?->getLabel() ?? '');
+
+        if ($regime === 'Tickets' || $regime === 'Ticket') {
+            $templateProcessor->setValue('etudiant.regime', '☑ Tickets   ☐ Externe');
+        } elseif ($regime === 'Externe') {
+            $templateProcessor->setValue('etudiant.regime', '☐ Tickets   ☑ Externe');
+        } else {
+            $templateProcessor->setValue('etudiant.regime', '☐ Tickets   ☐ Externe');
+        }
+
         // Représentant légal 1 = Responsable financier
         $responsable = $etudiant->getResponsableUn();
         if ($responsable) {
