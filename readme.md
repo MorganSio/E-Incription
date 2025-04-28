@@ -102,83 +102,93 @@ utilisateur et mot de passe à modifier selon la création de l'utilisateur et l
 # Étape 2 : Installer PHP et PHP-FPM
 
     sudo apt install php-fpm php-mysql php-xml php-mbstring php-curl php-intl php-zip
-    sudo systemctl status php8.2-fpm   # ou vérifie ta version de PHP installée (7.4, 8.1, etc)
-    (ajoute php-curl, php-intl et php-zip, utiles pour Symfony)
+    sudo systemctl status php8.2-fpm 
 
-# Étape 3 : Cloner ton projet Symfony depuis GitHub
-
-    cd /var/www
-    git clone https://github.com/MorganSio/E-Inscription.git mon_site
-    cd mon_site
-    composer install
-
-# Étape 4 : Configurer Nginx pour Symfony
+# Étape 3 : Configurer Nginx pour Symfony
 # Créer le fichier de config :
 
-    sudo nano /etc/nginx/sites-available/mon_site
+    sudo nano /etc/nginx/sites-available/e-inscription
+    
 # Voici un exemple de configuration :
 
     server {
         listen 80;
-        server_name mon_site.com;
+        server_name e-inscription.com;
     
-        root /var/www/mon_site/public;
-        index index.php index.html index.htm;
+        # Répertoire racine pour Symfony (doit pointer vers le dossier public)
+        root /var/www/E-Inscription/public;
+        index index.php index.html;
     
+        # Gestion des requêtes vers index.php pour Symfony
         location / {
             try_files $uri /index.php$is_args$args;
         }
     
-        location ~ \.php$ {
-            include snippets/fastcgi-php.conf;
-            fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;  # Vérifie bien ta version de PHP
+        # Redirige les requêtes vers index.php pour Symfony
+        location ~ ^/index\.php(/|$) {
+            fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;  # Remplace avec ta version de PHP
             fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
             include fastcgi_params;
+            fastcgi_intercept_errors on;
+            fastcgi_param HTTP_CACHE_CONTROL "no-cache";
         }
     
+        # Gestion des erreurs 404
+        error_page 404 /index.php;
+    
+        # Sécuriser l'accès aux fichiers sensibles
+        location ~* \.(env|yaml|yml|twig|json|md|dist|lock)$ {
+            deny all;
+        }
+    
+        # Désactiver l'accès aux fichiers .ht*
         location ~ /\.ht {
             deny all;
         }
+    
+        # Protéger contre les attaques de clickjacking
+        add_header X-Frame-Options "SAMEORIGIN" always;
+    
+        # Protéger contre les attaques de type MIME sniffing
+        add_header X-Content-Type-Options "nosniff" always;
+    
+        # Protéger contre les attaques de cross-site scripting
+        add_header X-XSS-Protection "1; mode=block" always;
+    
+        # Protéger les informations de la version du serveur
+        server_tokens off;
+    
+        # Cache pour les fichiers statiques
+        location ~* \.(jpg|jpeg|png|gif|css|js|ico|woff|woff2|ttf|svg|eot|otf|mp4|webp)$ {
+            expires 30d;
+            access_log off;
+        }
+    
+        # Autoriser l'upload de fichiers via PHP
+        client_max_body_size 10M;  # Limite la taille de fichier uploadé à 10Mo (modifiable)
+    
+        # Configuration SSL (si tu utilises HTTPS)
+        listen 443 ssl;
+        ssl_certificate /etc/ssl/certs/ton_certificat.crt;
+        ssl_certificate_key /etc/ssl/private/ton_certificat.key;
+    
+        # Paramètres SSL recommandés
+        ssl_protocols TLSv1.2 TLSv1.3;
+        ssl_ciphers 'ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-GCM-SHA256';
+        ssl_prefer_server_ciphers off;
+        ssl_dhparam /etc/ssl/certs/dhparam.pem;
     }
     
 # Ensuite :
 
-    sudo ln -s /etc/nginx/sites-available/mon_site /etc/nginx/sites-enabled/
-    sudo nginx -t    # pour tester la config
+    sudo ln -s /etc/nginx/sites-available/e-inscription /etc/nginx/sites-enabled/
+    sudo nginx -t
     sudo systemctl reload nginx
+    
 # Étape 5 : Donner les bonnes permissions
     
-    sudo chown -R www-data:www-data /var/www/mon_site
-    sudo chmod -R 755 /var/www/mon_site
-# Créer un fichier de configuration Nginx :
-
-    sudo nano /etc/nginx/sites-available/e-inscription
-
-# Contenu exemple :
-
-    server {
-
-    listen 80;
-    server_name your-domain.com;
-    root /var/www/E-Incription/public;
-    index index.php index.html;
-    location / {
-        try_files $uri /index.php$is_args$args;
-    }
-    location ~ \.php$ {
-        include snippets/fastcgi-php.conf;
-        fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
-    }
-    location ~ /\.ht {
-        deny all;
-    }
-
-
-# Activer le site et recharger Nginx :
-
-    sudo ln -s /etc/nginx/sites-available/e-inscription /etc/nginx/sites-enabled/
-    sudo systemctl reload nginx
-
+    sudo chown -R www-data:www-data /var/www/E-Inscription
+    sudo chmod -R 755 /var/www/E-Inscription
 
 ## 6. Lancer les migrations et créer le schéma
 
