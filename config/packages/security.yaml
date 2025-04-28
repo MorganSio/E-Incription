@@ -25,7 +25,7 @@ security:
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/parent, roles: ROLE_PARENT }
-        - { path: ^/eleve, roles: ROLE_ELEVE }
+        # - { path: ^/eleve, roles: ROLE_ELEVE }
         # - { path: ^/profile, roles: ROLE_USER }
 
 when@test:
