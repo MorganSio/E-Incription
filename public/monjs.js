@@ -29,6 +29,8 @@ document.addEventListener('DOMContentLoaded', function () {
         // Ajoute la logique de traitement des valeurs ici (ex : envoyer à un serveur, validation, etc.)
     }
 });
+
+ 
 // Form mdl
 document.addEventListener('DOMContentLoaded', function () {
     // Gestion du bouton de validation de la première section
@@ -83,107 +85,24 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
  
-// // Form self
 document.addEventListener('DOMContentLoaded', function () {
-    const validFirstBtn = document.getElementById('validFirst');
-   
-    // Vérifier si l'élément existe
-    if (validFirstBtn) {
-        validFirstBtn.addEventListener('click', function () {
-            const acceptYes = document.getElementById('acceptYes').checked;
-            const acceptNo = document.getElementById('acceptNo').checked;
- 
-            // Si "Oui" est sélectionné, afficher la deuxième section
-            if (acceptYes) {
-                document.getElementById('intFirst').style.display = 'none';
-                document.getElementById('intSecond').style.display = 'block';
-            }
- 
-            // Si "Non" est sélectionné, afficher une alerte et rester sur intFirst
-            if (acceptNo) {
-                alert("Vous avez refusé l'inscription à l'Intendance BTS.");
-            }
-        });
-    }
- 
-    const validSecondBtn = document.getElementById('validSecond');
-    if (validSecondBtn) {
-        validSecondBtn.addEventListener('click', function () {
-            // Récupérer les éléments du formulaire
-            const regimeForfait5Days = document.getElementById('regime-5-days').checked;
-            const regimeForfait4Days = document.getElementById('regime-4-days').checked;
-            const regimeTickets = document.getElementById('regime-tickets').checked;
-            const regimeExterne = document.getElementById('regime-externe').checked;
- 
-            const paymentCheque = document.getElementById('payment-cheque').checked;
-            const paymentCard = document.getElementById('payment-card').checked;
-            const paymentCash = document.getElementById('payment-cash').checked;
- 
-            // Vérifier que le régime a été sélectionné
-            if (!regimeForfait5Days && !regimeForfait4Days && !regimeTickets && !regimeExterne) {
-                alert("Veuillez sélectionner un régime.");
-                return;
-            }
- 
-            // Vérifier que le mode de paiement a été sélectionné
-            if (!paymentCheque && !paymentCard && !paymentCash) {
-                alert("Veuillez sélectionner un mode de paiement.");
-                return;
-            }
- 
-            // Si toutes les conditions sont remplies, soumettre le formulaire ou afficher un message de confirmation
-            alert("Merci ! Votre formulaire a été soumis.");
-            // document.getElementById('mdlSecondForm').submit(); // Décommentez pour envoyer le formulaire
-        });
-    }
-});
+    const acceptYes = document.getElementById('acceptYes');
+    const acceptNo = document.getElementById('acceptNo');
+    const intSecondDiv = document.getElementById('intSecond');
 
-document.addEventListener("DOMContentLoaded", function (){
-    console.log('test');
-
-    form = document.querySelector("form[id^='etudiant-form'");
-    if (!form){
-        console.error("formulairenon trouver");
-        return;
-    }
-    else{
-        console.log(form);
-        
-    }
-    
-    button = document.getElementById("validateEtudiant");
-    button.addEventListener("click", function(){
-        console.log(form);
-        let formData = new FormData(form);
-        let data ={};
-
-        formData.forEach((value,key) => {            
-            data[key] = value;            
-        });
-        console.log(data);
-        console.log(JSON.stringify(data));
-        
-        fetch("/info-eleve/save",{
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => response.json())
-        .then(result => {
-            if (result.success) {
-                alert("Identité enregistrée !");
-            } else {
-                alert("Erreur a : " + result.message);
+    if (acceptYes && acceptNo && intSecondDiv) {
+        function toggleIntendance() {
+            if (acceptYes.checked) {
+                intSecondDiv.style.display = 'block';
+            } else if (acceptNo.checked) {
+                intSecondDiv.style.display = 'none';
             }
-        })
-        .catch(error => {
-            console.error("", error);
-            alert("Erreur de connexion avec le serveur.");
-        });
-       
-    })
+        }
+        acceptYes.addEventListener('change', toggleIntendance);
+        acceptNo.addEventListener('change', toggleIntendance);
+
+        intSecondDiv.style.display = 'none';
+    }
 });
 
  
@@ -217,7 +136,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let data = {};
            
             console.log(form);
-            data['repNumber']=index;
+            data['repNumber']=index
  
  
             formData.forEach((value, key) => {
@@ -229,7 +148,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 data["lien"+index] = data["preciser"+index];
             }
  
-            data["addresse"+index] = data["addresse-voie"+index]+data["postal-code"+index]+data["addresse-city"+index]
+            // data["addresse"+index] = data["addresse-voie"+index]+data["postal-code"+index]+data["addresse-city"+index]
  
             console.log("Données du formulaire envoyées :", data);
  

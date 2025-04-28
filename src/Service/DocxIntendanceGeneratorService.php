@@ -17,9 +17,10 @@ class DocxIntendanceGeneratorService
         $this->entityManager = $entityManager;
     }
 
-    public function generateDocx(int $etudiantId): BinaryFileResponse
+    public function generateDocx(int $etudiantId, bool $returnPath = false): string|BinaryFileResponse
     {
         $etudiant = $this->entityManager->getRepository(InfoEleve::class)->find($etudiantId);
+
         if (!$etudiant) {
             throw new NotFoundHttpException("Étudiant non trouvé.");
         }
@@ -31,6 +32,10 @@ class DocxIntendanceGeneratorService
         $templateProcessor = new TemplateProcessor($templatePath);
         $this->fillTemplate($templateProcessor, $etudiant);
         $templateProcessor->saveAs($outputDocxPath);
+
+        if ($returnPath) {
+            return $outputDocxPath;
+        }
 
         return $this->createDocxDownloadResponse($outputDocxPath);
     }
@@ -44,6 +49,16 @@ class DocxIntendanceGeneratorService
         $templateProcessor->setValue('etudiant.prenom', $user?->getPrenom() ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.date_naissance', $etudiant->getDateDeNaissance()?->format('d/m/Y') ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.classe', $etudiant->getClasse() ?? 'Non renseigné');
+
+        $regime = strtolower($etudiant->getRegime()?->getLabel() ?? '');
+
+        if ($regime === 'Tickets' || $regime === 'Ticket') {
+            $templateProcessor->setValue('etudiant.regime', '☑ Tickets   ☐ Externe');
+        } elseif ($regime === 'Externe') {
+            $templateProcessor->setValue('etudiant.regime', '☐ Tickets   ☑ Externe');
+        } else {
+            $templateProcessor->setValue('etudiant.regime', '☐ Tickets   ☐ Externe');
+        }
 
         // Représentant légal 1 = Responsable financier
         $responsable = $etudiant->getResponsableUn();

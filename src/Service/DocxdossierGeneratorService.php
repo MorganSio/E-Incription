@@ -18,7 +18,7 @@ class DocxdossierGeneratorService
         $this->entityManager = $entityManager;
     }
 
-    public function generateDocx(int $etudiantId): BinaryFileResponse
+    public function generateDocx(int $etudiantId, bool $returnPath = false): string|BinaryFileResponse
     {
         $etudiant = $this->entityManager->getRepository(InfoEleve::class)->find($etudiantId);
 
@@ -33,6 +33,10 @@ class DocxdossierGeneratorService
         $templateProcessor = new TemplateProcessor($templatePath);
         $this->fillTemplate($templateProcessor, $etudiant);
         $templateProcessor->saveAs($outputDocxPath);
+
+        if ($returnPath) {
+            return $outputDocxPath;
+        }
 
         return $this->createDocxDownloadResponse($outputDocxPath);
     }
