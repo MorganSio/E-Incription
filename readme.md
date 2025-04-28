@@ -71,12 +71,14 @@
 
 ## 3. Configurer la base de données PostgreSQL
 # Créer un utilisateur et une base :
+utilisateur à modifier selon vos envies
 
     sudo -u postgres createuser euser -P
     sudo -u postgres createdb e_inscription -O euser
 
 
 # Mettre à jour le fichier .env :
+utilisateur et mot de passe à modifier selon la création de l'utilisateur et le mot de passe crée précédement
 
     DATABASE_URL="postgresql://euser:motdepasse@127.0.0.1:5432/e_inscription?serverVersion=15.8&charset=utf8"
 
