@@ -108,14 +108,12 @@ sudo -u postgres createdb e_inscription -O euser
 ```
 
 Mettre à jour le fichier pg_hba
-> Note :
-
 ```bash
 sudo nano /etc/postgresql/15/main/pg_hba.conf
 ```
 
 puis ajouter la ligne
-> Note : les valleurs e_inscription euser et 127.0.0.1/32 sont a remplacer par la basse de donnée, l'utilisateur l'adresse de connexion ou du réseau
+> Note : les valleurs e_inscription euser et 127.0.0.1/32 sont a remplacer par la basse de donnée, l'utilisateur l'adresse du réseau ou du client directement
 ```bash
 host e_inscription euser 127.0.0.1/32 password
 ```
