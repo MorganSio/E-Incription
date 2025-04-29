@@ -21,6 +21,26 @@ Assurez-vous d'avoir les éléments suivants installés :
 
 ## 🛠️ Installation en local
 
+### Extensions PHP requises
+
+Assurez-vous que les extensions PHP suivantes sont activées dans votre fichier php.ini :
+
+```
+extension=curl
+extension=mbstring
+extension=openssl
+extension=pdo_pgsql
+extension=intl
+extension=json
+extension=tokenizer
+extension=ctype
+extension=xml
+extension=fileinfo
+extension=gd
+extension=zip
+extension=pgsql
+```
+
 ### 1. Cloner le dépôt
 
 ```bash
@@ -63,6 +83,7 @@ Voici les étapes pour installer l'application et la base de données sur un ser
 ```bash
 sudo apt update && sudo apt install -y \
 php php-cli php-mbstring php-xml php-curl php-pgsql php-intl \
+php-json php-tokenizer php-ctype php-fileinfo php-gd php-zip \
 unzip curl git nginx postgresql postgresql-contrib \
 composer
 ```
@@ -253,3 +274,4 @@ php bin/console app:create-admin
 - Si vous rencontrez des problèmes de permissions, vérifiez que les dossiers `var/cache` et `var/log` sont accessibles en écriture.
 - Pour les problèmes liés à la base de données, assurez-vous que PostgreSQL est correctement configuré et que l'utilisateur dispose des droits nécessaires.
 - En cas d'erreurs avec Nginx, consultez les logs : `sudo tail -f /var/log/nginx/error.log`
+- Si vous rencontrez des erreurs liées aux extensions PHP manquantes, vérifiez que toutes les extensions requises sont activées dans votre fichier php.ini.
