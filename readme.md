@@ -21,7 +21,6 @@ Assurez-vous d'avoir les éléments suivants installés :
 
 ## 🛠️ Installation en local
 
-<<<<<<< HEAD
 ### 1. Cloner le dépôt
 
 ```bash
@@ -97,7 +96,6 @@ DATABASE_URL="postgresql://votre_user:votre_motdepasse@localhost:5432/E-Inscript
 php bin/console app:check-database-connection
 ```
 
->>>>>>> 844b794b13af7c11b734fdd37a2aed74b0078125
 ### 5. Démarrer le serveur de développement
 
 ```bash
@@ -105,8 +103,6 @@ symfony server:start
 ```
 
 ## 🌐 Déploiement sur un serveur distant (Linux - Ubuntu recommandé)
-<<<<<<< HEAD
-=======
 
 Voici les étapes pour installer l'application et la base de données sur un serveur distant.
 
@@ -149,11 +145,9 @@ puis ajouter la ligne
 ```bash
 host e_inscription euser 127.0.0.1/32 password
 ```
->>>>>>> 844b794b13af7c11b734fdd37a2aed74b0078125
 
 Voici les étapes pour installer l'application et la base de données sur un serveur distant.
 
-<<<<<<< HEAD
 ### 1. Installer les dépendances nécessaires
 
 ```bash
@@ -223,7 +217,6 @@ Créer le fichier de configuration :
 sudo nano /etc/nginx/sites-available/e-inscription
 ```
 
-=======
 Mettre à jour le fichier `.env` :
 > Note : Modifiez l'utilisateur et le mot de passe selon ce que vous avez défini précédemment
 
@@ -265,7 +258,6 @@ Créer le fichier de configuration :
 sudo nano /etc/nginx/sites-available/e-inscription
 ```
 
->>>>>>> 844b794b13af7c11b734fdd37a2aed74b0078125
 Voici un exemple de configuration :
 
 ```nginx
@@ -392,7 +384,4 @@ php bin/console app:create-admin
 - Si vous rencontrez des problèmes de permissions, vérifiez que les dossiers `var/cache` et `var/log` sont accessibles en écriture.
 - Pour les problèmes liés à la base de données, assurez-vous que PostgreSQL est correctement configuré et que l'utilisateur dispose des droits nécessaires.
 - En cas d'erreurs avec Nginx, consultez les logs : `sudo tail -f /var/log/nginx/error.log`
-<<<<<<< HEAD
-=======
 - Si vous rencontrez des erreurs liées aux extensions PHP manquantes, vérifiez que toutes les extensions requises sont activées dans votre fichier php.ini.
->>>>>>> 844b794b13af7c11b734fdd37a2aed74b0078125
