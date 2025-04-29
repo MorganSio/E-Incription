@@ -19,9 +19,10 @@
                                 <div class="fr-col-12 fr-col-md-10 fr-col-lg-9">
                                     <h1 class="fr-h1">Info de l'Étudiant</h1>
                                     <div>
-                                        <form class="fr-mb-0" id="etudiant">
-                                            <fieldset class="fr-mb-0 fr-fieldset" id="representant-fieldset-" aria-labelledby="representant-fieldset-legend-  ">
-                                                <legend class="fr-fieldset__legend" id="representant-fieldset-legend-  ">
+                                    <form Id="used to make it work"></form>
+                                        <form class="fr-mb-0" id="etudiant-form">
+                                            <fieldset class="fr-mb-0 fr-fieldset" id="etudiant-fieldset" aria-labelledby="representant-fieldset-legend-  ">
+                                                <legend class="fr-fieldset__legend" id="etudiant-fieldset-legend-  ">
                                                     <h3 class="fr-h5">Étudiant</h3>
                                                 </legend>
                                                 <div class="fr-fieldset__element">
@@ -74,38 +75,38 @@
                                                                 <h3 class="fr-h5">Étudiant en représentant légal</h3>
                                                                 <p class="fr-text">Voulez-vous être votre propre représentant légal ?</p>
                                                                 <div class="fr-radio-group">
-                                                                    <input type="radio" id="autorisation_oui" name="autorisation" value="oui">
-                                                                    <label class="fr-label" for="autorisation_oui">Je me représente moi meme</label>
+                                                                    <input type="radio" id="student_legal_yes" name="student-legal" value="true">
+                                                                    <label class="fr-label" for="student_legal_yes">Je me représente moi meme</label>
                                                                 </div>
                                                                 <p>
                                                                 <div class="fr-radio-group">
-                                                                    <input type="radio" id="autorisation_non" name="autorisation" value="non">
-                                                                    <label class="fr-label" for="autorisation_non">Autres représentants légaux (Représentant Légal 1)</label>
+                                                                    <input type="radio" id="student_legal_no" name="student-legal" value= "false">
+                                                                    <label class="fr-label" for="student_legal_no">Autres représentants légaux (a définir dans la partie représentant legal))</label>
                                                                 </div>
                                                             </div>
 
                                                             <div class="fr-fieldset__element">
                                                                 <h3 class="fr-h5">Étudiant en représentant légal</h3>
-                                                                <label class="fr-label" for="student-legal">Autorisez-vous la communication de votre adresse aux associations de parents d'élèves ?</label>
-                                                                <select class="fr-select" id="student-legal" name="student-legal">
+                                                                <label class="fr-label" for="resp-comm">Autorisez-vous la communication de votre adresse aux associations de parents d'élèves ?</label>
+                                                                <select class="fr-select" id="resp-comm" name="resp-comm">
                                                                     <option value="non">Non</option>
                                                                     <option value="oui">Oui</option>
                                                                 </select>
                                                             </div>
 
                                                             <div class="fr-fieldset__element">
-                                                                <label class="fr-label" for="resp-name">Adresse</label>
-                                                                <input class="fr-input" type="text" id="resp-name" name="resp-name" placeholder="1 rue du lycée Fulbert" required>
+                                                                <label class="fr-label" for="resp-adresse">Adresse</label>
+                                                                <input class="fr-input" type="text" id="resp-adresse" name="resp-adresse" placeholder="1 rue du lycée Fulbert" required>
                                                             </div>
 
                                                             <div class="fr-fieldset__element">
                                                                 <label class="fr-label" for="resp-codepostal">Code Postal</label>
-                                                                <input class="fr-input" type="text" id="resp-codepostal" name="resp-codepostal" placeholder="75001" required>
+                                                                <input class="fr-input" type="text" id="resp-codepostal" name="resp-codepostal" placeholder="28000" required>
                                                             </div>
 
                                                             <div class="fr-fieldset__element">
-                                                                <label class="fr-label" for="resp-firstname">Commune</label>
-                                                                <input class="fr-input" type="text" id="resp-firstname" name="resp-firstname" placeholder="Chartres" required>
+                                                                <label class="fr-label" for="resp-commune">Commune</label>
+                                                                <input class="fr-input" type="text" id="resp-commune" name="resp-commune" placeholder="Chartres" required>
                                                             </div>
 
                                                             <div class="fr-fieldset__element">
@@ -143,10 +144,10 @@
                                                         </div>
 
                                                         <div class="fr-fieldset__element">
-                                                            <label class="fr-label" for="student-transport">Transport scolaire</label>
-                                                            <select class="fr-select" id="student-transport" name="student-transport">
-                                                                <option value="non-transport">Non</option>
-                                                                <option value="oui-transport">Oui</option>
+                                                            <label class="fr-label" for="student-has-transport">Transport scolaire</label>
+                                                            <select class="fr-select" id="student-has-transport" name="student-has-transport">
+                                                                <option value="false">Non</option>
+                                                                <option value="true">Oui</option>
                                                             </select>
                                                         </div>
 
@@ -176,6 +177,7 @@
                                                         <div class="fr-fieldset__element">
                                                             <label class="fr-label" for="student-class">Classe (Spécialité)</label>
                                                             <select class="fr-select" id="student-class" name="student-class">
+                                                                <option value="" selected disabled hidden> veuillez selectionner une option</option>
                                                                 <option value="SIO">SIO (Services Informatiques aux Organisation)</option>
                                                                 <option value="NDRC">NDRC (Négociation et Digitalisation de la Relation Client</option>
                                                                 <option value="CG">CG (Comptabilité Gestions)</option>
@@ -191,10 +193,10 @@
                                                         </div>
 
                                                         <div class="fr-fieldset__element">
-                                                            <label class="fr-label" for="student-lv2">Langue LV2 : Espagnol (Optionnel)</label>
+                                                            <label class="fr-label" for="student-lv2">Langue LV2 (Optionnel)</label>
                                                             <select class="fr-select" id="student-lv2" name="student-lv2">
-                                                                <option value="non">Non</option>
-                                                                <option value="oui">Oui</option>
+                                                                <option value="">pas de Lv2</option>
+                                                                <option value="espagnole">Espagnol</option>
                                                             </select>
                                                         </div>
 
@@ -241,7 +243,7 @@
                                                         <div class="fr-fieldset__element">
                                                             <!-- Dernier diplôme obtenu -->
                                                             <p class="fr-text--bold fr-mt-4">Dernier diplôme obtenu :</p>
-                                                            <input class="fr-input" type="text" name="etablissement-2022">
+                                                            <input class="fr-input" type="text" name="last-certif">
                                                         </div>
                                                     </fieldset>
 
@@ -271,7 +273,7 @@
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         // REPRESENTANT LEGAL
-        const radioOui = document.getElementById('autorisation_oui');
+        const radioOui = document.getElementById('student_legal_yes');
         if (radioOui) {
             const parentFieldset = radioOui.closest('fieldset.fr-fieldset');
             if (parentFieldset) {
@@ -279,8 +281,8 @@
             }
         }
         
-        const autorisationOui = document.getElementById('autorisation_oui');
-        const autorisationNon = document.getElementById('autorisation_non');
+        const autorisationOui = document.getElementById('student_legal_yes');
+        const autorisationNon = document.getElementById('student_legal_no');
         
         const representantLegalFieldset = document.getElementById('representant-legal-fieldset');
         
@@ -329,14 +331,14 @@
             selects[1].id = 'transport-type';
         }
 
-        const transportSelect = document.getElementById('student-transport');
-        const transportTypeSelect = document.getElementById('transport-type');
+        const transportSelect = document.getElementById('student-has-transport');
+        const transportTypeSelect = document.getElementById('student-transport');
         const immatriculationField = document.getElementById('immatriculation').closest('.fr-fieldset__element');
         const transportTypeContainer = transportTypeSelect ? transportTypeSelect.closest('.fr-fieldset__element') : null;
         
         function toggleTransportType() {
             if (transportTypeContainer) {
-            if (transportSelect.value === 'oui-transport') {
+            if (transportSelect.value === 'true') {
                 transportTypeContainer.style.display = 'block';
                 toggleImmatriculation();
             } else {
@@ -347,7 +349,7 @@
         }
         
         function toggleImmatriculation() {
-            if (transportSelect.value === 'oui-transport' && transportTypeSelect.value === 'voiture-transport') {
+            if (transportSelect.value === 'true' && transportTypeSelect.value === 'voiture-transport') {
             immatriculationField.style.display = 'block';
             } else {
             immatriculationField.style.display = 'none';
