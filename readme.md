@@ -48,7 +48,6 @@ DATABASE_URL="postgresql://votre_user:votre_motdepasse@localhost:5432/E-Inscript
 php bin/console app:check-database-connection
 ```
 
-=======
 ### Extensions PHP requises
 
 Assurez-vous que les extensions PHP suivantes sont activées dans votre fichier php.ini :
