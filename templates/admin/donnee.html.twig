@@ -43,8 +43,44 @@
                 <div id="globalChart" style="width: 100%; min-height: 350px;"></div>
             </div>
         </div>
+    
+        <div class="card w-100 mb-4">
+            <h2>Dossiers PDF pour {{ user.prenom }} {{ user.nom }}</h2>
+            <table class="table table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for type, data in pdfs %}
+                        <tr>
+                            <td>{{ type|capitalize }}</td>
+                            <td>
+                                {% if data.exists %}
+                                    ✅ Généré
+                                {% else %}
+                                    ❌ Non généré
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if data.exists %}
+                                    <a href="{{ asset(data.path) }}" class="btn btn-sm btn-primary" target="_blank">Visualiser</a>
+                                    <a href="{{ asset(data.path) }}" class="btn btn-sm btn-secondary" download>Télécharger</a>
+                                {% else %}
+                                    <a href="{{ data.generateRoute }}" class="btn btn-sm btn-warning">Générer</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="{{ path('admin') }}" class="btn btn-outline-dark mt-4">⬅ Retour au dashboard</a>
+        </div>
     </div>
-
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Fonction pour ajuster les graphiques à la taille de l'écran

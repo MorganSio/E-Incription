@@ -118,13 +118,10 @@ class AdminDashboardController extends AbstractDashboardController
     #[Route('/admin/visualiser-donnees/{id}', name: 'admin_visualiser_donnees')]
     public function visualiserDonnees(User $user): Response
     {
-        // Calcul des données complètes et incomplètes pour cet utilisateur
-        $fields = ['telephone', 'adresse', 'dateNaissance']; // Ajustez selon votre modèle
-        $completionData = [
-            'complete' => 0,
-            'incomplete' => 0
-        ];
-        
+        // Données de complétion
+        $fields = ['telephone', 'adresse', 'dateNaissance'];
+        $completionData = ['complete' => 0, 'incomplete' => 0];
+
         foreach ($fields as $field) {
             $getter = 'get' . ucfirst($field);
             if (method_exists($user, $getter) && !empty($user->$getter())) {
@@ -133,26 +130,44 @@ class AdminDashboardController extends AbstractDashboardController
                 $completionData['incomplete']++;
             }
         }
-        
-        // Calcul des statistiques globales pour tous les utilisateurs
+
+        // Statistiques globales
         $users = $this->entityManager->getRepository(User::class)->findAll();
         $globalStats = [];
-        
+
         foreach ($fields as $field) {
             $globalStats[$field] = 0;
             $getter = 'get' . ucfirst($field);
-            
             foreach ($users as $u) {
                 if (method_exists($u, $getter) && empty($u->$getter())) {
                     $globalStats[$field]++;
                 }
             }
         }
-        
+
+        // Vérification des PDF
+        $pdfTypes = ['intendance', 'urgence', 'mdl', 'dossier'];
+        $pdfs = [];
+
+        foreach ($pdfTypes as $type) {
+            $filePath = "/uploads/pdfs/{$type}_{$user->getId()}.pdf";
+            $absolutePath = $this->getParameter('kernel.project_dir') . '/public' . $filePath;
+            $exists = file_exists($absolutePath);
+
+            $pdfs[$type] = [
+                'exists' => $exists,
+                'path' => $filePath,
+                'generateRoute' => $this->generateUrl("generer_docx_{$type}", [
+                    'id' => $user->getInfoEleve()?->getId()
+                ]),
+            ];
+        }
+
         return $this->render('admin/donnee.html.twig', [
             'user' => $user,
             'completionData' => $completionData,
-            'globalStats' => $globalStats
+            'globalStats' => $globalStats,
+            'pdfs' => $pdfs,
         ]);
     }
 }
