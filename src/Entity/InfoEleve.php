@@ -18,6 +18,9 @@ class InfoEleve
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $date_de_naissance = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?string $promotion = null;
+
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $classe = null;
 
@@ -77,6 +80,15 @@ class InfoEleve
 
     #[ORM\Column(type: Types::BLOB, nullable: true)]
     private $attestation_reusite = null;
+
+    #[ORM\Column(length: 15, nullable: true)]
+    private ?string $numero_mobile = null;
+
+    #[ORM\Column(length: 15, nullable: true)]
+    private ?string $numSecuSocial= null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $transportScolaire = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: true)]
@@ -152,6 +164,19 @@ class InfoEleve
 
         return $this;
     }
+
+    public function getPromotion(): ?string
+    {
+        return $this->promotion;
+    }
+
+    public function setPromotion(?string $promo):static
+    {
+        $this->promotion = $promo;
+
+        return $this;
+    }
+
 
     public function getClasse(): ?string
     {
@@ -393,6 +418,42 @@ class InfoEleve
         return $this;
     }
 
+    public function getNumeroMobile()
+    {
+        return $this->numero_mobile;
+    }
+
+    public function setNumeroMobile($numero_mobile): static
+    {
+        $this->numero_mobile = $numero_mobile;
+
+        return $this;
+    }
+
+    public function getNumSecuSocial()
+    {
+        return $this->numSecuSocial;
+    }
+
+    public function setNumSecuSocial($numSecuSocial): static
+    {
+        $this->numSecuSocial = $numSecuSocial;
+
+        return $this;
+    }
+
+    public function getTransportScolaire()
+    {
+        return $this->transportScolaire;
+    }
+
+    public function setTransportScolaire($transportScolaire): static
+    {
+        $this->transportScolaire = $transportScolaire;
+
+        return $this;
+    }
+
     public function getResponsableFinancier(): ?ResposableFinancier
     {
         return $this->responsable_financier;
@@ -445,7 +506,7 @@ class InfoEleve
     {
         return $this->LVUn;
     }
-
+    
     public function setLVUn(?Langues $LVUn): static
     {
         $this->LVUn = $LVUn;

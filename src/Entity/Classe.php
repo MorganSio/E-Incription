@@ -15,8 +15,7 @@ class Classe
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $anee = null;
+ 
 
     #[ORM\Column(length: 255)]
     private ?string $label = null;
@@ -37,17 +36,7 @@ class Classe
         return $this->id;
     }
 
-    public function getAnee(): ?int
-    {
-        return $this->anee;
-    }
-
-    public function setAnee(int $anee): static
-    {
-        $this->anee = $anee;
-
-        return $this;
-    }
+  
 
     public function getLabel(): ?string
     {

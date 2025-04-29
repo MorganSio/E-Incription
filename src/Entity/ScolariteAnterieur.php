@@ -13,7 +13,7 @@ class ScolariteAnterieur
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 9)]
+    #[ORM\Column(length: 9, nullable: true)]
     private ?string $anne_scolaire = null;
 
     #[ORM\Column(length: 50, nullable: true)]
@@ -26,9 +26,11 @@ class ScolariteAnterieur
     private ?string $etablissement = null;
 
     #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Langues $LVDeux = null;
 
     #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Langues $LVUn = null;
 
     public function getId(): ?int

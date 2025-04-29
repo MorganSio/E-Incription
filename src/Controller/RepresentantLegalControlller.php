@@ -30,10 +30,8 @@ class RepresentantLegalControlller extends AbstractController
         if (!$data) {
             return new JsonResponse(['success' => false, 'message' => 'Données invalides'], 400);
         }
-
         try {
             $infoUser = $this->getUser()->getInfoEleve();
-
 
             if ($data['repNumber'] == '1'){
                 
