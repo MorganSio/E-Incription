@@ -1,0 +1,191 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content %}
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <div class="container-fluid">
+        <!-- Bloc principal : Informations utilisateur + graphique -->
+        <div class="card mb-4 w-100">
+            <div class="card-header">
+                <h3>Données de l'utilisateur: {{ user.prenom }} {{ user.nom }}</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-6 mb-4">
+                        <h4>Informations personnelles</h4>
+                        <table class="table">
+                            <tr><th style="width: 40%">Nom</th><td>{{ user.nom }}</td></tr>
+                            <tr><th>Prénom</th><td>{{ user.prenom }}</td></tr>
+                            <tr><th>Email</th><td>{{ user.email }}</td></tr>
+                            <tr><th>Compte vérifié</th><td>{{ user.isVerified ? 'Oui' : 'Non' }}</td></tr>
+                            {% if user.telephone is defined %}
+                                <tr><th>Téléphone</th><td>{{ user.telephone ?: 'Non renseigné' }}</td></tr>
+                            {% endif %}
+                            {% if user.adresse is defined %}
+                                <tr><th>Adresse</th><td>{{ user.adresse ?: 'Non renseignée' }}</td></tr>
+                            {% endif %}
+                        </table>
+                    </div>
+                    <div class="col-lg-6">
+                        <h4 class="text-center">État de complétion du profil</h4>
+                        <div id="completionChart" style="width: 100%; min-height: 300px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Carte séparée : Statistiques globales -->
+        <div class="card w-100 mb-4">
+            <div class="card-header">
+                <h3>Statistiques globales</h3>
+            </div>
+            <div class="card-body">
+                <div id="globalChart" style="width: 100%; min-height: 350px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fonction pour ajuster les graphiques à la taille de l'écran
+            function createResponsiveCharts() {
+                // Graphique de complétion du profil utilisateur
+                var completionOptions = {
+                    series: [{{ completionData.complete }}, {{ completionData.incomplete }}],
+                    chart: {
+                        type: 'pie',
+                        height: 350,
+                        width: '100%',
+                        redrawOnWindowResize: true
+                    },
+                    labels: ['Données complètes', 'Données manquantes'],
+                    colors: ['#4CAF50', '#F44336'],
+                    title: {
+                        text: 'État de complétion du profil',
+                        align: 'center',
+                        floating: false
+                    },
+                    legend: {
+                        position: window.innerWidth < 768 ? 'bottom' : 'right'
+                    },
+                    responsive: [{
+                        breakpoint: 768,
+                        options: {
+                            chart: {
+                                height: 300
+                            },
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }]
+                };
+
+                if (document.querySelector("#completionChart")) {
+                    var completionChart = new ApexCharts(document.querySelector("#completionChart"), completionOptions);
+                    completionChart.render();
+                }
+                
+                // Graphique global des champs manquants
+                var globalOptions = {
+                    series: [{
+                        name: 'Utilisateurs',
+                        data: [
+                            {% for field, count in globalStats %}
+                                {{ count }},
+                            {% endfor %}
+                        ]
+                    }],
+                    chart: {
+                        type: 'bar',
+                        height: 350,
+                        width: '100%',
+                        redrawOnWindowResize: true
+                    },
+                    plotOptions: {
+                        bar: {
+                            horizontal: window.innerWidth < 768,
+                            columnWidth: '55%',
+                            endingShape: 'rounded',
+                            distributed: false
+                        },
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    stroke: {
+                        show: true,
+                        width: 2,
+                        colors: ['transparent']
+                    },
+                    xaxis: {
+                        categories: [
+                            {% for field, count in globalStats %}
+                                '{{ field }}',
+                            {% endfor %}
+                        ],
+                        labels: {
+                            rotate: window.innerWidth < 768 ? 0 : -45,
+                            style: {
+                                fontSize: '12px'
+                            }
+                        }
+                    },
+                    yaxis: {
+                        title: {
+                            text: window.innerWidth < 768 ? 'Champs' : 'Nombre d\'utilisateurs'
+                        }
+                    },
+                    fill: {
+                        opacity: 1
+                    },
+                    tooltip: {
+                        y: {
+                            formatter: function (val) {
+                                return val + " utilisateurs"
+                            }
+                        }
+                    },
+                    title: {
+                        text: 'Champs manquants pour tous les utilisateurs',
+                        align: 'center'
+                    },
+                    responsive: [{
+                        breakpoint: 768,
+                        options: {
+                            plotOptions: {
+                                bar: {
+                                    horizontal: true
+                                }
+                            },
+                            xaxis: {
+                                labels: {
+                                    rotate: 0
+                                }
+                            }
+                        }
+                    }]
+                };
+
+                if (document.querySelector("#globalChart")) {
+                    var globalChart = new ApexCharts(document.querySelector("#globalChart"), globalOptions);
+                    globalChart.render();
+                }
+            }
+
+            // Initialiser les graphiques
+            createResponsiveCharts();
+
+            // Recréer les graphiques quand la fenêtre est redimensionnée
+            let resizeTimer;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(function() {
+                    document.querySelector("#completionChart").innerHTML = '';
+                    document.querySelector("#globalChart").innerHTML = '';
+                    createResponsiveCharts();
+                }, 250);
+            });
+        });
+    </script>
+{% endblock %}
