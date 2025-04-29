@@ -107,6 +107,20 @@ sudo -u postgres createuser euser -P
 sudo -u postgres createdb e_inscription -O euser
 ```
 
+Mettre à jour le fichier pg_hba
+> Note :
+
+```bash
+sudo nano /etc/postgresql/15/main/pg_hba.conf
+```
+
+puis ajouter la ligne
+> Note : les valleurs e_inscription euser et 127.0.0.1/32 sont a remplacer par la basse de donnée, l'utilisateur l'adresse de connexion ou du réseau
+```bash
+host e_inscription euser 127.0.0.1/32 password
+```
+
+
 Mettre à jour le fichier `.env` :
 > Note : Modifiez l'utilisateur et le mot de passe selon ce que vous avez défini précédemment
 
