@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Classe;
 use App\Entity\User;
-use App\Entity\Langues;
 use App\Entity\InfoEleve;
 use App\Entity\RepresentantLegal;
 use App\Entity\ScolariteAnterieur;
@@ -62,105 +61,43 @@ class EnregistrementEleveController extends AbstractController
                 $infoEleve->setAnneScolaireDeux($anneScolaireDeux);
             }
 
-            { // langues
-                $label = $data["lv1-1"] ;
-                $langueRepo = $entityManager->getRepository(get_class(new Langues));
-                if (!$label = ""){
-                    $langue = $langueRepo->findOneBy(array("label" => $label ));
-                    if(is_null($langue)){
-                        $langue = new Langues();
-                        $langue->setLabel($label);
-                        $entityManager->persist($langue);
-                    }
-                    if ($anneScolaireUn->getLVUn() instanceof Langues) {
-                        $lv1A1 = $anneScolaireUn->getLVUn();
-                        if ($langue != $lv1A1) {
-                            $anneScolaireUn->setLVUn($langue);
-                        }
-                    }
-                    else {
-                        $anneScolaireUn->setLVUn($langue);
-                    }
+                $langue = $data["lv1-1"] ;
+                if (!$langue = ""){
+                    $anneScolaireUn->setLVUn($langue);
                 }
 
-                $label = $data["lv1-2"] ;
-                if (!$label = ""){
-                    $langue = $langueRepo->findOneBy(array("label" => $label ));
-                    
-                    if(is_null($langue)){
-                        $langue = new Langues();
-                        $langue->setLabel($label);
-                        $entityManager->persist($langue);
-                    }
-                    if ($anneScolaireDeux->getLVUn() instanceof Langues) {
-                        $lv1A2 = $anneScolaireDeux->getLVUn();
-                        if ($langue != $lv1A2) {
-                            $anneScolaireDeux->setLVUn($langue);
-                        }
-                    }
-                    else {
-                        $anneScolaireDeux->setLVUn($langue);
-                    }
+                $langue = $data["lv1-2"] ;
+                if (!$langue = ""){
+                    $anneScolaireDeux->setLVUn($langue);
                 }
 
-                $label = $data["lv2-1"] ;
-                if (!$label = ""){
-                    $langue = $langueRepo->findOneBy(array("label" => $label ));
-                    
-                    if(is_null($langue)){
-                        $langue = new Langues();
-                        $langue->setLabel($label);
-                        $entityManager->persist($langue);
-                    }
-                    if ($anneScolaireUn->getLVDeux() instanceof Langues) {
-                        $lv2A1 = $anneScolaireUn->getLVDeux();
-                        if ($langue != $lv2A1) {
-                            $anneScolaireUn->setLVDeux($langue);
-                        }
-                    }
-                    else {
-                        $anneScolaireUn->setLVDeux($langue);
-                    }
+                $langue = $data["lv2-1"] ;
+                if (!$langue = ""){
+                    $anneScolaireUn->setLVDeux($langue);
                 }
 
-                $label = $data["lv2-2"] ;
-                if (!$label = ""){
-                    $langue = $langueRepo->findOneBy(array("label" => $label ));
-                    
-                    if(is_null($langue)){
-                        $langue = new Langues();
-                        $langue->setLabel($label);
-                        $entityManager->persist($langue);
-                    }
-                    if ($anneScolaireDeux->getLVDeux() instanceof Langues) {
-                        $lv2A2 = $anneScolaireDeux->getLVDeux();
-                        if ($langue != $lv2A2) {
-                            $anneScolaireDeux->setLVDeux($langue);
-                        }
-                    }
-                    else {
-                        $anneScolaireDeux->setLVDeux($langue);
-                    }
+                $langue = $data["lv2-2"] ;
+                if (!$langue = ""){
+                    $anneScolaireDeux->setLVDeux($langue);
                 }
 
-                $label = $data["student-lv1"];
-                if ($label != "") {
-                    $langue = $langueRepo->findOneBy(array("label" => $label ));
+                // $label = $data["student-lv1"];
+                // if ($label != "") {
+                //     $langue =  ["Anglais"];
                     
-                    if(is_null($langue)){
-                        return new JsonResponse(['success' => false, 'message' => "LV1 pour l'annee a venir non valide"],400);
-                    }
+                //     if(($langue)){
+                //         return new JsonResponse(['success' => false, 'message' => "LV1 pour l'annee a venir non valide"],400);
+                //     }
                     $infoEleve->setLVUn($langue);
-                }
-                $label = $data["student-lv2"];
-                if ($label != "") {
-                    $langue = $langueRepo->findOneBy(array("label" => $label ));
-                    if(is_null($langue)){
-                        return new JsonResponse(['success' => false, 'message' => "LV2 pour l'annee a venir non valide"],400);
-                    }
+                // }
+                $langue = $data["student-lv2"];
+                // if ($label != "") {
+                //     $langue = $langueRepo->findOneBy(array("label" => $label ));
+                //     if(is_null($langue)){
+                //         return new JsonResponse(['success' => false, 'message' => "LV2 pour l'annee a venir non valide"],400);
+                //     }
                     $infoEleve->setLVDeux($langue);
-                }
-            }
+                // }
 
             if ($data["annee-1"] != ""){
                 $anneScolaireUn->setAnneScolaire($data["annee-1"]);

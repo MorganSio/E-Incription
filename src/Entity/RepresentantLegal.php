@@ -30,9 +30,6 @@ class RepresentantLegal extends Humain
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $adresse_employeur = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $RIB = null;
-
     #[ORM\Column(length: 64, nullable: true)]
     private ?string $lien_eleve;
 
@@ -120,18 +117,6 @@ class RepresentantLegal extends Humain
     public function setAdresseEmployeur(?string $adresse_employeur): static
     {
         $this->adresse_employeur = $adresse_employeur;
-
-        return $this;
-    }
-
-    public function getRIB(): ?string
-    {
-        return $this->RIB;
-    }
-
-    public function setRIB(?string $RIB): static
-    {
-        $this->RIB = $RIB;
 
         return $this;
     }

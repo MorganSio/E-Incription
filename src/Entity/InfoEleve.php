@@ -45,9 +45,8 @@ class InfoEleve
     #[ORM\Column(length: 500, nullable: true)]
     private ?string $observations = null;
 
-    #[ORM\Column(length: 50, nullable: true)]
-    private ?string $etat_matrimoniale_parents = null;
-
+    #type du payement mdl (par cheque ou espece) 
+    #aurais du s'appeler paimentMdlParCheque
     #[ORM\Column(nullable: true)]
     private ?bool $cheque = null;
 
@@ -90,6 +89,13 @@ class InfoEleve
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $transportScolaire = null;
 
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $LVUn = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $LVDeux = null;
+
+
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: true)]
     private ?ResposableFinancier $responsable_financier = null;
@@ -106,13 +112,6 @@ class InfoEleve
     #[ORM\JoinColumn(nullable: true)]
     private ?ScolariteAnterieur $anne_scolaire_deux = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?Langues $LVUn = null;
-
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?Langues $LVDeux = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: true)]
@@ -126,6 +125,7 @@ class InfoEleve
     #[ORM\JoinColumn(nullable: true)]
     private ?RegimeCantine $regime = null;
 
+    #lien eleve ?
     #[ORM\ManyToOne(inversedBy: 'infoEleves')]
     #[ORM\JoinColumn(nullable: true)]
     private ?RepresentantLegal $responsable_un = null;
@@ -502,24 +502,24 @@ class InfoEleve
         return $this;
     }
 
-    public function getLVUn(): ?Langues
+    public function getLVUn(): ?string
     {
         return $this->LVUn;
     }
     
-    public function setLVUn(?Langues $LVUn): static
+    public function setLVUn(?string $LVUn): static
     {
         $this->LVUn = $LVUn;
 
         return $this;
     }
 
-    public function getLVDeux(): ?Langues
+    public function getLVDeux(): ?string
     {
         return $this->LVDeux;
     }
 
-    public function setLVDeux(?Langues $LVDeux): static
+    public function setLVDeux(?string $LVDeux): static
     {
         $this->LVDeux = $LVDeux;
 
