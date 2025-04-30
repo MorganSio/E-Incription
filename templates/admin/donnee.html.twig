@@ -4,13 +4,24 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
     <div class="container-fluid">
-        <!-- Bloc principal : Informations utilisateur + graphique -->
+        <!-- En-tête avec le nom de l'élève et son état de complétion -->
         <div class="card mb-4 w-100">
-            <div class="card-header">
-                <h3>Données de l'utilisateur: {{ user.prenom }} {{ user.nom }}</h3>
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3>Données de l'élève: {{ user.prenom }} {{ user.nom }}</h3>
+                <div class="text-right">
+                    {% set completion = globalComparison.user_percentage %}
+                    {% if completion < 50 %}
+                        <span class="badge bg-danger p-2">{{ completion }}% complété</span>
+                    {% elseif completion < 80 %}
+                        <span class="badge bg-warning p-2">{{ completion }}% complété</span>
+                    {% else %}
+                        <span class="badge bg-success p-2">{{ completion }}% complété</span>
+                    {% endif %}
+                </div>
             </div>
             <div class="card-body">
                 <div class="row">
+                    <!-- Informations personnelles -->
                     <div class="col-lg-6 mb-4">
                         <h4>Informations personnelles</h4>
                         <table class="table">
@@ -18,14 +29,29 @@
                             <tr><th>Prénom</th><td>{{ user.prenom }}</td></tr>
                             <tr><th>Email</th><td>{{ user.email }}</td></tr>
                             <tr><th>Compte vérifié</th><td>{{ user.isVerified ? 'Oui' : 'Non' }}</td></tr>
-                            {% if user.telephone is defined %}
-                                <tr><th>Téléphone</th><td>{{ user.telephone ?: 'Non renseigné' }}</td></tr>
-                            {% endif %}
-                            {% if user.adresse is defined %}
-                                <tr><th>Adresse</th><td>{{ user.adresse ?: 'Non renseignée' }}</td></tr>
+                            
+                            {% if user.infoEleve is not null %}
+                                <tr>
+                                    <th>Date de naissance</th>
+                                    <td>{{ user.infoEleve.dateDeNaissance ? user.infoEleve.dateDeNaissance|date('d/m/Y') : 'Non renseignée' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Classe</th>
+                                    <td>{{ user.infoEleve.classe ?: 'Non renseignée' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Promotion</th>
+                                    <td>{{ user.infoEleve.promotion ?: 'Non renseignée' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Téléphone mobile</th>
+                                    <td>{{ user.infoEleve.numeroMobile ?: 'Non renseigné' }}</td>
+                                </tr>
                             {% endif %}
                         </table>
                     </div>
+                    
+                    <!-- Graphique de complétion -->
                     <div class="col-lg-6">
                         <h4 class="text-center">État de complétion du profil</h4>
                         <div id="completionChart" style="width: 100%; min-height: 300px;"></div>
@@ -33,51 +59,119 @@
                 </div>
             </div>
         </div>
-
-        <!-- Carte séparée : Statistiques globales -->
-        <div class="card w-100 mb-4">
+        
+        <!-- Comparaison avec la moyenne -->
+        <div class="card mb-4 w-100">
             <div class="card-header">
-                <h3>Statistiques globales</h3>
+                <h4>Comparaison avec la moyenne des élèves</h4>
             </div>
             <div class="card-body">
-                <div id="globalChart" style="width: 100%; min-height: 350px;"></div>
+                <div id="comparisonChart" style="width: 100%; min-height: 250px;"></div>
             </div>
         </div>
-    
-        <div class="card w-100 mb-4">
-            <h2>Dossiers PDF pour {{ user.prenom }} {{ user.nom }}</h2>
-            <table class="table table-bordered mt-3">
-                <thead>
-                    <tr>
-                        <th>Type</th>
-                        <th>Statut</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for type, data in pdfs %}
-                        <tr>
-                            <td>{{ type|capitalize }}</td>
-                            <td>
-                                {% if data.exists %}
-                                    ✅ Généré
-                                {% else %}
-                                    ❌ Non généré
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if data.exists %}
-                                    <a href="{{ asset(data.path) }}" class="btn btn-sm btn-primary" target="_blank">Visualiser</a>
-                                    <a href="{{ asset(data.path) }}" class="btn btn-sm btn-secondary" download>Télécharger</a>
-                                {% else %}
-                                    <a href="{{ data.generateRoute }}" class="btn btn-sm btn-warning">Générer</a>
-                                {% endif %}
-                            </td>
-                        </tr>
+        
+        <!-- Détail par section -->
+        <div class="card mb-4 w-100">
+            <div class="card-header">
+                <h4>Complétion par section</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div id="sectionsChart" style="width: 100%; min-height: 400px;"></div>
+                    </div>
+                    <div class="col-lg-4">
+                        <h5 class="mb-3">Top champs manquants</h5>
+                        <ul class="list-group">
+                            {% for field in completionData.missingFields %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>{{ field.section|capitalize }} > {{ field.field|capitalize }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Documents fournis -->
+        <div class="card mb-4 w-100">
+            <div class="card-header">
+                <h4>Documents fournis</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    {% for name, isPresent in documents.details %}
+                        <div class="col-md-3 mb-3">
+                            <div class="card {{ isPresent ? 'border-success' : 'border-danger' }}">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">{{ name|capitalize|replace({'_': ' '}) }}</h5>
+                                    {% if isPresent %}
+                                        <span class="badge bg-success">Fourni</span>
+                                    {% else %}
+                                        <span class="badge bg-danger">Manquant</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
                     {% endfor %}
-                </tbody>
-            </table>
-            <a href="{{ path('admin') }}" class="btn btn-outline-dark mt-4">⬅ Retour au dashboard</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Dossiers PDF -->
+        <div class="card w-100 mb-4">
+            <div class="card-header">
+                <h4>Dossiers PDF pour {{ user.prenom }} {{ user.nom }}</h4>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Statut</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for type, data in pdfs %}
+                            <tr>
+                                <td>{{ type|capitalize }}</td>
+                                <td>
+                                    {% if data.exists %}
+                                        <span class="badge bg-success">Généré</span>
+                                    {% else %}
+                                        <span class="badge bg-danger">Non généré</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if data.exists %}
+                                        <a href="{{ asset(data.path) }}" class="btn btn-sm btn-primary" target="_blank">Visualiser</a>
+                                        <a href="{{ asset(data.path) }}" class="btn btn-sm btn-secondary" download>Télécharger</a>
+                                    {% else %}
+                                        <a href="{{ path('generer_docx_' ~ type, {'id': user.infoEleve.id}) }}" class="btn btn-sm btn-warning">Générer</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Actions -->
+        <div class="card w-100 mb-4">
+            <div class="card-header">
+                <h4>Actions</h4>
+            </div>
+            <div class="card-body">
+                <a href="{{ path('admin_email_form', {'id': user.id}) }}" class="btn btn-primary">
+                    <i class="fa fa-envelope"></i> Envoyer un email
+                </a>
+                <a href="{{ path('admin') }}" class="btn btn-outline-dark">
+                    <i class="fa fa-arrow-left"></i> Retour au dashboard
+                </a>
+            </div>
         </div>
     </div>
     
@@ -87,7 +181,7 @@
             function createResponsiveCharts() {
                 // Graphique de complétion du profil utilisateur
                 var completionOptions = {
-                    series: [{{ completionData.complete }}, {{ completionData.incomplete }}],
+                    series: [{{ completionData.completion.complete }}, {{ completionData.completion.incomplete }}],
                     chart: {
                         type: 'pie',
                         height: 350,
@@ -97,15 +191,25 @@
                     labels: ['Données complètes', 'Données manquantes'],
                     colors: ['#4CAF50', '#F44336'],
                     title: {
-                        text: 'État de complétion du profil',
+                        text: 'Complétion du profil',
                         align: 'center',
-                        floating: false
+                        style: {
+                            fontSize: '16px',
+                            fontWeight: 600
+                        }
                     },
                     legend: {
-                        position: window.innerWidth < 768 ? 'bottom' : 'right'
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        y: {
+                            formatter: function(val) {
+                                return val + ' données';
+                            }
+                        }
                     },
                     responsive: [{
-                        breakpoint: 768,
+                        breakpoint: 480,
                         options: {
                             chart: {
                                 height: 300
@@ -116,38 +220,35 @@
                         }
                     }]
                 };
-
-                if (document.querySelector("#completionChart")) {
-                    var completionChart = new ApexCharts(document.querySelector("#completionChart"), completionOptions);
-                    completionChart.render();
-                }
                 
-                // Graphique global des champs manquants
-                var globalOptions = {
+                var completionChart = new ApexCharts(document.querySelector("#completionChart"), completionOptions);
+                completionChart.render();
+                
+                // Graphique de comparaison avec la moyenne des élèves
+                var comparisonOptions = {
                     series: [{
-                        name: 'Utilisateurs',
-                        data: [
-                            {% for field, count in globalStats %}
-                                {{ count }},
-                            {% endfor %}
-                        ]
+                        name: 'Profil de l\'élève',
+                        data: [{{ globalComparison.user_percentage }}]
                     }],
                     chart: {
                         type: 'bar',
-                        height: 350,
-                        width: '100%',
-                        redrawOnWindowResize: true
+                        height: 250,
+                        toolbar: {
+                            show: false
+                        }
                     },
                     plotOptions: {
                         bar: {
-                            horizontal: window.innerWidth < 768,
+                            horizontal: false,
                             columnWidth: '55%',
-                            endingShape: 'rounded',
-                            distributed: false
+                            endingShape: 'rounded'
                         },
                     },
                     dataLabels: {
-                        enabled: false
+                        enabled: true,
+                        formatter: function(val) {
+                            return val + '%';
+                        }
                     },
                     stroke: {
                         show: true,
@@ -155,72 +256,99 @@
                         colors: ['transparent']
                     },
                     xaxis: {
-                        categories: [
-                            {% for field, count in globalStats %}
-                                '{{ field }}',
-                            {% endfor %}
-                        ],
-                        labels: {
-                            rotate: window.innerWidth < 768 ? 0 : -45,
-                            style: {
-                                fontSize: '12px'
-                            }
-                        }
+                        categories: ['Taux de complétion'],
                     },
                     yaxis: {
                         title: {
-                            text: window.innerWidth < 768 ? 'Champs' : 'Nombre d\'utilisateurs'
-                        }
+                            text: 'Pourcentage (%)'
+                        },
+                        min: 0,
+                        max: 100
                     },
                     fill: {
-                        opacity: 1
+                        opacity: 1,
+                        colors: ['#2196F3', '#9E9E9E']
                     },
                     tooltip: {
                         y: {
-                            formatter: function (val) {
-                                return val + " utilisateurs"
+                            formatter: function(val) {
+                                return val + "%";
                             }
                         }
-                    },
-                    title: {
-                        text: 'Champs manquants pour tous les utilisateurs',
-                        align: 'center'
-                    },
-                    responsive: [{
-                        breakpoint: 768,
-                        options: {
-                            plotOptions: {
-                                bar: {
-                                    horizontal: true
-                                }
-                            },
-                            xaxis: {
-                                labels: {
-                                    rotate: 0
-                                }
-                            }
-                        }
-                    }]
+                    }
                 };
 
-                if (document.querySelector("#globalChart")) {
-                    var globalChart = new ApexCharts(document.querySelector("#globalChart"), globalOptions);
-                    globalChart.render();
-                }
+                var comparisonChart = new ApexCharts(document.querySelector("#comparisonChart"), comparisonOptions);
+                comparisonChart.render();
+                
+                
+                
+                var sectionsOptions = {
+                    series: [{
+                        name: 'Complétion',
+                        data: sectionsData.map(function(item) { return item.value; })
+                    }],
+                    chart: {
+                        type: 'bar',
+                        height: 400
+                    },
+                    plotOptions: {
+                        bar: {
+                            borderRadius: 4,
+                            horizontal: true,
+                            distributed: true,
+                            dataLabels: {
+                                position: 'bottom'
+                            },
+                        }
+                    },
+                    colors: ['#33b2df', '#546E7A', '#d4526e', '#13d8aa', '#A5978B', '#4ecdc4', '#c7f464', '#81D4FA'],
+                    dataLabels: {
+                        enabled: true,
+                        textAnchor: 'start',
+                        style: {
+                            colors: ['#fff']
+                        },
+                        formatter: function(val) {
+                            return val + '%';
+                        },
+                        offsetX: 0
+                    },
+                    stroke: {
+                        width: 1,
+                        colors: ['#fff']
+                    },
+                    xaxis: {
+                        categories: sectionsData.map(function(item) { return item.section; })
+                    },
+                    yaxis: {
+                        labels: {
+                            show: false
+                        }
+                    },
+                    tooltip: {
+                        theme: 'dark',
+                        y: {
+                            formatter: function(val) {
+                                return val + '%';
+                            }
+                        }
+                    }
+                };
+
+                var sectionsChart = new ApexCharts(document.querySelector("#sectionsChart"), sectionsOptions);
+                sectionsChart.render();
             }
-
-            // Initialiser les graphiques
+            
+            // Appeler la fonction pour créer les graphiques
             createResponsiveCharts();
-
-            // Recréer les graphiques quand la fenêtre est redimensionnée
-            let resizeTimer;
+            
+            // Redimensionner les graphiques lors du redimensionnement de la fenêtre
             window.addEventListener('resize', function() {
-                clearTimeout(resizeTimer);
-                resizeTimer = setTimeout(function() {
-                    document.querySelector("#completionChart").innerHTML = '';
-                    document.querySelector("#globalChart").innerHTML = '';
-                    createResponsiveCharts();
-                }, 250);
+                // Redessiner les graphiques si nécessaire
+                if (typeof completionChart !== 'undefined') completionChart.render();
+                if (typeof comparisonChart !== 'undefined') comparisonChart.render();
+                if (typeof sectionsChart !== 'undefined') sectionsChart.render();
             });
         });
     </script>
