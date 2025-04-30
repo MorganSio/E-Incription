@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -42,7 +43,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     public bool $isVerified = false;
 
-    #[ORM\OneToOne]
+    // Modifié cette relation pour inclure cascade={"remove"}
+    #[ORM\OneToOne(mappedBy: "user", cascade: ["remove"])]
     public ?InfoEleve $infoEleve = null;
 
     public function getId(): ?int
@@ -51,7 +53,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     public function getEmail(): ?string
-    {   
+    {
         return $this->email;
     }
 
@@ -143,8 +145,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-
+ 
     public function isVerified(): bool
     {
         return $this->isVerified;

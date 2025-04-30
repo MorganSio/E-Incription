@@ -48,6 +48,53 @@ DATABASE_URL="postgresql://votre_user:votre_motdepasse@localhost:5432/E-Inscript
 php bin/console app:check-database-connection
 ```
 
+### Extensions PHP requises
+
+Assurez-vous que les extensions PHP suivantes sont activées dans votre fichier php.ini :
+
+```
+extension=curl
+extension=mbstring
+extension=openssl
+extension=pdo_pgsql
+extension=intl
+extension=json
+extension=tokenizer
+extension=ctype
+extension=xml
+extension=fileinfo
+extension=gd
+extension=zip
+extension=pgsql
+```
+
+### 1. Cloner le dépôt
+
+```bash
+git clone https://github.com/MorganSio/E-Inscription.git
+cd E-Inscription
+```
+
+### 2. Installer les dépendances
+
+```bash
+composer install
+```
+
+### 3. Configurer la base de données
+
+Modifiez le fichier `.env` à la racine du projet :
+
+```
+DATABASE_URL="postgresql://votre_user:votre_motdepasse@localhost:5432/E-Inscription?serverVersion=15.8&charset=utf8"
+```
+
+### 4. Vérifier la connexion à la base de données
+
+```bash
+php bin/console app:check-database-connection
+```
+
 ### 5. Démarrer le serveur de développement
 
 ```bash
@@ -55,6 +102,48 @@ symfony server:start
 ```
 
 ## 🌐 Déploiement sur un serveur distant (Linux - Ubuntu recommandé)
+
+Voici les étapes pour installer l'application et la base de données sur un serveur distant.
+
+### 1. Installer les dépendances nécessaires
+
+```bash
+sudo apt update && sudo apt install -y \
+php php-cli php-mbstring php-xml php-curl php-pgsql php-intl \
+php-json php-tokenizer php-ctype php-fileinfo php-gd php-zip \
+unzip curl git nginx postgresql postgresql-contrib \
+composer
+```
+
+### 2. Cloner le dépôt et configurer le projet
+
+```bash
+cd /var/www/
+sudo git clone https://github.com/MorganSio/E-Inscription.git
+cd E-Inscription
+composer install
+```
+
+### 3. Configurer la base de données PostgreSQL
+
+Créer un utilisateur et une base :
+> Note : Utilisateur à modifier selon vos besoins
+
+```bash
+sudo -u postgres createuser euser -P
+sudo -u postgres createdb e_inscription -O euser
+```
+
+Mettre à jour le fichier pg_hba
+```bash
+sudo nano /etc/postgresql/15/main/pg_hba.conf
+```
+
+puis ajouter la ligne
+> Note : les valleurs e_inscription euser et 127.0.0.1/32 sont a remplacer par la basse de donnée, l'utilisateur l'adresse du réseau ou du client directement
+```bash
+host e_inscription euser 127.0.0.1/32 password
+```
 
 Voici les étapes pour installer l'application et la base de données sur un serveur distant.
 
@@ -84,6 +173,47 @@ Créer un utilisateur et une base :
 ```bash
 sudo -u postgres createuser euser -P
 sudo -u postgres createdb e_inscription -O euser
+```
+
+Mettre à jour le fichier `.env` :
+> Note : Modifiez l'utilisateur et le mot de passe selon ce que vous avez défini précédemment
+
+```
+DATABASE_URL="postgresql://euser:motdepasse@127.0.0.1:5432/e_inscription?serverVersion=15.8&charset=utf8"
+```
+
+### 4. Vérifier la connexion
+
+```bash
+php bin/console app:check-database-connection
+```
+
+### 5. Configurer Nginx
+
+#### Installation de Nginx
+
+**Étape 1 : Installer Nginx**
+
+```bash
+sudo apt update
+sudo apt upgrade
+sudo apt install nginx
+sudo systemctl status nginx
+```
+
+**Étape 2 : Installer PHP et PHP-FPM**
+
+```bash
+sudo apt install php-fpm php-mysql php-xml php-mbstring php-curl php-intl php-zip
+sudo systemctl status php8.2-fpm
+```
+
+**Étape 3 : Configurer Nginx pour Symfony**
+
+Créer le fichier de configuration :
+
+```bash
+sudo nano /etc/nginx/sites-available/e-inscription
 ```
 
 Mettre à jour le fichier `.env` :
@@ -253,3 +383,4 @@ php bin/console app:create-admin
 - Si vous rencontrez des problèmes de permissions, vérifiez que les dossiers `var/cache` et `var/log` sont accessibles en écriture.
 - Pour les problèmes liés à la base de données, assurez-vous que PostgreSQL est correctement configuré et que l'utilisateur dispose des droits nécessaires.
 - En cas d'erreurs avec Nginx, consultez les logs : `sudo tail -f /var/log/nginx/error.log`
+- Si vous rencontrez des erreurs liées aux extensions PHP manquantes, vérifiez que toutes les extensions requises sont activées dans votre fichier php.ini.

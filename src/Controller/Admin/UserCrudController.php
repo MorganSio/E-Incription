@@ -37,27 +37,27 @@ class UserCrudController extends AbstractCrudController
             TextField::new('password')->onlyOnForms()->hideOnForm(), // Pour ne pas afficher le mot de passe en clair
             TextField::new('Nom'),
             TextField::new('prenom'),
-            BooleanField::new('isVerified')->hideOnForm(),
+            // BooleanField::new('isVerified')->hideOnForm(),
         ];
     }
 
-    public function configureActions(Actions $actions): Actions
-    {
-        $actions = parent::configureActions($actions);
+    // public function configureActions(Actions $actions): Actions
+    // {
+    //     $actions = parent::configureActions($actions);
 
-        return $actions
-            ->add(Crud::PAGE_INDEX, $this->createGenerateDocxAction('generateDocxIntendance', 'Générer PDF Intendance', 'generer_docx_intendance'))
-            ->add(Crud::PAGE_DETAIL, $this->createGenerateDocxAction('generateDocxIntendance', 'Générer PDF Intendance', 'generer_docx_intendance'))
+    //     return $actions
+    //         ->add(Crud::PAGE_INDEX, $this->createGenerateDocxAction('generateDocxIntendance', 'Générer PDF Intendance', 'generer_docx_intendance'))
+    //         ->add(Crud::PAGE_DETAIL, $this->createGenerateDocxAction('generateDocxIntendance', 'Générer PDF Intendance', 'generer_docx_intendance'))
 
-            ->add(Crud::PAGE_INDEX, $this->createGenerateDocxAction('generateDocxUrgence', 'Générer PDF Urgence', 'generer_docx_urgence'))
-            ->add(Crud::PAGE_DETAIL, $this->createGenerateDocxAction('generateDocxUrgence', 'Générer PDF Urgence', 'generer_docx_urgence'))
+    //         ->add(Crud::PAGE_INDEX, $this->createGenerateDocxAction('generateDocxUrgence', 'Générer PDF Urgence', 'generer_docx_urgence'))
+    //         ->add(Crud::PAGE_DETAIL, $this->createGenerateDocxAction('generateDocxUrgence', 'Générer PDF Urgence', 'generer_docx_urgence'))
 
-            ->add(Crud::PAGE_INDEX, $this->createGenerateDocxAction('generateDocxMdl', 'Générer PDF Mdl', 'generer_docx_mdl'))
-            ->add(Crud::PAGE_DETAIL, $this->createGenerateDocxAction('generateDocxMdl', 'Générer PDF Mdl', 'generer_docx_mdl'))
+    //         ->add(Crud::PAGE_INDEX, $this->createGenerateDocxAction('generateDocxMdl', 'Générer PDF Mdl', 'generer_docx_mdl'))
+    //         ->add(Crud::PAGE_DETAIL, $this->createGenerateDocxAction('generateDocxMdl', 'Générer PDF Mdl', 'generer_docx_mdl'))
 
-            ->add(Crud::PAGE_INDEX, $this->createGenerateDocxAction('generateDocxDossier', 'Générer PDF Dossier', 'generer_docx_dossier'))
-            ->add(Crud::PAGE_DETAIL, $this->createGenerateDocxAction('generateDocxDossier', 'Générer PDF Dossier', 'generer_docx_dossier'));
-    }
+    //         ->add(Crud::PAGE_INDEX, $this->createGenerateDocxAction('generateDocxDossier', 'Générer PDF Dossier', 'generer_docx_dossier'))
+    //         ->add(Crud::PAGE_DETAIL, $this->createGenerateDocxAction('generateDocxDossier', 'Générer PDF Dossier', 'generer_docx_dossier'));
+    // }
 
     private function createGenerateDocxAction(string $actionName, string $label, string $route): Action
     {
