@@ -1,0 +1,30 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h3>Envoyer un email à {{ user.prenom }} {{ user.nom }}</h3>
+        </div>
+        <div class="card-body">
+            <form method="post" action="{{ path('admin_send_email', {'id': user.id}) }}">
+                <div class="form-group mb-3">
+                    <label for="destinataire">Destinataire:</label>
+                    <input type="email" id="destinataire" class="form-control" value="{{ user.email }}" readonly>
+                </div>
+                
+                <div class="form-group mb-3">
+                    <label for="objet">Objet:</label>
+                    <input type="text" id="objet" name="objet" class="form-control" required>
+                </div>
+                
+                <div class="form-group mb-3">
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" class="form-control" rows="10" required></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Envoyer</button>
+                <a href="{{ path('admin_dashboard') }}" class="btn btn-secondary">Annuler</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}
