@@ -57,22 +57,22 @@ class EnregistrementEleveController extends AbstractController
             }
 
                 $langue = $data["lv1-1"] ;
-                if (!$langue = ""){
+                if ($langue != ""){
                     $anneScolaireUn->setLVUn($langue);
                 }
-
+                
                 $langue = $data["lv1-2"] ;
-                if (!$langue = ""){
+                if ($langue != ""){
                     $anneScolaireDeux->setLVUn($langue);
                 }
 
                 $langue = $data["lv2-1"] ;
-                if (!$langue = ""){
+                if ($langue != ""){
                     $anneScolaireUn->setLVDeux($langue);
                 }
 
                 $langue = $data["lv2-2"] ;
-                if (!$langue = ""){
+                if ($langue != ""){
                     $anneScolaireDeux->setLVDeux($langue);
                 }
 

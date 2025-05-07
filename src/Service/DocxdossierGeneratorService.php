@@ -48,7 +48,7 @@ class DocxdossierGeneratorService
         // === ÉTUDIANT ===
         $templateProcessor->setValue('etudiant.nom', $user?->getNom() ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.prenom', $user?->getPrenom() ?? 'Non renseigné');
-        $templateProcessor->setValue('etudiant.num_secu', $user?->getNumSecuSocial() ?? 'Nom renseigné'); // À adapter si tu l’as
+        $templateProcessor->setValue('etudiant.num_secu', $etudiant->getNumSecuSocial() ?? 'Nom renseigné'); // À adapter si tu l’as
         $templateProcessor->setValue('etudiant.date_nais', $etudiant->getDateDeNaissance()?->format('d/m/Y') ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.sexe', $etudiant->getSexe() ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.nationalite', $etudiant->getNationalite() ?? 'Non renseigné');
@@ -61,18 +61,18 @@ class DocxdossierGeneratorService
 
         $templateProcessor->setValue('etudiant.classe', $etudiant->getClasse() ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.specialite', $etudiant->getClasse()?->getLabel() ?? 'Non renseigné'); // À adapter
-        $templateProcessor->setValue('etudiant.lv1', $etudiant->getLVUn()?->getLabel() ?? 'Non renseigné');
-        $templateProcessor->setValue('etudiant.lv2', $etudiant->getLVDeux()?->getLabel() ?? 'Non renseigné');
+        $templateProcessor->setValue('etudiant.lv1', $etudiant->getLVUn() ?? 'Non renseigné');
+        $templateProcessor->setValue('etudiant.lv2', $etudiant->getLVDeux() ?? 'Non renseigné');
 
         // === SCOLARITÉS ANTÉRIEURES ===
         $templateProcessor->setValue('etudiant.annee_sco_1', $etudiant->getAnneScolaireUn()?->getAnneScolaire() ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.annee_sco_2', $etudiant->getAnneScolaireDeux()?->getAnneScolaire() ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.classe_1', $etudiant->getAnneScolaireUn()?->getClasse() ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.classe_2', $etudiant->getAnneScolaireDeux()?->getClasse() ?? 'Non renseigné');
-        $templateProcessor->setValue('etudiant.lv1_1', $etudiant->getAnneScolaireUn()?->getLVUn()?->getLabel() ?? 'Non renseigné');
-        $templateProcessor->setValue('etudiant.lv1_2', $etudiant->getAnneScolaireDeux()?->getLVUn()?->getLabel() ?? 'Non renseigné');
-        $templateProcessor->setValue('etudiant.lv2_1', $etudiant->getAnneScolaireUn()?->getLVDeux()?->getLabel() ?? 'Non renseigné');
-        $templateProcessor->setValue('etudiant.lv2_2', $etudiant->getAnneScolaireDeux()?->getLVDeux()?->getLabel() ?? 'Non renseigné');
+        $templateProcessor->setValue('etudiant.lv1_1', $etudiant->getAnneScolaireUn()?->getLVUn() ?? 'Non renseigné');
+        $templateProcessor->setValue('etudiant.lv1_2', $etudiant->getAnneScolaireDeux()?->getLVUn() ?? 'Non renseigné');
+        $templateProcessor->setValue('etudiant.lv2_1', $etudiant->getAnneScolaireUn()?->getLVDeux()  ?? 'Non renseigné');
+        $templateProcessor->setValue('etudiant.lv2_2', $etudiant->getAnneScolaireDeux()?->getLVDeux() ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.option_1', $etudiant->getAnneScolaireUn()?->getOption() ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.option_2', $etudiant->getAnneScolaireDeux()?->getOption() ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.etab_1', $etudiant->getAnneScolaireUn()?->getEtablissement() ?? 'Non renseigné');
