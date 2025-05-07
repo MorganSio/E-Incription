@@ -125,25 +125,13 @@
                                                 </div>
                                                 <div class="fr-fieldset__element">
                                                     <fieldset class="fr-fieldset" id="sex-9533" aria-labelledby="sex-9533-legend sex-9533-messages">
-                                                        <legend class="fr-fieldset__legend--regular fr-fieldset__legend" id="sex-9533-legend">
-                                                            Sexe
-                                                        </legend>
-                                                        <div class="fr-fieldset__element">
-                                                            <div class="fr-radio-group fr-radio-group--sm">
-                                                                <input type="radio" id="female-9534" name="sex">
-                                                                <label class="fr-label" for="female-9534">
-                                                                    Feminin
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="fr-fieldset__element">
-                                                            <div class="fr-radio-group fr-radio-group--sm">
-                                                                <input type="radio" id="male-9535" name="sex">
-                                                                <label class="fr-label" for="male-9535">
-                                                                    Masculin
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                     {{ form_row(registrationForm.sexe, {
+                                                                        id: 'family-name-9537',
+                                                                        label_attr: {'class': 'fr-label'},
+                                                                        attr: {'class': 'fr-input', 'autocapitalize': 'off', 'autocorrect': 'off', 'required': 'required'},
+                                                                    }) }}
+                                                      
+                                                </div>
                                                         <div class="fr-messages-group" id="sex-9533-messages" aria-live="polite">
                                                         </div>
                                                     </fieldset>
