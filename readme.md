@@ -357,9 +357,10 @@ sudo chown -R www-data:www-data /var/www/E-Inscription
 sudo chmod -R 755 /var/www/E-Inscription
 ```
 
-### 6. Lancer les migrations et créer le schéma
+### 6. Créer le schéma et lancer les migrations
 
 ```bash
+php bin/console doctrine:database:create
 php bin/console make:migration  
 php bin/console doctrine:migrations:migrate
 ```

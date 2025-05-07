@@ -25,13 +25,13 @@ class ScolariteAnterieur
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $etablissement = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?Langues $LVDeux = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?Langues $LVUn = null;
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $LVDeux = null;
+
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $LVUn = null;
 
     public function getId(): ?int
     {
@@ -86,24 +86,24 @@ class ScolariteAnterieur
         return $this;
     }
 
-    public function getLVDeux(): ?Langues
+    public function getLVDeux(): ?string
     {
         return $this->LVDeux;
     }
 
-    public function setLVDeux(?Langues $LVDeux): static
+    public function setLVDeux(?string $LVDeux): static
     {
         $this->LVDeux = $LVDeux;
 
         return $this;
     }
 
-    public function getLVUn(): ?Langues
+    public function getLVUn(): ?string
     {
         return $this->LVUn;
     }
 
-    public function setLVUn(?Langues $LVUn): static
+    public function setLVUn(?string $LVUn): static
     {
         $this->LVUn = $LVUn;
 

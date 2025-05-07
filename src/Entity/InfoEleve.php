@@ -45,9 +45,8 @@ class InfoEleve
     #[ORM\Column(length: 500, nullable: true)]
     private ?string $observations = null;
 
-    #[ORM\Column(length: 50, nullable: true)]
-    private ?string $etat_matrimoniale_parents = null;
-
+    #type du payement mdl (par cheque ou espece) 
+    #aurais du s'appeler paimentMdlParCheque
     #[ORM\Column(nullable: true)]
     private ?bool $cheque = null;
 
@@ -90,6 +89,19 @@ class InfoEleve
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $transportScolaire = null;
 
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $LVUn = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $LVDeux = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $sexe = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $regime = null;
+
+
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: true)]
     private ?ResposableFinancier $responsable_financier = null;
@@ -106,26 +118,12 @@ class InfoEleve
     #[ORM\JoinColumn(nullable: true)]
     private ?ScolariteAnterieur $anne_scolaire_deux = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?Langues $LVUn = null;
-
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?Langues $LVDeux = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: true)]
     private ?MedecinTraitant $medecin_traitant = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?Sexe $sexe = null;
-
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?RegimeCantine $regime = null;
-
+    #lien eleve ? #je voulais dire quoi par ça ?
     #[ORM\ManyToOne(inversedBy: 'infoEleves')]
     #[ORM\JoinColumn(nullable: true)]
     private ?RepresentantLegal $responsable_un = null;
@@ -270,18 +268,6 @@ class InfoEleve
     public function setObservations(?string $observations): static
     {
         $this->observations = $observations;
-
-        return $this;
-    }
-
-    public function getEtatMatrimonialeParents(): ?string
-    {
-        return $this->etat_matrimoniale_parents;
-    }
-
-    public function setEtatMatrimonialeParents(?string $etat_matrimoniale_parents): static
-    {
-        $this->etat_matrimoniale_parents = $etat_matrimoniale_parents;
 
         return $this;
     }
@@ -502,24 +488,24 @@ class InfoEleve
         return $this;
     }
 
-    public function getLVUn(): ?Langues
+    public function getLVUn(): ?string
     {
         return $this->LVUn;
     }
     
-    public function setLVUn(?Langues $LVUn): static
+    public function setLVUn(?string $LVUn): static
     {
         $this->LVUn = $LVUn;
 
         return $this;
     }
 
-    public function getLVDeux(): ?Langues
+    public function getLVDeux(): ?string
     {
         return $this->LVDeux;
     }
 
-    public function setLVDeux(?Langues $LVDeux): static
+    public function setLVDeux(?string $LVDeux): static
     {
         $this->LVDeux = $LVDeux;
 
@@ -538,24 +524,24 @@ class InfoEleve
         return $this;
     }
 
-    public function getsexe(): ?Sexe
+    public function getSexe(): ?string
     {
         return $this->sexe;
     }
 
-    public function setsexe(?Sexe $sexe): static
+    public function setSexe(string $sexe): static
     {
         $this->sexe = $sexe;
 
         return $this;
     }
 
-    public function getRegime(): ?RegimeCantine
+    public function getRegime(): ?string
     {
         return $this->regime;
     }
 
-    public function setRegime(?RegimeCantine $regime): static
+    public function setRegime(?string $regime): static
     {
         $this->regime = $regime;
 
