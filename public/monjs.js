@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", function (){
             if (result.success) {
                 alert("Identité enregistrée !");
             } else {
-                alert("Erreur a : " + result.message);
+                console.error("Erreur a : " + result.message);
             }
         })
         .catch(error => {
