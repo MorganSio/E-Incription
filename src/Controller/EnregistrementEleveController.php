@@ -2,13 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Classe;
 use App\Entity\User;
+use App\Entity\Classe;
 use App\Entity\InfoEleve;
 use App\Entity\RepresentantLegal;
 use App\Entity\ScolariteAnterieur;
 use App\Repository\LanguesRepository;
-// use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,9 +20,6 @@ class EnregistrementEleveController extends AbstractController
     #[Route('/info-eleve', name: 'fiche-etudiant')]
     public function index(): Response
     {
-        
-    // dd("2025-04-24");
-    // dd(\DateTime::createFromFormat("Y-m-d","2025-04-24"));
         return $this->render('enregistrement_eleve/index.html.twig', [
             'controller_name' => 'EnregistrementEleveController',
         ]);
@@ -41,7 +37,6 @@ class EnregistrementEleveController extends AbstractController
         
 
         try {
-            // $infoEleve = new InfoEleve(new User());
             $infoEleve = $this->getUser()->getInfoEleve();
 
             if ($infoEleve->getAnneScolaireUn() instanceof ScolariteAnterieur){
@@ -81,23 +76,14 @@ class EnregistrementEleveController extends AbstractController
                     $anneScolaireDeux->setLVDeux($langue);
                 }
 
-                // $label = $data["student-lv1"];
-                // if ($label != "") {
-                //     $langue =  ["Anglais"];
-                    
-                //     if(($langue)){
-                //         return new JsonResponse(['success' => false, 'message' => "LV1 pour l'annee a venir non valide"],400);
-                //     }
+                $langue = $data["student-lv1"];
+                if ($langue != "") {
                     $infoEleve->setLVUn($langue);
-                // }
+                }
                 $langue = $data["student-lv2"];
-                // if ($label != "") {
-                //     $langue = $langueRepo->findOneBy(array("label" => $label ));
-                //     if(is_null($langue)){
-                //         return new JsonResponse(['success' => false, 'message' => "LV2 pour l'annee a venir non valide"],400);
-                //     }
+                if ($langue != "") {
                     $infoEleve->setLVDeux($langue);
-                // }
+                }
 
             if ($data["annee-1"] != ""){
                 $anneScolaireUn->setAnneScolaire($data["annee-1"]);
