@@ -48,9 +48,9 @@ class DocxdossierGeneratorService
         // === ÉTUDIANT ===
         $templateProcessor->setValue('etudiant.nom', $user?->getNom() ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.prenom', $user?->getPrenom() ?? 'Non renseigné');
-        $templateProcessor->setValue('etudiant.num_secu', ''); // À adapter si tu l’as
+        $templateProcessor->setValue('etudiant.num_secu', $user?->getNumSecuSocial() ?? 'Nom renseigné'); // À adapter si tu l’as
         $templateProcessor->setValue('etudiant.date_nais', $etudiant->getDateDeNaissance()?->format('d/m/Y') ?? 'Non renseigné');
-        $templateProcessor->setValue('etudiant.sexe', $etudiant->getSexe()?->getLabel() ?? 'Non renseigné');
+        $templateProcessor->setValue('etudiant.sexe', $etudiant->getSexe() ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.nationalite', $etudiant->getNationalite() ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.dep_nais', $etudiant->getDepartement() ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.com_nais', $etudiant?->getCommuneNaissance() ?? 'Non renseigné');

@@ -95,6 +95,12 @@ class InfoEleve
     #[ORM\Column(length: 20, nullable: true)]
     private ?string $LVDeux = null;
 
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $sexe = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $regime = null;
+
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: true)]
@@ -117,15 +123,7 @@ class InfoEleve
     #[ORM\JoinColumn(nullable: true)]
     private ?MedecinTraitant $medecin_traitant = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?Sexe $sexe = null;
-
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?RegimeCantine $regime = null;
-
-    #lien eleve ?
+    #lien eleve ? #je voulais dire quoi par ça ?
     #[ORM\ManyToOne(inversedBy: 'infoEleves')]
     #[ORM\JoinColumn(nullable: true)]
     private ?RepresentantLegal $responsable_un = null;
@@ -270,18 +268,6 @@ class InfoEleve
     public function setObservations(?string $observations): static
     {
         $this->observations = $observations;
-
-        return $this;
-    }
-
-    public function getEtatMatrimonialeParents(): ?string
-    {
-        return $this->etat_matrimoniale_parents;
-    }
-
-    public function setEtatMatrimonialeParents(?string $etat_matrimoniale_parents): static
-    {
-        $this->etat_matrimoniale_parents = $etat_matrimoniale_parents;
 
         return $this;
     }
@@ -538,24 +524,24 @@ class InfoEleve
         return $this;
     }
 
-    public function getsexe(): ?Sexe
+    public function getSexe(): ?string
     {
         return $this->sexe;
     }
 
-    public function setsexe(?Sexe $sexe): static
+    public function setSexe(string $sexe): static
     {
         $this->sexe = $sexe;
 
         return $this;
     }
 
-    public function getRegime(): ?RegimeCantine
+    public function getRegime(): ?string
     {
         return $this->regime;
     }
 
-    public function setRegime(?RegimeCantine $regime): static
+    public function setRegime(?string $regime): static
     {
         $this->regime = $regime;
 
