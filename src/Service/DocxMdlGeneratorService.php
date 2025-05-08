@@ -51,6 +51,8 @@ class DocxMdlGeneratorService
         $templateProcessor->setValue('etudiant.date_naissance', $etudiant->getDateDeNaissance()?->format('d/m/Y') ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.classe', $etudiant->getClasse() ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.mail', $user?->getEmail() ?? 'Non renseigné');
+        $templateProcessor->setValue('etudiant.autorisation', $etudiant?->isDroitImage() ?? 'Non renseigné');
+        $templateProcessor->setValue('etudiant.type_paiement', $etudiant->isCheque() ?? 'Non renseigné');
 
         // Téléphone & email depuis Humain (User hérite de Humain)
         if ($user instanceof \App\Entity\Humain) {
