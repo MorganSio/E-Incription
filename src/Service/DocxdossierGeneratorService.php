@@ -59,6 +59,18 @@ class DocxdossierGeneratorService
         $templateProcessor->setValue('etudiant.courriel', $user instanceof Humain ? $user->getCourriel() ?? 'Non renseigné' : 'Non renseigné');
         $templateProcessor->setValue('etudiant.immatri', $etudiant->getImmattriculationVeic() ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.redoublement', $etudiant->isRedoublant() ? 'Oui' : 'Non');
+        $templateProcessor->setValue('etudiant.type_transport', $etudiant->getTransportScolaire() ?? 'Non renseigné');
+        $templateProcessor->setValue('etudiant.transport', $etudiant->getTransportScolaire() !== null ? 'Oui' : 'Non');
+        
+        $regime = strtolower($etudiant->getRegime()?->getLabel() ?? '');
+
+        if ($regime === 'Tickets' || $regime === 'Ticket') {
+            $templateProcessor->setValue('etudiant.regime', '☑ Tickets   ☐ Externe');
+        } elseif ($regime === 'Externe') {
+            $templateProcessor->setValue('etudiant.regime', '☐ Tickets   ☑ Externe');
+        } else {
+            $templateProcessor->setValue('etudiant.regime', '☐ Tickets   ☐ Externe');
+        }
 
         $templateProcessor->setValue('etudiant.classe', $etudiant->getClasse() ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.specialite', $etudiant->getClasse()?->getLabel() ?? 'Non renseigné'); // À adapter
@@ -117,7 +129,7 @@ class DocxdossierGeneratorService
         if (!$source) {
             foreach ([
                 'nom', 'prenom', 'adresse', 'commune', 'courriel',
-                'tel_dom', 'tel_travail', 'tel_perso', 'profession'
+                'tel_dom', 'tel_travail', 'tel_perso', 'profession', 'tuteur'
             ] as $field) {
                 $templateProcessor->setValue("{$prefix}.{$field}", 'Non renseigné');
             }
@@ -133,6 +145,16 @@ class DocxdossierGeneratorService
         $templateProcessor->setValue("{$prefix}.tel_travail", $source->getTelephonePro() ?? 'Non renseigné');
         $templateProcessor->setValue("{$prefix}.tel_perso", $source->getTelephonePerso() ?? 'Non renseigné');
         $templateProcessor->setValue("{$prefix}.profession", $source->getPoste() ?? 'Non renseigné');
+
+        $tuteur = strtolower($source->getLienEleve() ?? '');
+
+        if ($tuteur === 'Mère' || $tuteur === 'Mere' || $tuteur === 'mère' || $tuteur === 'mere') {
+            $templateProcessor->setValue("{$prefix}.tuteur", '☑ Mère   ☐ Père   ☐ Autres');
+        } elseif ($tuteur === 'Père' || $tuteur === 'Pere' || $tuteur === 'père' || $tuteur === 'pere') {
+            $templateProcessor->setValue("{$prefix}.tuteur", '☐ Mère   ☑ Père   ☐ Autres');
+        } else {
+            $templateProcessor->setValue("{$prefix}.tuteur", '☐ Mère   ☐ Père   ☑ Autres');
+        }
     }
 
     private function createDocxDownloadResponse(string $filePath): BinaryFileResponse

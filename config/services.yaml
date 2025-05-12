@@ -19,7 +19,45 @@ services:
     App\Service\CloudService:
         arguments:
             $sofficePath: '%app.soffice_path%'
+    
+    App\Infrastructure\Email\Office365OAuthTokenProvider:
+        arguments:
+            $tenantId: '%env(resolve:EMAIL_TENANT)%'
+            $clientId: '%env(resolve:EMAIL_CLIENT_ID)%'
+            $clientSecret: '%env(resolve:EMAIL_CLIENT_SECRET)%'
 
+    App\Infrastructure\Email\OAuthEsmtpTransportFactoryDecorator:
+        decorates: mailer.transport_factory.smtp
+        arguments:
+            $inner: '@App\Infrastructure\Email\OAuthEsmtpTransportFactoryDecorator.inner'
+            $authenticator: '@App\Infrastructure\Email\XOAuth2Authenticator'
+
+    App\Infrastructure\Email\XOAuth2Authenticator: ~
+
+    App\Infrastructure\Email\Office365Mailer:
+        arguments:
+            $fromAddress: 'inscription@lyceefulbert.fr'
+
+    App\Service\GraphMailer:
+        arguments:
+            $clientId: '%email_client_id%'
+            $clientSecret: '%email_client_secret%'
+            $tenantId: '%email_tenant%'
+            $fromEmail: '%email_from%'
+
+    Nyholm\Psr7\Factory\Psr17Factory: ~
+    Psr\Http\Message\RequestFactoryInterface: '@Nyholm\Psr7\Factory\Psr17Factory'
+    Psr\Http\Message\ResponseFactoryInterface: '@Nyholm\Psr7\Factory\Psr17Factory'
+    Psr\Http\Message\ServerRequestFactoryInterface: '@Nyholm\Psr7\Factory\Psr17Factory'
+    Psr\Http\Message\StreamFactoryInterface: '@Nyholm\Psr7\Factory\Psr17Factory'
+    Psr\Http\Message\UploadedFileFactoryInterface: '@Nyholm\Psr7\Factory\Psr17Factory'
+    Psr\Http\Message\UriFactoryInterface: '@Nyholm\Psr7\Factory\Psr17Factory'
+
+    
 parameters:
     upload_directory: '%kernel.project_dir%/public/uploads'
     app.soffice_path: 'C:\\Program Files\\LibreOffice\\program\\soffice.exe'
+    email_client_id: '%env(EMAIL_CLIENT_ID)%'
+    email_client_secret: '%env(EMAIL_CLIENT_SECRET)%'
+    email_tenant: '%env(EMAIL_TENANT)%'
+    email_from: 'inscription@lyceefulbert.fr'
