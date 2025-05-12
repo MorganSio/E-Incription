@@ -1,0 +1,16 @@
+name: Deploy Application
+
+on:
+  push:
+    branches:
+      - dev 
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Étape 1 : Définir les variables d'environnement depuis les secrets GitHub
+      - name: Set environment variables
+        run: |
+          echo "EMAIL_CLIENT_SECRET=${{ secrets.EMAIL_CLIENT_SECRET }}" >> $GITHUB_ENV
