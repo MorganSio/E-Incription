@@ -365,6 +365,32 @@ php bin/console make:migration
 php bin/console doctrine:migrations:migrate
 ```
 
+### 🔐 Configuration Microsoft Azure (OAuth / API Graph)
+
+Pour que l’application puisse interagir avec l’API de Microsoft, vous devez configurer une application dans Azure et récupérer les identifiants nécessaires : `clientId`, `tenantId`, `clientSecret`.
+
+#### Étapes pour récupérer le `clientSecret` dans Azure
+
+1. Connectez-vous au [portail Azure](https://portal.azure.com) avec le compte inscription@lyceefulbert.fr .
+2. Allez dans **Azure Active Directory** dans la barre de recherche > **Gérer** > **Inscriptions d'applications**.
+3. Cliquez sur **New registration** pour créer une application, ou sélectionnez une application existante.
+4. Dans la colonne de gauche, cliquez sur **Certificats & secrets** dans **Gérer**.
+5. Sous l’onglet **Secrets Client**, cliquez sur **Nouveau client secret** :
+   - Donnez un nom explicite (par exemple `SymfonyMailerSecret`).
+   - Choisissez une période d’expiration : `6 mois`.
+   - Cliquez sur **Add**.
+    Ou si le **Secrets Client** existe et que le certificat expire bientôt il faudra tout de même en crée un nouveau
+6. Une fois généré, **copiez immédiatement la valeur** dans la colonne **Valeur**.
+   > ⚠️ Elle ne sera plus visible après avoir quitté la page.
+
+#### Environnement à configurer
+
+```env
+AZURE_CLIENT_ID="votre-client-id"  # déjà présent dans le .env
+AZURE_TENANT_ID="votre-tenant-id"  # déjà présent dans le .env
+AZURE_CLIENT_SECRET="votre-secret"   # à modifier tout les 6 mois dans le .env
+```
+
 ## 📦 Autres commandes utiles
 
 **Lancer les tests :**
