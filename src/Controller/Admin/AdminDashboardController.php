@@ -30,7 +30,7 @@ class AdminDashboardController extends AbstractDashboardController
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
-        return $this->redirectToRoute('admin_dashboard');
+        return parent::index();
     }
 
     public function configureDashboard(): Dashboard
