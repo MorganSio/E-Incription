@@ -21,7 +21,6 @@ Assurez-vous d'avoir les éléments suivants installés :
 
 ## 🛠️ Installation en local
 
-<<<<<<< HEAD
 ### 1. Cloner le dépôt
 
 ```bash
@@ -49,7 +48,6 @@ DATABASE_URL="postgresql://votre_user:votre_motdepasse@localhost:5432/E-Inscript
 php bin/console app:check-database-connection
 ```
 
-=======
 ### Extensions PHP requises
 
 Assurez-vous que les extensions PHP suivantes sont activées dans votre fichier php.ini :
@@ -97,7 +95,6 @@ DATABASE_URL="postgresql://votre_user:votre_motdepasse@localhost:5432/E-Inscript
 php bin/console app:check-database-connection
 ```
 
->>>>>>> 844b794b13af7c11b734fdd37a2aed74b0078125
 ### 5. Démarrer le serveur de développement
 
 ```bash
@@ -105,8 +102,6 @@ symfony server:start
 ```
 
 ## 🌐 Déploiement sur un serveur distant (Linux - Ubuntu recommandé)
-<<<<<<< HEAD
-=======
 
 Voici les étapes pour installer l'application et la base de données sur un serveur distant.
 
@@ -149,11 +144,9 @@ puis ajouter la ligne
 ```bash
 host e_inscription euser 127.0.0.1/32 password
 ```
->>>>>>> 844b794b13af7c11b734fdd37a2aed74b0078125
 
 Voici les étapes pour installer l'application et la base de données sur un serveur distant.
 
-<<<<<<< HEAD
 ### 1. Installer les dépendances nécessaires
 
 ```bash
@@ -223,7 +216,6 @@ Créer le fichier de configuration :
 sudo nano /etc/nginx/sites-available/e-inscription
 ```
 
-=======
 Mettre à jour le fichier `.env` :
 > Note : Modifiez l'utilisateur et le mot de passe selon ce que vous avez défini précédemment
 
@@ -265,7 +257,6 @@ Créer le fichier de configuration :
 sudo nano /etc/nginx/sites-available/e-inscription
 ```
 
->>>>>>> 844b794b13af7c11b734fdd37a2aed74b0078125
 Voici un exemple de configuration :
 
 ```nginx
@@ -373,6 +364,32 @@ php bin/console make:migration
 php bin/console doctrine:migrations:migrate
 ```
 
+### 🔐 Configuration Microsoft Azure (OAuth / API Graph)
+
+Pour que l’application puisse interagir avec l’API de Microsoft, vous devez configurer une application dans Azure et récupérer les identifiants nécessaires : `clientId`, `tenantId`, `clientSecret`.
+
+#### Étapes pour récupérer le `clientSecret` dans Azure
+
+1. Connectez-vous au [portail Azure](https://portal.azure.com) avec le compte inscription@lyceefulbert.fr .
+2. Allez dans **Azure Active Directory** dans la barre de recherche > **Gérer** > **Inscriptions d'applications**.
+3. Cliquez sur **New registration** pour créer une application, ou sélectionnez une application existante.
+4. Dans la colonne de gauche, cliquez sur **Certificats & secrets** dans **Gérer**.
+5. Sous l’onglet **Secrets Client**, cliquez sur **Nouveau client secret** :
+   - Donnez un nom explicite (par exemple `SymfonyMailerSecret`).
+   - Choisissez une période d’expiration : `6 mois`.
+   - Cliquez sur **Add**.
+    Ou si le **Secrets Client** existe et que le certificat expire bientôt il faudra tout de même en crée un nouveau
+6. Une fois généré, **copiez immédiatement la valeur** dans la colonne **Valeur**.
+   > ⚠️ Elle ne sera plus visible après avoir quitté la page.
+
+#### Environnement à configurer
+
+```env
+AZURE_CLIENT_ID="votre-client-id"  # déjà présent dans le .env
+AZURE_TENANT_ID="votre-tenant-id"  # déjà présent dans le .env
+AZURE_CLIENT_SECRET="votre-secret"   # à modifier tout les 6 mois dans le .env
+```
+
 ## 📦 Autres commandes utiles
 
 **Lancer les tests :**
@@ -392,7 +409,4 @@ php bin/console app:create-admin
 - Si vous rencontrez des problèmes de permissions, vérifiez que les dossiers `var/cache` et `var/log` sont accessibles en écriture.
 - Pour les problèmes liés à la base de données, assurez-vous que PostgreSQL est correctement configuré et que l'utilisateur dispose des droits nécessaires.
 - En cas d'erreurs avec Nginx, consultez les logs : `sudo tail -f /var/log/nginx/error.log`
-<<<<<<< HEAD
-=======
 - Si vous rencontrez des erreurs liées aux extensions PHP manquantes, vérifiez que toutes les extensions requises sont activées dans votre fichier php.ini.
->>>>>>> 844b794b13af7c11b734fdd37a2aed74b0078125
