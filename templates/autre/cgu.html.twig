@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Conditions Générales d'Utilisation{% endblock %}
+
+{% block body %}
+<div class="fr-container">
+    <h1>Conditions Générales d'Utilisation (CGU)</h1>
+
+    <section class="fr-mb-4w">
+        <h2>1. Objet</h2>
+        <p>Les présentes Conditions Générales d'Utilisation (CGU) définissent les règles d'accès et d'utilisation du site web du Lycée Fulbert.</p>
+    </section>
+
+    <section class="fr-mb-4w">
+        <h2>2. Acceptation des Conditions</h2>
+        <p>L'accès et l'utilisation de ce site impliquent l'acceptation pleine et entière des présentes CGU.</p>
+    </section>
+
+    <section class="fr-mb-4w">
+        <h2>3. Accès au Site</h2>
+        <h3>3.1 Conditions d'Accès</h3>
+        <ul>
+            <li>Le site est accessible aux élèves, parents, personnels du lycée et visiteurs</li>
+            <li>Certaines zones peuvent nécessiter une authentification</li>
+            <li>L'accès est gratuit et ouvert à tous, dans la limite des capacités de connexion</li>
+        </ul>
+
+        <h3>3.2 Inscription et Compte Utilisateur</h3>
+        <ul>
+            <li>Certains services nécessitent la création d'un compte</li>
+            <li>L'utilisateur s'engage à fournir des informations exactes</li>
+            <li>Un compte est strictement personnel et non transmissible</li>
+        </ul>
+    </section>
+
+    <section class="fr-mb-4w">
+        <h2>4. Droits et Obligations des Utilisateurs</h2>
+        <h3>4.1 Obligations</h3>
+        <ul>
+            <li>Respecter les autres utilisateurs</li>
+            <li>Ne pas diffuser de contenu à caractère diffamatoire, injurieux ou discriminatoire</li>
+            <li>Protéger la confidentialité de ses identifiants</li>
+        </ul>
+
+        <h3>4.2 Interdictions</h3>
+        <ul>
+            <li>Toute tentative de piratage ou d'intrusion dans le système</li>
+            <li>La diffusion de contenu illégal ou portant atteinte aux droits d'autrui</li>
+            <li>L'usurpation d'identité</li>
+            <li>La reproduction ou la modification non autorisée des contenus</li>
+        </ul>
+    </section>
+
+    <section class="fr-mb-4w">
+        <h2>5. Responsabilités</h2>
+        <h3>5.1 Responsabilité du Lycée</h3>
+        <ul>
+            <li>Maintenir un accès au site dans la mesure du possible</li>
+            <li>Protéger les données personnelles</li>
+            <li>Assurer la mise à jour des informations</li>
+        </ul>
+
+        <h3>5.2 Limites de Responsabilité</h3>
+        <ul>
+            <li>Le lycée ne peut garantir une disponibilité continue du site</li>
+            <li>Les contenus sont donnés à titre informatif</li>
+            <li>Le lycée décline toute responsabilité en cas de dommages directs ou indirects</li>
+        </ul>
+    </section>
+
+    <section class="fr-mb-4w">
+        <h2>6. Propriété Intellectuelle</h2>
+        <p>Tous les contenus du site (textes, images, vidéos) sont la propriété du Lycée Fulbert, sauf mention contraire.</p>
+        <p>Toute reproduction ou utilisation sans autorisation est interdite.</p>
+    </section>
+
+    <section class="fr-mb-4w">
+        <h2>7. Protection des Données Personnelles</h2>
+        <p>Le traitement des données personnelles est régi par notre <a href="{{ path('politique_confidentialite') }}">Politique de Confidentialité</a>.</p>
+    </section>
+
+    <section class="fr-mb-4w">
+        <h2>8. Modifications</h2>
+        <p>Le Lycée Fulbert se réserve le droit de modifier les présentes CGU à tout moment.</p>
+        <p>Les utilisateurs sont invités à les consulter régulièrement.</p>
+    </section>
+
+    <section class="fr-mb-4w">
+        <h2>9. Contact</h2>
+        <p>Pour toute question relative aux CGU, contactez : <a href="mailto:contact@lyceefulbert.fr">contact@lyceefulbert.fr</a></p>
+    </section>
+
+    <p class="fr-mt-4w"><em>Dernières modifications : {{ "now"|date("F Y") }}</em></p>
+</div>
+{% endblock %}
