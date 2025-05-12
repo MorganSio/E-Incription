@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminDashboardController extends AbstractDashboardController
 {
-    private const CC_EMAIL = 'rouff.hugo28@gmail.com';
+    private const CC_EMAIL = 'morgan.joncart@lyceefulbert.fr';
 
     public function __construct(
         private readonly UserRepository $userRepository,
