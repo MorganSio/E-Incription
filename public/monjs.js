@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function (){
 
     form = document.querySelector("form[id^='etudiant-form'");
     if (!form){
-        console.error("formulairenon trouver");
+        console.info("formulaire non trouvé");
         return;
     }
     else{

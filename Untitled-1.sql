@@ -6,4 +6,4 @@
 
 UPDATE public."user"
 	SET roles = '["ROLE_ADMIN"]'
-	WHERE id = 26;
+	WHERE id = 28;

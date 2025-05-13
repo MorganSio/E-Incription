@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\RegimeCantine;
+use App\Repository\InfoEleveRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,40 +13,42 @@ use Symfony\Component\Routing\Annotation\Route;
 class FicheIntendanceController extends AbstractController
 {
     #[Route('fiche-intendance', name: 'fiche-intendance')]
-    public function index(): Response
+    public function ficheIntendance(Request $request, EntityManagerInterface $entityManager, InfoEleveRepository $infoEleveRepository): Response
     {
-        return $this->render('/forms/intendance.html.twig', [
-            'controller_name' => 'FicheIntendanceController',
-        ]);
-    }
-
-    public function ficheIntendance(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $infoUser = $this->getUser()->getInfoEleve();
-
-        if ($request->isMethod('POST')) {
-            $accepter = $request->request->get('accepter');
-
-            if ($accepter === 'oui') {
-                $regime = $entityManager->getRepository(RegimeCantine::class)->findOneBy(['label' => 'tickets']);
-                if ($regime) {
-                    $infoUser->setRegime($regime);
-                }
-            } elseif ($accepter === 'non') {
-                $regime = $entityManager->getRepository(RegimeCantine::class)->findOneBy(['label' => 'externe']);
-                if ($regime) {
-                    $infoUser->setRegime($regime);
-                }
-            }
-
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Votre choix a bien été enregistré.');
-            return $this->redirectToRoute('fiche-intendance');
+        // Récupérer l'élève connecté ou par ID (à adapter selon votre logique)
+        $user = $this->getUser();
+        
+        // Chercher l'InfoEleve correspondante ou en créer une nouvelle
+        $infoEleve = $user ? $infoEleveRepository->findOneBy(['user' => $user]) : null;
+    
+        if (!$infoEleve) {
+            throw $this->createNotFoundException('Aucune information élève trouvée pour cet utilisateur.');
         }
+    
+        // Vérifie si le formulaire a été soumis en POST
+        if ($request->isMethod('POST')) {
+            // Récupération des valeurs soumises
+            $regime = $request->request->get('intendance');
 
+            // dd($regime);
+
+            // Mise à jour du régime en fonction de "accepter"
+            $infoEleve->setRegime($regime);
+    
+            // Persister les modifications
+            $entityManager->persist($infoEleve);
+            $entityManager->flush();
+    
+            // Ajouter un message flash
+            $this->addFlash('success', 'Informations enregistrées avec succès.');
+    
+            // Rediriger vers la page d'accueil ou une autre page
+            return $this->redirectToRoute('index');
+        }
+    
+        // Rendu du formulaire
         return $this->render('forms/intendance.html.twig', [
-            'infoUser' => $infoUser,
+            'infoUser' => $infoEleve,
         ]);
     }
 }
