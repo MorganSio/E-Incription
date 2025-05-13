@@ -51,7 +51,6 @@ class DocxdossierGeneratorService
         $templateProcessor->setValue('etudiant.num_secu', $etudiant->getNumSecuSocial() ?? 'Nom renseigné'); // À adapter si tu l’as
         $templateProcessor->setValue('etudiant.date_nais', $etudiant->getDateDeNaissance()?->format('d/m/Y') ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.sexe', $etudiant->getSexe() ?? 'Non renseigné');
-        $templateProcessor->setValue('etudiant.sexe', $etudiant->getSexe() ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.nationalite', $etudiant->getNationalite() ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.dep_nais', $etudiant->getDepartement() ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.com_nais', $etudiant?->getCommuneNaissance() ?? 'Non renseigné');
@@ -112,7 +111,7 @@ class DocxdossierGeneratorService
                 $templateProcessor->setValue('majeur.tel_perso', 'Non renseigné');
                 $templateProcessor->setValue('majeur.tel_dom', 'Non renseigné');
                 $templateProcessor->setValue('majeur.courriel', 'Non renseigné');
-                $templateProcessor->setValue('majeur.sms', '☐');
+                $templateProcessor->setValue('majeur.sms', 'Non renseigné');
             }
         } else {
             // Si pas majeur indépendant => on vide les champs
@@ -122,8 +121,8 @@ class DocxdossierGeneratorService
         }
 
         // === RESPONSABLES LÉGAUX ===
-        $this->setResponsableValues($templateProcessor, 'rep_legal1', $etudiant->getResponsableUn() ?? $etudiant);
-        $this->setResponsableValues($templateProcessor, 'rep_legal2', $etudiant->getResponsableDeux() ?? null);
+        $this->setResponsableValues($templateProcessor, 'rep_legal1', $etudiant->getResponsableUn());
+        $this->setResponsableValues($templateProcessor, 'rep_legal2', $etudiant->getResponsableDeux());
     }
 
     private function setResponsableValues(TemplateProcessor $templateProcessor, string $prefix, $source): void
@@ -165,7 +164,7 @@ class DocxdossierGeneratorService
         } elseif ($sms === false) {
             $templateProcessor->setValue("{$prefix}.sms", '☐');
         } else {
-            $templateProcessor->setValue("{$prefix}.sms", '☐'); // Ou 'Non renseigné' si tu préfères
+            $templateProcessor->setValue("{$prefix}.sms", 'Non renseigné'); // Ou 'Non renseigné' si tu préfères
         }
     }
 
