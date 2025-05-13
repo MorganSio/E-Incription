@@ -51,7 +51,6 @@ class DocxdossierGeneratorService
         $templateProcessor->setValue('etudiant.num_secu', $etudiant->getNumSecuSocial() ?? 'Nom renseigné'); // À adapter si tu l’as
         $templateProcessor->setValue('etudiant.date_nais', $etudiant->getDateDeNaissance()?->format('d/m/Y') ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.sexe', $etudiant->getSexe() ?? 'Non renseigné');
-        $templateProcessor->setValue('etudiant.sexe', $etudiant->getSexe() ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.nationalite', $etudiant->getNationalite() ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.dep_nais', $etudiant->getDepartement() ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.com_nais', $etudiant?->getCommuneNaissance() ?? 'Non renseigné');
@@ -62,11 +61,11 @@ class DocxdossierGeneratorService
         $templateProcessor->setValue('etudiant.type_transport', $etudiant->getTransportScolaire() ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.transport', $etudiant->getTransportScolaire() !== null ? 'Oui' : 'Non');
         
-        $regime = strtolower($etudiant->getRegime()?->getLabel() ?? '');
+        $regime = strtolower($etudiant->getRegime() ?? '');
 
-        if ($regime === 'Tickets' || $regime === 'Ticket') {
+        if ($regime === 'tickets' || $regime === 'ticket') {
             $templateProcessor->setValue('etudiant.regime', '☑ Tickets   ☐ Externe');
-        } elseif ($regime === 'Externe') {
+        } elseif ($regime === 'externe') {
             $templateProcessor->setValue('etudiant.regime', '☐ Tickets   ☑ Externe');
         } else {
             $templateProcessor->setValue('etudiant.regime', '☐ Tickets   ☐ Externe');
@@ -105,23 +104,25 @@ class DocxdossierGeneratorService
                 $templateProcessor->setValue('majeur.tel_perso', $user->getTelephonePerso() ?? 'Non renseigné');
                 $templateProcessor->setValue('majeur.tel_dom', $user->getTelephonePerso() ?? 'Non renseigné');
                 $templateProcessor->setValue('majeur.courriel', $user->getCourriel() ?? 'Non renseigné');
+                $templateProcessor->setValue('majeur.sms', '☐');
             } else {
                 $templateProcessor->setValue('majeur.adresse', 'Non renseigné');
                 $templateProcessor->setValue('majeur.commune', 'Non renseigné');
                 $templateProcessor->setValue('majeur.tel_perso', 'Non renseigné');
                 $templateProcessor->setValue('majeur.tel_dom', 'Non renseigné');
                 $templateProcessor->setValue('majeur.courriel', 'Non renseigné');
+                $templateProcessor->setValue('majeur.sms', 'Non renseigné');
             }
         } else {
             // Si pas majeur indépendant => on vide les champs
-            foreach (['adresse', 'commune', 'tel_perso', 'courriel', 'tel_dom'] as $champ) {
+            foreach (['adresse', 'commune', 'tel_perso', 'courriel', 'tel_dom', 'sms'] as $champ) {
                 $templateProcessor->setValue("majeur.$champ", '');
             }
         }
 
         // === RESPONSABLES LÉGAUX ===
-        $this->setResponsableValues($templateProcessor, 'rep_legal1', $etudiant->getResponsableUn() ?? $etudiant);
-        $this->setResponsableValues($templateProcessor, 'rep_legal2', $etudiant->getResponsableDeux() ?? null);
+        $this->setResponsableValues($templateProcessor, 'rep_legal1', $etudiant->getResponsableUn());
+        $this->setResponsableValues($templateProcessor, 'rep_legal2', $etudiant->getResponsableDeux());
     }
 
     private function setResponsableValues(TemplateProcessor $templateProcessor, string $prefix, $source): void
@@ -154,6 +155,16 @@ class DocxdossierGeneratorService
             $templateProcessor->setValue("{$prefix}.tuteur", '☐ Mère   ☑ Père   ☐ Autres');
         } else {
             $templateProcessor->setValue("{$prefix}.tuteur", '☐ Mère   ☐ Père   ☑ Autres');
+        }
+
+        // Case à cocher pour SMS : ☑ Oui ☐ Non
+        $sms = $source->getSmsSend();
+        if ($sms === true) {
+            $templateProcessor->setValue("{$prefix}.sms", '☑');
+        } elseif ($sms === false) {
+            $templateProcessor->setValue("{$prefix}.sms", '☐');
+        } else {
+            $templateProcessor->setValue("{$prefix}.sms", 'Non renseigné'); // Ou 'Non renseigné' si tu préfères
         }
     }
 
