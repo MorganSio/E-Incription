@@ -25,6 +25,3 @@
 ###< symfony/asset-mapper ###
 /migrations
 /public/generated
-
-.env.local
-.env.*.local
