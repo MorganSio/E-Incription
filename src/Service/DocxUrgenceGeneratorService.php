@@ -55,9 +55,9 @@ class DocxUrgenceGeneratorService
 
         $sexe = strtolower($etudiant->getSexe() ?? '');
 
-        if ($sexe === 'Masculin' || $sexe === 'masculin') {
+        if ($sexe === 'Homme' || $sexe === 'homme' || $sexe === 'masculin' || $sexe === 'masculin') {
             $templateProcessor->setValue('etudiant.sexe_choix', '☑ Masculin   ☐ Féminin');
-        } elseif ($sexe === 'Féminin' || $sexe === 'Feminin' || $sexe === 'feminin' || $sexe === 'féminin') {
+        } elseif ($sexe === 'Féminin' || $sexe === 'Feminin' || $sexe === 'feminin' || $sexe === 'féminin' || $sexe === 'femme' || $sexe === 'Femme') {
             $templateProcessor->setValue('etudiant.sexe_choix', '☐ Masculin   ☑ Féminin');
         } else {
             $templateProcessor->setValue('etudiant.sexe_choix', '☐ Masculin   ☐ Féminin');
