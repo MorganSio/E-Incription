@@ -391,6 +391,10 @@ AZURE_TENANT_ID="votre-tenant-id"  # déjà présent dans le .env
 AZURE_CLIENT_SECRET="votre-secret"   # à modifier tout les 6 mois dans le .env
 ```
 
+### Ajout des informations clients sur le .env
+
+les informations se trouvent dans notre équipe teams : Master Corp, les informations pour l'envoie de mail se trouve dans la publication, la publication se trouve epinglé
+
 ## 📦 Autres commandes utiles
 
 **Lancer les tests :**
