@@ -122,8 +122,8 @@ class DocxdossierGeneratorService
         }
 
         // === RESPONSABLES LÉGAUX ===
-        $this->setResponsableValues($templateProcessor, 'rep_legal1', $etudiant->getResponsableUn() ?? $etudiant);
-        $this->setResponsableValues($templateProcessor, 'rep_legal2', $etudiant->getResponsableDeux() ?? null);
+        $this->setResponsableValues($templateProcessor, 'rep_legal1', $etudiant->getResponsableUn());
+        $this->setResponsableValues($templateProcessor, 'rep_legal2', $etudiant->getResponsableDeux());
     }
 
     private function setResponsableValues(TemplateProcessor $templateProcessor, string $prefix, $source): void
