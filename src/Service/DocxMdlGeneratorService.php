@@ -5,9 +5,15 @@ namespace App\Service;
 use App\Entity\InfoEleve;
 use App\Entity\Humain;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\InfoEleveRepository;
 use PhpOffice\PhpWord\TemplateProcessor;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use App\Entity\User;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DocxMdlGeneratorService
 {
@@ -31,7 +37,7 @@ class DocxMdlGeneratorService
         $outputDocxPath = __DIR__ . '/../../public/generated/formulaire_Adhésion_MDL_' . $nom . '.docx';
 
         $templateProcessor = new TemplateProcessor($templatePath);
-        $this->fillTemplate($templateProcessor, $etudiant);
+        $this->fillTemplate($templateProcessor, $etudiant, $this->entityManager->getRepository(InfoEleve::class));
         $templateProcessor->saveAs($outputDocxPath);
 
         if ($returnPath) {
@@ -41,18 +47,18 @@ class DocxMdlGeneratorService
         return $this->createDocxDownloadResponse($outputDocxPath);
     }
 
-    private function fillTemplate(TemplateProcessor $templateProcessor, InfoEleve $etudiant): void
+    private function fillTemplate(TemplateProcessor $templateProcessor, InfoEleve $etudiant, InfoEleveRepository $infoEleveRepository): void
     {
         $user = $etudiant->getUser();
-
+        $infoEleve = $user ? $infoEleveRepository->findOneBy(['user' => $user]) : null;
         // Étudiant
         $templateProcessor->setValue('etudiant.nom', $user?->getNom() ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.prenom', $user?->getPrenom() ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.date_naissance', $etudiant->getDateDeNaissance()?->format('d/m/Y') ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.classe', $etudiant->getClasse() ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.mail', $user?->getEmail() ?? 'Non renseigné');
-        $templateProcessor->setValue('etudiant.autorisation', $etudiant?->isDroitImage() ?? 'Non renseigné');
-        $templateProcessor->setValue('etudiant.type_paiement', $etudiant->isCheque() ?? 'Non renseigné');
+        $templateProcessor->setValue('etudiant.autorisation', $infoEleve?->getImageRights() ?? 'Non renseigné');
+        $templateProcessor->setValue('etudiant.type_paiement', $infoEleve->getPaymentMethod() ?? 'Non renseigné');
 
         // Téléphone & email depuis Humain (User hérite de Humain)
         if ($user instanceof \App\Entity\Humain) {
