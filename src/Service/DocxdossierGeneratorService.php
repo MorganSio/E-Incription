@@ -62,11 +62,11 @@ class DocxdossierGeneratorService
         $templateProcessor->setValue('etudiant.type_transport', $etudiant->getTransportScolaire() ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.transport', $etudiant->getTransportScolaire() !== null ? 'Oui' : 'Non');
         
-        $regime = strtolower($etudiant->getRegime()?->getLabel() ?? '');
+        $regime = strtolower($etudiant->getRegime() ?? '');
 
-        if ($regime === 'Tickets' || $regime === 'Ticket') {
+        if ($regime === 'tickets' || $regime === 'ticket') {
             $templateProcessor->setValue('etudiant.regime', '☑ Tickets   ☐ Externe');
-        } elseif ($regime === 'Externe') {
+        } elseif ($regime === 'externe') {
             $templateProcessor->setValue('etudiant.regime', '☐ Tickets   ☑ Externe');
         } else {
             $templateProcessor->setValue('etudiant.regime', '☐ Tickets   ☐ Externe');

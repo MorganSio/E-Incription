@@ -53,11 +53,11 @@ class DocxUrgenceGeneratorService
         $templateProcessor->setValue('representant.tel_contact_urgence', $etudiant->getNumeroContacteUrgence() ?? 'Non renseigné');
         $templateProcessor->setValue('etudiant.dernier_rappel_antitetanique', $etudiant->getDernierRappelAntitetanique()?->format('d/m/Y') ?? 'Non renseigné');
 
-        $sexe = strtolower($etudiant->getSexe()?->getLabel() ?? '');
+        $sexe = strtolower($etudiant->getSexe() ?? '');
 
-        if ($sexe === 'Masculin') {
+        if ($sexe === 'Masculin' || $sexe === 'masculin') {
             $templateProcessor->setValue('etudiant.sexe_choix', '☑ Masculin   ☐ Féminin');
-        } elseif ($sexe === 'Féminin' || $sexe === 'Feminin') {
+        } elseif ($sexe === 'Féminin' || $sexe === 'Feminin' || $sexe === 'feminin' || $sexe === 'féminin') {
             $templateProcessor->setValue('etudiant.sexe_choix', '☐ Masculin   ☑ Féminin');
         } else {
             $templateProcessor->setValue('etudiant.sexe_choix', '☐ Masculin   ☐ Féminin');
