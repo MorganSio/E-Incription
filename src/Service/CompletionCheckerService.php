@@ -79,21 +79,16 @@ class CompletionCheckerService
      */
     private function isValueComplete($value): bool
     {
-        // Gestion spécifique des types
         if ($value === null) return false;
         if (is_string($value) && trim($value) === '') return false;
         if (is_array($value) && count($value) === 0) return false;
         if ($value instanceof \DateTimeInterface) return true;
-        
-        // Pour les valeurs booléennes, on considère qu'elles sont toujours complètes
         if (is_bool($value)) return true;
-        
-        // Pour les BLOBs et autres types d'objets
         if (is_object($value)) return true;
-        
+
         return true;
     }
-    
+
     /**
      * Analyse la complétude des données d'un élève
      * 
@@ -108,7 +103,7 @@ class CompletionCheckerService
             'sections' => [],
             'missing_fields' => []
         ];
-        
+
         // Liste des entités à vérifier
         $entitiesToCheck = [
             'informations_personnelles' => $infoEleve,
@@ -122,17 +117,24 @@ class CompletionCheckerService
             'scolarite_anterieure_1' => $infoEleve?->getAnneScolaireUn(),
             'scolarite_anterieure_2' => $infoEleve?->getAnneScolaireDeux(),
         ];
-        
+
         // Analyse chaque entité
         foreach ($entitiesToCheck as $section => $entity) {
+            if (!is_object($entity)) {
+                $result['sections'][$section] = [
+                    'complete' => 0,
+                    'incomplete' => 0,
+                    'fields' => []
+                ];
+                continue;
+            }
+
             $completion = $this->getEntityCompletion($entity);
             $result['sections'][$section] = $completion;
-            
-            // Mise à jour des compteurs globaux
+
             $result['global']['complete'] += $completion['complete'];
             $result['global']['incomplete'] += $completion['incomplete'];
-            
-            // Ajoute les champs manquants avec leur section
+
             foreach ($completion['fields'] as $field) {
                 $result['missing_fields'][] = [
                     'section' => $section,
@@ -140,16 +142,15 @@ class CompletionCheckerService
                 ];
             }
         }
-        
-        // Calcule le pourcentage de complétion
+
         $total = $result['global']['complete'] + $result['global']['incomplete'];
         $result['completion_percentage'] = $total > 0 
             ? round(($result['global']['complete'] / $total) * 100, 2) 
             : 0;
-            
+
         return $result;
     }
-    
+
     /**
      * Analyse globale pour tous les utilisateurs
      * 
@@ -164,14 +165,13 @@ class CompletionCheckerService
             'completion_average' => 0,
             'total_users' => count($users)
         ];
-        
+
         $totalCompletionPercentage = 0;
-        
+
         foreach ($users as $user) {
             $userData = $this->analyzeStudentDataCompletion($user);
             $totalCompletionPercentage += $userData['completion_percentage'];
-            
-            // Statistiques par section
+
             foreach ($userData['sections'] as $section => $data) {
                 if (!isset($globalStats['sections'][$section])) {
                     $globalStats['sections'][$section] = [
@@ -180,19 +180,18 @@ class CompletionCheckerService
                         'users_missing' => 0
                     ];
                 }
-                
+
                 $globalStats['sections'][$section]['complete'] += $data['complete'];
                 $globalStats['sections'][$section]['incomplete'] += $data['incomplete'];
-                
+
                 if (count($data['fields']) > 0) {
                     $globalStats['sections'][$section]['users_missing']++;
                 }
             }
-            
-            // Statistiques par champ manquant
+
             foreach ($userData['missing_fields'] as $missingField) {
                 $key = $missingField['section'] . '.' . $missingField['field'];
-                
+
                 if (!isset($globalStats['missing_fields'][$key])) {
                     $globalStats['missing_fields'][$key] = [
                         'section' => $missingField['section'],
@@ -200,24 +199,22 @@ class CompletionCheckerService
                         'count' => 0
                     ];
                 }
-                
+
                 $globalStats['missing_fields'][$key]['count']++;
             }
         }
-        
-        // Calculer la moyenne de complétion
+
         if (count($users) > 0) {
             $globalStats['completion_average'] = round($totalCompletionPercentage / count($users), 2);
         }
-        
-        // Trier les champs manquants par nombre décroissant
+
         usort($globalStats['missing_fields'], function($a, $b) {
             return $b['count'] - $a['count'];
         });
-        
+
         return $globalStats;
     }
-    
+
     /**
      * Vérifie si les documents requis sont présents
      * 
@@ -235,40 +232,40 @@ class CompletionCheckerService
             'attestation_identite' => $user->getInfoEleve()?->getAttestationIdentite(),
             'attestation_reussite' => $user->getInfoEleve()?->getAttestationReusite(),
         ];
-        
+
         $result = [
             'present' => 0,
             'missing' => 0,
             'details' => []
         ];
-        
+
         foreach ($documents as $name => $document) {
             $isPresent = !empty($document);
-            
+
             $result['details'][$name] = $isPresent;
-            
+
             if ($isPresent) {
                 $result['present']++;
             } else {
                 $result['missing']++;
             }
         }
-        
+
         // Vérifier les PDF générés
         $pdfTypes = ['intendance', 'urgence', 'mdl', 'dossier'];
         $result['pdfs'] = [];
-        
+
         foreach ($pdfTypes as $type) {
             $filePath = "/uploads/pdfs/{$type}_{$user->getId()}.pdf";
             $absolutePath = $projectDir . '/public' . $filePath;
             $exists = file_exists($absolutePath);
-            
+
             $result['pdfs'][$type] = [
                 'exists' => $exists,
                 'path' => $filePath
             ];
         }
-        
+
         return $result;
     }
 }
