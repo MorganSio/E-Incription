@@ -18,6 +18,7 @@ Assurez-vous d'avoir les éléments suivants installés :
 - PostgreSQL 15.8
 - Un serveur Web (Apache, Nginx, ou le serveur Symfony en local)
 - Symfony CLI (recommandé)
+- Avoir installé Libre Office sur le pc avec la version la plus récente
 
 ## 🛠️ Installation en local
 
